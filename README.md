@@ -1,34 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Requisitos
 
-## Getting Started
+### Para ejecutar el sistema
+Node.js >= 16.11
+Chrome >=96 (preferentemente) o Mozilla Firefox >= 91
+URL de la API **"siga-api"**
 
-First, run the development server:
+### Para desarrollar el sistema
+Node.js >= 16.11
+Chrome >=96 (preferentemente) o Mozilla Firefox >= 91
+URL de la API
+Visual Studio Code >= 1.6
 
+#### Plugins (recomendados) para desarrollar en el editor de codigo Visual Studio CODE
+Auto Close Tag - Jun Han
+Auto Import - steoates
+Next.js snippets - Pulkit Gangwar
+Prettier  Code formatter - Prettier
+Visual Studio IntelliCode - Microsoft
+Bracker Pair Colorizer 2 - CoenraadS
+ES7 React/Redux/GraphQL/React-Native snippets - dsznajder
+ESLint - Microsoft
+HTML Snippets - Mohamed Abusaid
+JavaScript (ES6) code snippets - charalampos karypidis
+JS JSX Snippets - Ran
+Material Icon Theme - Philip Kief
+
+## Para ejecutar el proyecto
+
+1. Renombrar el archivo``.env.local.example`` a ``.env.local`` y cambiar las variables dentro del archivo de acuerdo a tu entorno de trabajo
+
+2. Primero debes de correr el servidor de desarrollo con **npm** o con **yarn** (en windows al instalar **Node** ya viene con npm por default)
+
+3. Ejecutar dentro la carpta del proyecto el modo de desarrollador o en modo de producción.
 ```bash
+#----- Paso Obligatorio ------ 
+npm install
+
+#----- Modo Desarrollador ------
+#Para modo de desarrollo ejecuta
 npm run dev
-# or
-yarn dev
+
+#------ Modo Producción --------
+#Para modo de producción ejecuta
+npm run build && npm run start
 ```
+**Nota**: El modo de producción genera una serie de optimizaciones y se utiliza en caso de montar montar una versión en producción, éste paso lo realiza automáticamente Vercel Platform y Heroku. Este paso generará una nueva carpeta llamada `.next`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4.  Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver el resultado.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# Estructura del proyecto
+```
+.git				//Carpeta del controlador de versiones
+components			//Formularios y piezas de interfaz
+node_modules		//Carpeta de librerias
+pages				//Paginas o Rutas del sistema
+	_app.js			//Aplicación (como si fuera el main)
+	_document.js	//Equivalente a el documento HTML
+	index.js		//Pagina principal del sistema
+public				//Contiene archivos estaticos (por ejemplo el favicon)
+styles				//Estilos (Se recomienda usar modulos)
+	- global.css	//CSS Global
+.env				//Datos necesarios para que funcione el sistema
+.eslintrc.json		//Configuración del formateador de codigo para VSCode
+.gitignore			//Carpetas y archivos ignorados git
+.next.config.js		//Configuración del compilador NEXTJS
+theme.js			//Tema del sistema (de Chakra UI)
+package-lock.json	//Caché del proyecto
+package.json		//Datos del proyecto, librerias instaladas
+Readme.md			//Aqui estan estas mismas instrucciones en Markdown
+```
+  
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Documentación
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### React.JS
+Para aprender más sobre react, échale un ojo a los siguientes recursos:
 
-## Learn More
+- [Documentación de React.js](https://es.reactjs.org/)
+- VIDEO [Curso Practico de React desde 0](https://www.youtube.com/watch?v=T_j60n1zgu0)
+- VIDEO [Curso de JavaScript desde 0](https://www.youtube.com/watch?v=RqQ1d1qEWlE)
 
-To learn more about Next.js, take a look at the following resources:
+#### Next.JS
+Para aprender más sobre Next.js, echale un ojo a los siguientes recursos:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Documentación de Next.js](https://nextjs.org/docs) - leer sobre Next.js sus caracteristicas y la API.
+- [Aprende Next.js](https://nextjs.org/learn) - un tutorial interactivo de Next.js
+- VIDEO  [Curso desde 0 NextJS](https://youtu.be/2jxc8DMzt0I)
+  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Despliegue en Vercel Platform
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+El camino facil para desplegar tu Next.js app es usar [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) una vez teniendo el proyecto en [Github](github.com) podrás enlazarlo fácilmente a un entorno de producción en Vercel Platform 
