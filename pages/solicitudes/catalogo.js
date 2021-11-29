@@ -1,4 +1,5 @@
 import Head from "next/head";
+
 import { Heading, Button, Container, Grid, GridItem, Box} from '@chakra-ui/react';
 import DataTable from 'react-data-table-component';
 
