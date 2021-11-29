@@ -1,6 +1,7 @@
 const Scaffold = (props) => {
     return (
         <div>
+            Scaffold
             {props.children}
         </div>
     );
