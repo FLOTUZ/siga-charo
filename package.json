@@ -2,6 +2,7 @@
   "name": "siga-charo",
   "private": true,
   "scripts": {
+    "pull":"git pull && next dev",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

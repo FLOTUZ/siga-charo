@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Router from "next/router";
+import axios from "axios";
 
 import Logo from "../assets/img/logo-ayuntamiento.svg";
 import {
@@ -21,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 
 import { useState } from "react";
-import axios from "axios";
+import { nuevaSesion } from "../utils/Utils";
 
 export default function Home() {
   const toast = useToast();
@@ -34,6 +35,7 @@ export default function Home() {
 
   const validar = (e) => {
     e.preventDefault();
+    setCargando(true);
 
     let data = {
       where: {
@@ -67,8 +69,11 @@ export default function Home() {
     })
       .then(function (respuesta) {
         if (respuesta.data.length > 0) {
-          setUserLoged(respuesta.data[0]);
-          localStorage.setItem("user", JSON.stringify(respuesta.data[0]));
+          nuevaSesion(
+            "user",
+            respuesta.data[0],
+            process.env.NEXT_PUBLIC_MINS_MAXIMO_SESION_ABIERTA
+          );
 
           async () =>
             toast({
@@ -92,6 +97,7 @@ export default function Home() {
         }
       })
       .catch(function (error) {
+        console.log(error);
         setCargando(false);
         toast({
           position: "bottom-left",
