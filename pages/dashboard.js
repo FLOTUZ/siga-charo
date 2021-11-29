@@ -1,4 +1,4 @@
-import Scaffold from "../components/layouts/Scaffold";
+import Scaffold from "../components/layout/Scaffold";
 import { useEffect } from "react";
 import { obtenerSesion } from "../utils/Utils";
 
