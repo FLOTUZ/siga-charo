@@ -1,0 +1,24 @@
+* {
+  border: 0.5px;
+  border-style: solid;
+  border-color: cyan;
+}
+.login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.form-login{
+  width:37vw
+}
+
+.img-login {
+  height: 100vh;
+  width: 60vw;
+  position: absolute;
+  right: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(../assets/img/hidalgo-morelos.svg);
+}

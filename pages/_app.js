@@ -1,12 +1,13 @@
-import "../styles/globals.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
-//Theme
+import "../styles/globals.css";
+
+//Colores personalizados
 const colors = {
-  brand: {
-    900: "#1a365d",
-    800: "#153e75",
-    700: "#2a69ac",
+  core: {
+    900: "#242B42", //Dark primary
+    800: "#808FBE", //Light Secondary
+    700: "#2E3650", //BNT Dark
   },
 };
 
