@@ -88,6 +88,7 @@ export default function Catalogo() {
       </Grid>
       
       <main>
+        <Box bg='white' w='100%' p={5} color='white'></Box>
         <Box maxW='large' borderWidth='1px' borderRadius='lg' overflow='hidden'>
           <DataTable
             title="solicitudes"
