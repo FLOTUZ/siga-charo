@@ -6,6 +6,7 @@ import "../styles/globals.css";
 const colors = {
   core: {
     900: "#242B42", //Dark primary
+    850: "#2E3650", //Dark secondary
     800: "#808FBE", //Light Secondary
     700: "#2E3650", //BNT Dark
   },

@@ -8,9 +8,17 @@ function Dashboard() {
     console.log(user);
   });
 
+  let rutas = [
+    {
+      url: "/dashboard",
+      nombre: "Dashboard",
+      isCurrentPage: true,
+    },
+  ];
+
   return (
     <>
-      <Scaffold></Scaffold>
+      <Scaffold rutas={rutas}></Scaffold>
     </>
   );
 }
