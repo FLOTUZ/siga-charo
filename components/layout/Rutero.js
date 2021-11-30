@@ -1,8 +1,7 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
-const Rutero = ({rutas = []}) => {
-
+const Rutero = ({ rutas = [] }) => {
   return (
     <Breadcrumb
       style={{ display: "flex", alignItems: "center" }}
@@ -12,19 +11,15 @@ const Rutero = ({rutas = []}) => {
       textColor="white"
       separator={<ChevronRightIcon color="white" />}
     >
-      {
-      rutas.length > 0 ? (
-      rutas.map((ruta, index) => {
-        return (
-          <BreadcrumbItem key={index} isCurrentPage={ruta.isCurrentPage}>
-            <BreadcrumbLink href={ruta.url}>{ruta.nombre}</BreadcrumbLink>
-          </BreadcrumbItem>
-        );
-      })) : (
-        <BreadcrumbItem>
-            <BreadcrumbLink href="#">ESPECIFICAR RUTAAAA</BreadcrumbLink>
-        </BreadcrumbItem>
-      )}
+      {rutas.length > 0
+        ? rutas.map((ruta, index) => {
+            return (
+              <BreadcrumbItem key={index} isCurrentPage={ruta.isCurrentPage}>
+                <BreadcrumbLink href={ruta.url}>{ruta.nombre}</BreadcrumbLink>
+              </BreadcrumbItem>
+            );
+          })
+        : null}
     </Breadcrumb>
   );
 };

@@ -18,7 +18,9 @@ function Dashboard() {
 
   return (
     <>
-      <Scaffold rutas={rutas}></Scaffold>
+      <Scaffold titulo="hola" descripcion="mundo" rutas={rutas}>
+        <p> PATATA </p>
+      </Scaffold>
     </>
   );
 }
