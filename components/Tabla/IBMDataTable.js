@@ -18,9 +18,7 @@ import {
   TableSelectRow,
   TableCell,
   Button,
-  PaginationNav,
-  TableExpandRow,
-  TableExpandedRow,
+  PaginationNav
 } from "carbon-components-react";
 
 import React, { useState } from "react";
