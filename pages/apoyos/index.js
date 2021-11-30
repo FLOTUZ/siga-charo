@@ -2,10 +2,39 @@ import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
 
 function Apoyos() {
+  const rows = [
+    {
+      id: "a",
+      name: "Load balancer 1",
+      status: "Disabled",
+    },
+    {
+      id: "b",
+      name: "Load balancer 2",
+      status: "Starting",
+    },
+    {
+      id: "c",
+      name: "Load balancer 3",
+      status: "Active",
+    },
+  ];
+
+  const headers = [
+    {
+      key: "name",
+      header: "Name",
+    },
+    {
+      key: "status",
+      header: "Status",
+    },
+  ];
+
   return (
     <Scaffold titulo="Apoyos" descripcion="Catalogo de apoyos">
       <div style={{ margin: "2rem" }}>
-        <IBMDataTable/>
+        <IBMDataTable headers={headers} rows={rows} />
       </div>
     </Scaffold>
   );

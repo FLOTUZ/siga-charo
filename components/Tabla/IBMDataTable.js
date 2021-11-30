@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   DataTable,
   TableContainer,
@@ -18,50 +19,25 @@ import {
   TableCell,
   Button,
   PaginationNav,
-  Pagination,
-  PageSelector,
+  TableExpandRow,
+  TableExpandedRow,
 } from "carbon-components-react";
+
+import React, { useState } from "react";
 
 import { Delete, Save, Download } from "carbon-icons";
 
-function IBMDataTable() {
-  const rows = [
-    {
-      id: "a",
-      name: "Load balancer 1",
-      status: 'Disabled',
-    },
-    {
-      id: "b",
-      name: "Load balancer 2",
-      status: "Starting",
-    },
-    {
-      id: "c",
-      name: "Load balancer 3",
-      status: "Active",
-    },
-  ];
+function IBMDataTable({ headers = [], rows = [] }) {
+  const [buscar, setBusqueda] = useState("");
 
-  const headers = [
-    {
-      key: "name",
-      header: "Name",
-    },
-    {
-      key: "status",
-      header: "Status",
-    },
-  ];
-
-  const batchActionClick = (selectedRows) => {
-    console.log("batchActionClick", selectedRows);
+  const eliminar = (selectedRows) => {
+    console.log("Eliminando", selectedRows);
   };
   const exportar = (selectedRows) => {
     console.log("Exportando", selectedRows);
   };
   const guardar = (selectedRows) => {
-    console.log("Exportando", selectedRows);
+    console.log("Guardando", selectedRows);
   };
   const nuevoItem = () => {
     console.log("Nueva Cosa");
@@ -98,7 +74,7 @@ function IBMDataTable() {
                     getBatchActionProps().shouldShowBatchActions ? 0 : -1
                   }
                   renderIcon={Delete}
-                  onClick={batchActionClick(selectedRows)}
+                  onClick={() => eliminar(selectedRows)}
                 >
                   Eliminar
                 </TableBatchAction>
@@ -107,7 +83,7 @@ function IBMDataTable() {
                     getBatchActionProps().shouldShowBatchActions ? 0 : -1
                   }
                   renderIcon={Save}
-                  onClick={guardar(selectedRows)}
+                  onClick={() => guardar(selectedRows)}
                 >
                   Guardar
                 </TableBatchAction>
@@ -116,7 +92,7 @@ function IBMDataTable() {
                     getBatchActionProps().shouldShowBatchActions ? 0 : -1
                   }
                   renderIcon={Download}
-                  onClick={exportar(selectedRows)}
+                  onClick={() => exportar(selectedRows)}
                 >
                   Exportar
                 </TableBatchAction>
@@ -148,7 +124,7 @@ function IBMDataTable() {
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? -1 : 0
                   }
-                  onClick={nuevoItem}
+                  onClick={() => nuevoItem()}
                   size="small"
                   kind="primary"
                 >
@@ -176,7 +152,11 @@ function IBMDataTable() {
                   >
                     <TableSelectRow {...getSelectionProps({ row })} />
                     {row.cells.map((cell) => (
-                      <TableCell key={cell.id}>{cell.value}</TableCell>
+                      <TableCell key={cell.id}>
+                        <Link href="http://google.com" alt="holi">
+                          <a>{cell.value}</a>
+                        </Link>
+                      </TableCell>
                     ))}
                   </TableRow>
                 ))}
