@@ -21,7 +21,15 @@ const NavLateral = () => {
       id: 2,
       nombre: "Nueva Solicitud",
       url: "/solicitudes/catalogo",
+<<<<<<< Updated upstream
       icono: <FiFilePlus size="70px" />,
+=======
+<<<<<<< HEAD
+      icono: <FiFilePlus size="70px"/>,
+=======
+      icono: <FiFilePlus size="70px" />,
+>>>>>>> main
+>>>>>>> Stashed changes
     },
     {
       id: 3,
@@ -33,12 +41,30 @@ const NavLateral = () => {
       id: 4,
       nombre: "Reportes",
       url: "/reportes",
+<<<<<<< Updated upstream
       icono: <FaRegChartBar  size="70px" ></FaRegChartBar>,
     },
     {
       id: 5,
       nombre: "Configuracion",
       url: "/gestion_usuarios/usuarios",
+=======
+<<<<<<< HEAD
+      icono: <FaRegChartBar size="70px" />,
+    },
+    {
+      id: 5,
+      nombre: "Dashboard",
+      url: "/configuracion",
+=======
+      icono: <FaRegChartBar  size="70px" ></FaRegChartBar>,
+    },
+    {
+      id: 5,
+      nombre: "Configuracion",
+      url: "/gestion_usuarios/usuarios",
+>>>>>>> main
+>>>>>>> Stashed changes
       icono: <AiFillSetting size="70px" />,
     },
   ];
@@ -47,8 +73,8 @@ const NavLateral = () => {
     <Center h="100vh">
       <VStack>
         <Image
-          height={100}
-          width={100}
+          height={200}
+          width={200}
           src={Logo}
           alt="Logo ayuntamiento charo"
         />
