@@ -15,7 +15,7 @@ import {
     Textarea,
     Box,
     Flex,
-    Input
+    Spacer
 } from '@chakra-ui/react'
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 
@@ -44,11 +44,11 @@ function Apoyos() {
                     <Flex borderStyle="solid" borderColor="gray.200" borderWidth="2px" direction="column"
                         w="100%" p={10} rounded={6}>
     
-                        <FormControl id='Nombre del Apoyo'>
-                            <FormLabel>Nombre del Apoyo</FormLabel>
-                            <Input type='text' />
+                        <FormControl id='Nombre del Apoyo' >
+                            <FormLabel>FNombre del Apoyo</FormLabel>
+                            <Input placeholder='' />
                         </FormControl>
-
+                        
 
                         <FormLabel>Tipo de Apoyo</FormLabel>
                         <RadioGroup defaultValue='1'>
