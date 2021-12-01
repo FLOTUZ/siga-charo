@@ -58,22 +58,24 @@ function nueva_Solicitud_Paso_1() {
                 <Box bg='white' w='100%' p={5} color='white'></Box>
                 <Box>
                     <Flex height='50vh' w='170vh' justifyContent="center">
-                        <Flex direction="column" alignItems="center" justifyContent="center"  w='100vh' background="gray.100" p={12} rounded={6}>
-                            <Text>Nombre(s)</Text>
-                            <Spacer/>
-                            <Input placeholder='Nombre(s)' required={true}/>
-                            <Text>Apellido Paterno</Text>
-                            <Spacer/>
-                            <Input placeholder='Apellido' required={true}/>
-                            <Text>Apellido Materno</Text>
-                            <Spacer/>
-                            <Input placeholder='Apellido Materno' required={true}/>
-                            <Text>Telefono Celular</Text>
-                            <Spacer/>
-                            <Input placeholder='Celular' required={true}/>
-                            <Text>Telefono</Text>
-                            <Spacer/>
-                            <Input placeholder='Telefono' required={true}/>
+                        <Flex 
+                            direction="column"
+                            w='110vh'
+                            borderStyle="solid" 
+                            borderColor="gray.200" 
+                            borderWidth="2px" 
+                            p ={2}  rounded={6}
+                        >
+                            <Text m={1}>Nombre(s)</Text>
+                            <Input m={1} placeholder='Nombre(s)' required={true}/>
+                            <Text m={1}>Apellido Paterno</Text>
+                            <Input m={1} placeholder='Apellido' required={true}/>
+                            <Text m={1}>Apellido Materno</Text>
+                            <Input m={1} placeholder='Apellido Materno' required={true}/>
+                            <Text m={1}>Telefono Celular</Text>
+                            <Input m={1} placeholder='Celular' required={true}/>
+                            <Text m={1}>Telefono</Text>
+                            <Input m={1} placeholder='Telefono' required={true}/>
                         </Flex>
                     </Flex>
                 </Box>
@@ -86,7 +88,7 @@ function nueva_Solicitud_Paso_1() {
                         <Button colorScheme='teal' variant='solid' mr='4'>
                         Siguiente
                         </Button>
-                        <Button colorScheme='red' variant='solid'>Descartar</Button>
+                        <Button colorScheme='teal' variant='outline'>Descartar</Button>
                     </Box>
                 </Flex>
             </main>
