@@ -18,7 +18,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
-import { BiXCircle } from "react-icons/bi";
+import { BiXCircle, BiUpArrowCircle } from "react-icons/bi";
 
 let rutas = [
   {
@@ -59,13 +59,13 @@ function Apoyos() {
               p={1}
               rounded={6}>
                 <FormControl id="Nombre del Apoyo">
-                  <FormLabel> Nombre del Apoyo</FormLabel>
+                  <FormLabel> Nombre del Apoyo: </FormLabel>
                   <Input placeholder="" />
                 </FormControl>
             </Flex>
 
             <Spacer/>
-                <FormLabel marginTop="30px">Tipo de Apoyo</FormLabel>
+                <FormLabel marginTop="30px">Tipo de Apoyo: </FormLabel>
                 <Spacer/>
                   <RadioGroup defaultValue="1">
                     <Stack spacing={4} direction="row">
@@ -92,7 +92,7 @@ function Apoyos() {
               w="50%"
               p={10}
               rounded={6}>
-                <FormLabel>Descripción</FormLabel>
+                <FormLabel>Descripción: </FormLabel>
                 <Textarea placeholder="La descripción es..." />
           </Flex>
         </Flex>
@@ -101,10 +101,10 @@ function Apoyos() {
         p={10}
         >
           <Spacer />
-            <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>}>
+            <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>} m={5}>
               Descartar
             </Button>
-            <Button colorScheme="blue" variant="solid">
+            <Button colorScheme="blue" variant="solid" rightIcon= {<BiUpArrowCircle size = "25px "/>} m={5}>
              Guardar
             </Button>
         </Flex>
