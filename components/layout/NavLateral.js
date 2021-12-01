@@ -15,39 +15,26 @@ const NavLateral = () => {
       id: 1,
       nombre: "Dashboard",
       url: "/dashboard",
-<<<<<<< Updated upstream
       icono: <AiFillDashboard size="2rem" />,
-=======
-      icono: <AiFillDashboard size="30px" />,
->>>>>>> Stashed changes
     },
     {
       id: 2,
       nombre: "Nueva Solicitud",
       url: "/solicitudes/catalogo",
-<<<<<<< Updated upstream
 
       icono: <FiFilePlus size="2rem" />,
-=======
-      icono: <FiFilePlus size="30px" />,
->>>>>>> Stashed changes
 
     },
     {
       id: 3,
       nombre: "Apoyos",
       url: "/apoyos",
-<<<<<<< Updated upstream
       icono: <FiGrid size="2rem"/>,
-=======
-      icono: <FiGrid size="30px"/>,
->>>>>>> Stashed changes
     },
     {
       id: 4,
       nombre: "Reportes",
       url: "/reportes",
-<<<<<<< Updated upstream
 
       icono: <FaRegChartBar  size="2rem" />,
     },
@@ -57,26 +44,13 @@ const NavLateral = () => {
       url: "/gestion_usuarios/usuarios",
 
       icono: <FaUserFriends size="2rem" />,
-=======
-      icono: <FaRegChartBar size="30px" />
-    },
-    {
-      id: 5,
-      nombre: "Usarios",
-      url: "/gestion_usuarios/usuarios",
-      icono: <FaRegChartBar size="30px" />,
->>>>>>> Stashed changes
     },
     {
       id: 5,
       nombre: "Configuracion",
       url: "/configuracion",
-<<<<<<< Updated upstream
 
       icono: <AiFillSetting size="2rem" />,
-=======
-      icono: <AiFillSetting size="30px" />,
->>>>>>> Stashed changes
     },
   ];
 
@@ -84,13 +58,8 @@ const NavLateral = () => {
     <Center h="100vh">
       <VStack>
         <Image
-<<<<<<< Updated upstream
           height={100}
           width={100}
-=======
-          height={60}
-          width={120}
->>>>>>> Stashed changes
           src={Logo}
           alt="Logo ayuntamiento charo"
         />
@@ -105,15 +74,9 @@ const NavLateral = () => {
                   label={pagina.nombre}
                   bg="transparent"
                 >
-<<<<<<< Updated upstream
                   <Container
                     h="4rem"
                     w="4rem"
-=======
-                  <Button
-                    h="5rem"
-                    w="5rem"
->>>>>>> Stashed changes
                     color="core.800"
                     bg='#242B42'
                     
