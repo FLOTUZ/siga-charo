@@ -20,7 +20,7 @@ import {
   Button,
   PaginationNav
 } from "carbon-components-react";
-
+import { IconName } from "react-icons/bi";
 import React, { useState } from "react";
 
 import { Delete, Save, Download } from "carbon-icons";
@@ -118,7 +118,7 @@ function IBMDataTable({ headers = [], rows = [] }) {
                     Action 3
                   </TableToolbarAction>
                 </TableToolbarMenu>
-                <Button
+                <Button 
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? -1 : 0
                   }
@@ -126,7 +126,7 @@ function IBMDataTable({ headers = [], rows = [] }) {
                   size="small"
                   kind="primary"
                 >
-                  Nuevo
+                  Agregar 
                 </Button>
               </TableToolbarContent>
             </TableToolbar>
