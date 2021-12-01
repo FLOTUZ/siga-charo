@@ -1,9 +1,8 @@
 import Scaffold from "../../components/layout/Scaffold";
-<<<<<<< Updated upstream
-import { Divider, Stack, Text, Input, Box, HStack,Textarea,Select } from "@chakra-ui/react";
-=======
+
+
 import {
-  Divider,
+  Divider,Select,Textarea,
   Stack,
   Text,
   Input,
@@ -14,7 +13,7 @@ import {
   Flex,
   Spacer,
 } from "@chakra-ui/react";
->>>>>>> Stashed changes
+
 import { transparentize } from "@chakra-ui/theme-tools";
 import Datetime from 'react-datetime';
 import React from 'react';
@@ -30,15 +29,9 @@ let rutas = [
 ];
 function aprobacionApoyo() {
   return (
-<<<<<<< Updated upstream
-    <Scaffold
-      titulo="Ver Solicitud"
-      descripcion="Folio xxx"
-      rutas={rutas}
-    >
-=======
+
     <Scaffold titulo="Apoyo" descripcion="Folio : 007" rutas={rutas}>
->>>>>>> Stashed changes
+
       <Box
         m={2}
         borderStyle="solid"
