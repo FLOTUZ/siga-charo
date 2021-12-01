@@ -56,7 +56,7 @@ const NavLateral = () => {
 
   return (
     <Center h="100vh">
-      <VStack>
+      <VStack spacing={1} w="full"  >
         <Image
           height={100}
           width={100}
@@ -76,7 +76,7 @@ const NavLateral = () => {
                 >
                   <Container
                     h="4rem"
-                    w="4rem"
+                    w="full"
                     color="core.800"
                     bg='#242B42'
                     

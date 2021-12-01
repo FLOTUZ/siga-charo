@@ -1,24 +1,36 @@
 import Scaffold from "../../components/layout/Scaffold";
+<<<<<<< Updated upstream
 
 
 import {
   Divider,Select,Textarea,
+=======
+import {
+  Divider,
+>>>>>>> Stashed changes
   Stack,
   Text,
   Input,
   Box,
   HStack,
+<<<<<<< Updated upstream
   Badge,
   Button,
   Flex,
   Spacer,
 } from "@chakra-ui/react";
 
+=======
+  Textarea,
+  Select,
+} from "@chakra-ui/react";
+>>>>>>> Stashed changes
 import { transparentize } from "@chakra-ui/theme-tools";
-import Datetime from 'react-datetime';
-import React from 'react';
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import Datetime from "react-datetime";
+import React from "react";
+import DayPicker from "react-day-picker";
+import { DatePicker, DatePickerInput } from "carbon-components-react";
+import "react-day-picker/lib/style.css";
 
 let rutas = [
   {
@@ -29,9 +41,13 @@ let rutas = [
 ];
 function aprobacionApoyo() {
   return (
+<<<<<<< Updated upstream
 
     <Scaffold titulo="Apoyo" descripcion="Folio : 007" rutas={rutas}>
 
+=======
+    <Scaffold titulo="Ver Solicitud" descripcion="Folio xxx" rutas={rutas}>
+>>>>>>> Stashed changes
       <Box
         m={2}
         borderStyle="solid"
@@ -47,6 +63,10 @@ function aprobacionApoyo() {
             <Divider orientation="vertical" />
             <Text fontSize="2xl">Detalles de la solicitud</Text>
           </Stack>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
           <HStack align="stretch" m={5}>
             <Text fontWeight="bold" mb="10px">
               Fecha de solicitud:
@@ -180,29 +200,28 @@ function aprobacionApoyo() {
             <Text fontSize="2xl">Seguimiento</Text>
           </Stack>
 
-          <HStack align="stretch" m={5} >
+          <HStack align="stretch" m={5}>
             <Text fontWeight="bold" mb="10px">
-             Cantidad a Solicitar:
+              Cantidad a Solicitar:
             </Text>
-              <Select placeholder='Seleccione Cantidad'>
-                <option value='option1'> 10</option>
-                <option value='option2'> 20</option>
-                <option value='option3'> 30</option>
-              </Select>
+            <Select placeholder="Seleccione Cantidad">
+              <option value="option1"> 10</option>
+              <option value="option2"> 20</option>
+              <option value="option3"> 30</option>
+            </Select>
           </HStack>
           <HStack m={5}>
             <Text fontWeight="bold" mb="10px">
               Fecha:
             </Text>
-            <DayPicker />;
+
           </HStack>
           <HStack m={5}>
             <Text mb="10px" fontWeight="bold">
               Motivo de Rechazo:
             </Text>
-            
-              <Textarea placeholder='Motivo de Rechazo' />
-            
+
+            <Textarea placeholder="Motivo de Rechazo" />
           </HStack>
         </Box>
       </Box>
