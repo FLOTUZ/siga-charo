@@ -15,31 +15,31 @@ const NavLateral = () => {
       id: 1,
       nombre: "Dashboard",
       url: "/dashboard",
-      icono: <AiFillDashboard />,
+      icono: <AiFillDashboard size="70px" />,
     },
     {
       id: 2,
       nombre: "Nueva Solicitud",
       url: "/solicitudes/catalogo",
-      icono: <FiFilePlus />,
+      icono: <FiFilePlus size="70px" />,
     },
     {
       id: 3,
       nombre: "Apoyos",
       url: "/apoyos",
-      icono: <FiGrid />,
+      icono: <FiGrid size="70px"/>,
     },
     {
       id: 4,
       nombre: "Reportes",
       url: "/reportes",
-      icono: <FaRegChartBar />,
+      icono: <FaRegChartBar  size="70px" ></FaRegChartBar>,
     },
     {
       id: 5,
-      nombre: "Dashboard",
-      url: "/configuracion",
-      icono: <AiFillSetting />,
+      nombre: "Configuracion",
+      url: "/gestion_usuarios/usuarios",
+      icono: <AiFillSetting size="70px" />,
     },
   ];
 

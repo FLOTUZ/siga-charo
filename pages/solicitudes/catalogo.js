@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Heading, Button, Stack, Grid, GridItem, Box} from '@chakra-ui/react';
+import { Heading, Button, Stack, Flex, Box, Spacer} from '@chakra-ui/react';
 import DataTable from 'react-data-table-component';
 
 const columns = [
@@ -34,10 +34,10 @@ const data = [
         date: '20/10/2021',
         detalles:
         <Stack direction='row' spacing={4}>
-          <Button colorScheme='teal' variant='solid'>Detalles</Button>
-          <Button colorScheme='teal' variant='solid'>Agregar</Button>
-          <Button colorScheme='teal' variant='solid'>Editar</Button>
-          <Button colorScheme='red' variant='solid'>Archivar</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Detalles</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Agregar</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Editar</Button>
+          <Button colorScheme='red' variant='solid' h={6}>Archivar</Button>
         </Stack>,
     },
     {
@@ -47,10 +47,10 @@ const data = [
         date: '20/10/2021',
         detalles:
         <Stack direction='row' spacing={4}>
-          <Button colorScheme='teal' variant='solid'>Detalles</Button>
-          <Button colorScheme='teal' variant='solid'>Agregar</Button>
-          <Button colorScheme='teal' variant='solid'>Editar</Button>
-          <Button colorScheme='red' variant='solid'>Archivar</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Detalles</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Agregar</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Editar</Button>
+          <Button colorScheme='red' variant='solid' h={6}>Archivar</Button>
         </Stack>,
     },
     {
@@ -60,10 +60,10 @@ const data = [
       date: '20/10/2021',
       detalles:
       <Stack direction='row' spacing={4}>
-          <Button colorScheme='teal' variant='solid'>Detalles</Button>
-          <Button colorScheme='teal' variant='solid'>Agregar</Button>
-          <Button colorScheme='teal' variant='solid'>Editar</Button>
-          <Button colorScheme='red' variant='solid'>Archivar</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Detalles</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Agregar</Button>
+          <Button colorScheme='teal' variant='solid' h={6}>Editar</Button>
+          <Button colorScheme='red' variant='solid' h={6}>Archivar</Button>
         </Stack>,
   },
 ]
@@ -75,19 +75,19 @@ export default function Catalogo() {
         <title>Catalogo de Solicitudes</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Grid templateColumns='repeat(4, 1fr)' gap={6} alignItems="center">
-        <div>
-          <Heading as="h1" size="3xl">Solicitudes</Heading>
-          <Heading size="md">Listado de Solicitudes</Heading>
-        </div>
-        <div></div>
-        <div></div>
-        <Button  colorScheme='blue' variant='solid'>
-          Nueva Solicitud
-        </Button>
-      </Grid>
+      <Flex>
+        <Box p='2'>
+          <Heading as='h1' size='3xl'>Solicitudes</Heading>
+          <Heading size='md'>Lista de Solicitudes</Heading>
+        </Box>
+        <Spacer />
+        <Flex direction="column" alignItems="center" justifyContent="center">
+          <Button colorScheme='teal'>Nueva Solicitud</Button>
+        </Flex>
+      </Flex>
       
       <main>
+        <Box bg='white' w='100%' p={5} color='white'></Box>
         <Box maxW='large' borderWidth='1px' borderRadius='lg' overflow='hidden'>
           <DataTable
             title="solicitudes"
