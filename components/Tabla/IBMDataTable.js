@@ -103,31 +103,7 @@ function IBMDataTable({ headers = [], rows = [] }) {
                   }
                   onChange={onInputChange}
                 />
-                <TableToolbarMenu
-                  tabIndex={
-                    getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                  }
-                >
-                  <TableToolbarAction onClick={() => alert("Alert 1")}>
-                    Action 1
-                  </TableToolbarAction>
-                  <TableToolbarAction onClick={() => alert("Alert 2")}>
-                    Action 2
-                  </TableToolbarAction>
-                  <TableToolbarAction onClick={() => alert("Alert 3")}>
-                    Action 3
-                  </TableToolbarAction>
-                </TableToolbarMenu>
-                <Button 
-                  tabIndex={
-                    getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                  }
-                  onClick={() => nuevoItem()}
-                  size="small"
-                  kind="primary"
-                >
-                  Agregar 
-                </Button>
+ 
               </TableToolbarContent>
             </TableToolbar>
             <Table {...getTableProps()}>
@@ -156,6 +132,19 @@ function IBMDataTable({ headers = [], rows = [] }) {
                         </Link>
                       </TableCell>
                     ))}
+
+                    <TableToolbarMenu>
+                      <TableToolbarAction onClick={() => alert("Alert 1")}>
+                        Desabilitar
+                      </TableToolbarAction>
+                      <TableToolbarAction onClick={() => alert("Alert 2")}>
+                        Bitacora
+                      </TableToolbarAction>
+                      <TableToolbarAction onClick={() => alert("Alert 3")}>
+                        Editar
+                      </TableToolbarAction>
+                    </TableToolbarMenu>
+                    
                   </TableRow>
                 ))}
               </TableBody>

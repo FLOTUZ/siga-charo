@@ -22,3 +22,11 @@
   background-size: cover;
   background-image: url(../assets/img/hidalgo-morelos.svg);
 }
+
+.box{
+  padding: 5%;
+  borde-color: solid gray;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-top: 5%;
+}
