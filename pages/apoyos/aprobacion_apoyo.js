@@ -15,12 +15,8 @@ function aprobacionApoyo() {
       descripcion="apoyo por aceptar"
       rutas={rutas}
     >
-      <Stack direction="row" h="100px" p={4}>
-        <Divider orientation="vertical" />
-        <Text fontSize="2xl">Detalles de la solicitud</Text>
-      </Stack>
       <Box
-        m = {5}
+        m={2}
         borderStyle="solid"
         borderColor="gray.200"
         borderWidth="2px"
@@ -29,8 +25,50 @@ function aprobacionApoyo() {
         p={10}
         rounded={6}
       >
-        <Text>Fecha de solicitud:</Text>
-        <Text>18 noviembre 2021</Text>
+        <Box
+          borderStyle="solid"
+          borderColor="gray.200"
+          borderWidth="2px"
+          direction="column"
+          w="50%"
+          rounded={6}
+        >
+          <Stack direction="row" h="100px" p={4}>
+            <Divider orientation="vertical" />
+            <Text fontSize="2xl">Detalles de la solicitud</Text>
+          </Stack>
+          <Text mb="8px">Fecha de solicitud:</Text>
+          <Input
+            variant='unstyled'
+            disabled="true"
+            placeholder="19 noviembre 2021"
+            size="sm"
+          />
+
+          <Text mb="8px">Beneficiario:</Text>
+          <Input
+            variant='unstyled'
+            disabled="true"
+            placeholder="Joe Sierra"
+            size="sm"
+          />
+
+          <Text mb="8px">Representante:</Text>
+          <Input
+            variant='unstyled'
+            disabled="true"
+            placeholder="Isabela Arias Belmonte"
+            size="sm"
+          />
+
+          <Text mb="8px">Comunidad:</Text>
+          <Input
+            variant='unstyled'
+            disabled="true"
+            placeholder="Charo"
+            size="sm"
+          />
+        </Box>
       </Box>
     </Scaffold>
   );
