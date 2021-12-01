@@ -25,20 +25,13 @@ function aprobacionApoyo() {
         p={10}
         rounded={6}
       >
-        <Box
-          borderStyle="solid"
-          borderColor="gray.200"
-          borderWidth="2px"
-          direction="column"
-          w="50%"
-          rounded={6}
-        >
+        <Box direction="column" w="50%" rounded={6}>
           <Stack direction="row" h="100px" p={4}>
             <Divider orientation="vertical" />
             <Text fontSize="2xl">Detalles de la solicitud</Text>
           </Stack>
 
-          <HStack>
+          <HStack align="stretch" m={5} >
             <Text fontWeight="bold" mb="10px">
               Fecha de solicitud:
             </Text>
@@ -49,7 +42,7 @@ function aprobacionApoyo() {
               size="40px"
             />
           </HStack>
-          <HStack>
+          <HStack m={5}>
             <Text fontWeight="bold" mb="10px">
               Beneficiario:
             </Text>
@@ -60,7 +53,7 @@ function aprobacionApoyo() {
               size="40px"
             />
           </HStack>
-          <HStack>
+          <HStack m={5}>
             <Text mb="10px" fontWeight="bold">
               Representante:
             </Text>
@@ -71,7 +64,7 @@ function aprobacionApoyo() {
               size="sm"
             />
           </HStack>
-          <HStack>
+          <HStack m={5}>
             <Text fontWeight="bold" mb="10px">
               Comunidad:
             </Text>
