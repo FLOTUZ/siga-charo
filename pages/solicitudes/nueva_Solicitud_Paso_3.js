@@ -7,7 +7,8 @@ import {
     Flex,
     Box,
     Input,
-    Spacer
+    Spacer,
+    Select
 } from '@chakra-ui/react';
 import Scaffold from "../../components/layout/Scaffold";
 
@@ -25,7 +26,7 @@ function nueva_Solicitud_Paso_1() {
         <Scaffold
       rutas={rutas}
       titulo="Nueva Solicitud"
-      descripcion="Informacion del Solicitante"
+      descripcion="Detalles del Apoyo Solicitado"
     >
         <div>
             <Head>
@@ -41,11 +42,11 @@ function nueva_Solicitud_Paso_1() {
                                 1
                             </Box>
                             <Spacer />
-                            <Box p='4' bg='gray.400' rounded={40}>
+                            <Box p='4' bg='green.400' rounded={40}>
                                 2
                             </Box>
                             <Spacer />
-                            <Box p='4' bg='gray.400' rounded={40}>
+                            <Box p='4' bg='green.400' rounded={40}>
                                 3
                             </Box>
                             <Spacer />
@@ -66,16 +67,32 @@ function nueva_Solicitud_Paso_1() {
                             borderWidth="2px" 
                             p ={2}  rounded={6}
                         >
-                            <Text m={1}>Nombre(s)</Text>
-                            <Input m={1} placeholder='Nombre(s)' required={true}/>
-                            <Text m={1}>Apellido Paterno</Text>
-                            <Input m={1} placeholder='Apellido' required={true}/>
-                            <Text m={1}>Apellido Materno</Text>
-                            <Input m={1} placeholder='Apellido Materno' required={true}/>
-                            <Text m={1}>Telefono Celular</Text>
-                            <Input m={1} placeholder='Celular' required={true}/>
-                            <Text m={1}>Telefono</Text>
-                            <Input m={1} placeholder='Telefono' required={true}/>
+                            <Text m={1}>Elegir Apoyo</Text>
+                            <Select m={1} placeholder="Apoyo...">
+                                <option>Ejemplo 1</option>
+                                <option>Ejemplo 2</option>
+                                <option>Ejemplo 3</option>
+                            </Select>
+                            <Flex m={1}>
+                                <Box p='4'>
+                                    <Text>Cantidad</Text>
+                                    <Input/>
+                                </Box>
+                                <Box p='4'>
+                                    <Text>Fecha</Text>
+                                    <Input type='date'/>
+                                </Box>
+                            </Flex>
+                            <Flex m={1}>
+                                <Box p='4'>
+                                    <Text>Descuento</Text>
+                                    <Input/>
+                                </Box>
+                                <Box p='4'>
+                                    <Text>Total</Text>
+                                    <Input background='gray'/>
+                                </Box>
+                            </Flex>
                         </Flex>
                     </Flex>
                 </Box>
