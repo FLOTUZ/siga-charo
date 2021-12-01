@@ -26,7 +26,7 @@ function Dashboard() {
       <Scaffold titulo="Inicio"  rutas={rutas}>
         <Wrap spacing='5rem' m={10}  textAlign='center'   >
             <WrapItem>
-              <Center w='150px' h='100px' bg='core.850' borderRadius='10px'>
+              <Center w='140px' h='100px' bg='core.850' borderRadius='10px'>
             <Stat>
                     <StatLabel>
                     <Text  color='white' fontSize='20px' >
@@ -34,7 +34,7 @@ function Dashboard() {
                       </Text>
                       </StatLabel>
                     <StatNumber>
-                      <Text  color='white' fontSize='30px' >
+                      <Text  color='white' fontSize='20px' >
                           2
                         </Text>
                       </StatNumber>
@@ -42,7 +42,7 @@ function Dashboard() {
                   </Center>
             </WrapItem>
             <WrapItem>
-            <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
+            <Center w='140px' h='100px' bg='core.850' borderRadius='10px'>
             <Stat >
                       <StatLabel >
                         <Text  color='white' fontSize='20px'>
@@ -50,7 +50,7 @@ function Dashboard() {
                           </Text>
                       </StatLabel>
                         <StatNumber>
-                          <Text  color='white' fontSize='30px'>
+                          <Text  color='white' fontSize='20px'>
                              5
                           </Text>
                         </StatNumber>
@@ -58,7 +58,7 @@ function Dashboard() {
                   </Center>
             </WrapItem>
             <WrapItem >
-            <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
+            <Center w='140px' h='100px' bg='core.850' borderRadius='10px'>
             <Stat>
                     <StatLabel>
                       <Text  color='white' fontSize='20px'>
@@ -66,7 +66,7 @@ function Dashboard() {
                         </Text>
                       </StatLabel>
                     <StatNumber>
-                      <Text  color='white' fontSize='30px'>
+                      <Text  color='white' fontSize='20px'>
                          5
                         </Text>
                       </StatNumber>
@@ -74,7 +74,7 @@ function Dashboard() {
                   </Center>
              </WrapItem>
              <WrapItem >
-             <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
+             <Center w='140px' h='100px' bg='core.850' borderRadius='10px'>
                   <Stat>
                     <StatLabel>
                     <Text  color='white' fontSize='20px'>
@@ -82,7 +82,7 @@ function Dashboard() {
                       </Text>
                       </StatLabel>
                     <StatNumber>
-                    <Text  color='white' fontSize='30px' >
+                    <Text  color='white' fontSize='20px' >
                         2
                       </Text>
                       </StatNumber>
@@ -91,7 +91,7 @@ function Dashboard() {
              </WrapItem>
              <WrapItem>
                    <Button rightIcon={<AddIcon color='white' />}  colorScheme='white' variant='ghost' size='lg'  
-                    background='teal' borderRadius='50px' w='180px' h='110px' >
+                    background='teal' borderRadius='50px' w='180px' h='100px' >
                    <Text  color='white' fontSize='20px' >
                      Nueva Solicitud
                      </Text>
