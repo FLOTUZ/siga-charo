@@ -1,5 +1,20 @@
 import Scaffold from "../../components/layout/Scaffold";
+<<<<<<< Updated upstream
 import { Divider, Stack, Text, Input, Box, HStack,Textarea,Select } from "@chakra-ui/react";
+=======
+import {
+  Divider,
+  Stack,
+  Text,
+  Input,
+  Box,
+  HStack,
+  Badge,
+  Button,
+  Flex,
+  Spacer,
+} from "@chakra-ui/react";
+>>>>>>> Stashed changes
 import { transparentize } from "@chakra-ui/theme-tools";
 import Datetime from 'react-datetime';
 import React from 'react';
@@ -15,11 +30,15 @@ let rutas = [
 ];
 function aprobacionApoyo() {
   return (
+<<<<<<< Updated upstream
     <Scaffold
       titulo="Ver Solicitud"
       descripcion="Folio xxx"
       rutas={rutas}
     >
+=======
+    <Scaffold titulo="Apoyo" descripcion="Folio : 007" rutas={rutas}>
+>>>>>>> Stashed changes
       <Box
         m={2}
         borderStyle="solid"
@@ -35,8 +54,7 @@ function aprobacionApoyo() {
             <Divider orientation="vertical" />
             <Text fontSize="2xl">Detalles de la solicitud</Text>
           </Stack>
-
-          <HStack align="stretch" m={5} >
+          <HStack align="stretch" m={5}>
             <Text fontWeight="bold" mb="10px">
               Fecha de solicitud:
             </Text>
@@ -80,6 +98,77 @@ function aprobacionApoyo() {
               size="sm"
             />
           </HStack>
+        </Box>
+        <Divider />
+        <Box direction="column" w="50%" rounded={6}>
+          <Stack direction="row" h="100px" p={4}>
+            <Divider orientation="vertical" />
+            <Text fontSize="2xl">Apoyo Solicitado</Text>
+          </Stack>
+          <HStack align="stretch" m={5}>
+            <Text fontWeight="bold" mb="10px">
+              Apoyo:
+            </Text>
+            <Input
+              variant="unstyled"
+              disabled="true"
+              placeholder="Calentador Solar"
+              size="40px"
+            />
+          </HStack>
+          <HStack m={5}>
+            <Text fontWeight="bold" mb="10px">
+              Cantidad Solicitada:
+            </Text>
+            <Input
+              variant="unstyled"
+              disabled="true"
+              placeholder="2 "
+              size="40px"
+            />
+          </HStack>
+          <HStack m={5}>
+            <Text mb="10px" fontWeight="bold">
+              Costo del apoyo:
+            </Text>
+            <Input
+              variant="unstyled"
+              disabled="true"
+              placeholder="$2,000"
+              size="sm"
+            />
+          </HStack>
+          <HStack m={5}>
+            <Text fontWeight="bold" mb="10px">
+              Descuento:
+            </Text>
+            <Input
+              variant="unstyled"
+              disabled="true"
+              placeholder="N/A"
+              size="sm"
+            />
+          </HStack>
+          <HStack m={5}>
+            <Text fontWeight="bold" mb="10px">
+              Estatus:
+            </Text>
+            <Badge variant="solid" colorScheme="yellow">
+              Pendiente
+            </Badge>
+          </HStack>
+        </Box>
+        <Divider />
+        <Box m={2}>
+          <Flex>
+            <Spacer />
+            <Button colorScheme="green" variant="solid">
+              Aceptar
+            </Button>
+            <Button marginLeft="10px" colorScheme="red" variant="outline">
+              Rechazar
+            </Button>
+          </Flex>
         </Box>
       </Box>
       <Box
