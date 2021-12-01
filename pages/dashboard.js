@@ -24,9 +24,9 @@ function Dashboard() {
   return (
     <>
       <Scaffold titulo="Inicio"  rutas={rutas}>
-        <Wrap spacing='8rem' m={50}  textAlign='center'   >
+        <Wrap spacing='5rem' m={10}  textAlign='center'   >
             <WrapItem>
-              <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
+              <Center w='150px' h='100px' bg='core.850' borderRadius='10px'>
             <Stat>
                     <StatLabel>
                     <Text  color='white' fontSize='20px' >
@@ -42,7 +42,7 @@ function Dashboard() {
                   </Center>
             </WrapItem>
             <WrapItem>
-            <Center w='180px' h='110px' bg='core.850' borderRadius='10px'>
+            <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
             <Stat >
                       <StatLabel >
                         <Text  color='white' fontSize='20px'>
@@ -58,7 +58,7 @@ function Dashboard() {
                   </Center>
             </WrapItem>
             <WrapItem >
-            <Center w='180px' h='110px' bg='core.850' borderRadius='10px'>
+            <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
             <Stat>
                     <StatLabel>
                       <Text  color='white' fontSize='20px'>
@@ -74,7 +74,7 @@ function Dashboard() {
                   </Center>
              </WrapItem>
              <WrapItem >
-             <Center w='180px' h='110px' bg='core.850' borderRadius='10px'>
+             <Center w='150px' h='110px' bg='core.850' borderRadius='10px'>
                   <Stat>
                     <StatLabel>
                     <Text  color='white' fontSize='20px'>
@@ -99,7 +99,7 @@ function Dashboard() {
              </WrapItem>
   
         </Wrap>  
-        <Textarea placeholder='Notas'  backgroundColor='core.850' color='white' fontSize='30px'/>
+        <Textarea placeholder='Notas'  backgroundColor='core.850' color='white' fontSize='20px'/>
       </Scaffold>
     </>
   );
