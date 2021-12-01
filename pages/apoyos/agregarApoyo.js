@@ -37,7 +37,7 @@ function AgregarApoyo() {
   return (
     <Scaffold
       titulo="Catalogo de Apoyos"
-      descripcion="Editar Apoyo"
+      descripcion="Agregar Apoyo"
       rutas={rutas}
     >
       <Flex>
