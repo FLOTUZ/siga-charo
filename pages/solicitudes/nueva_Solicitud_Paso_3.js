@@ -6,16 +6,17 @@ import {
     Button,
     Flex,
     Box,
+    Input,
     Spacer,
     Select
 } from '@chakra-ui/react';
 import Scaffold from "../../components/layout/Scaffold";
 
-function nueva_Solicitud_Paso_2() {
+function nueva_Solicitud_Paso_1() {
 
     let rutas = [
         {
-          url: "/nueva_solicitud_paso_2",
+          url: "/nueva_solicitud_paso_1",
           nombre: "Nueva Solicitud",
           isCurrentPage: true,
         },
@@ -25,7 +26,7 @@ function nueva_Solicitud_Paso_2() {
         <Scaffold
       rutas={rutas}
       titulo="Nueva Solicitud"
-      descripcion="Lugar de Origen del Solicitante"
+      descripcion="Detalles del Apoyo Solicitado"
     >
         <div>
             <Head>
@@ -45,7 +46,7 @@ function nueva_Solicitud_Paso_2() {
                                 2
                             </Box>
                             <Spacer />
-                            <Box p='4' bg='gray.400' rounded={40}>
+                            <Box p='4' bg='green.400' rounded={40}>
                                 3
                             </Box>
                             <Spacer />
@@ -57,7 +58,7 @@ function nueva_Solicitud_Paso_2() {
                 </Box>
                 <Box bg='white' w='100%' p={5} color='white'></Box>
                 <Box>
-                    <Flex w='170vh' justifyContent="center">
+                    <Flex height='50vh' w='170vh' justifyContent="center">
                         <Flex 
                             direction="column"
                             w='110vh'
@@ -66,17 +67,36 @@ function nueva_Solicitud_Paso_2() {
                             borderWidth="2px" 
                             p ={2}  rounded={6}
                         >
-                            <Text m={1}>Lugar de Origen</Text>
-                            <Select m={1} placeholder="Lugar...">
+                            <Text m={1}>Elegir Apoyo</Text>
+                            <Select m={1} placeholder="Apoyo...">
                                 <option>Ejemplo 1</option>
                                 <option>Ejemplo 2</option>
                                 <option>Ejemplo 3</option>
                             </Select>
-                            <Button m={1} colorScheme='teal' variant='solid'>Agregar Nuevo Lugar de Origen</Button>
+                            <Flex m={1}>
+                                <Box p='4'>
+                                    <Text>Cantidad</Text>
+                                    <Input/>
+                                </Box>
+                                <Box p='4'>
+                                    <Text>Fecha</Text>
+                                    <Input type='date'/>
+                                </Box>
+                            </Flex>
+                            <Flex m={1}>
+                                <Box p='4'>
+                                    <Text>Descuento</Text>
+                                    <Input/>
+                                </Box>
+                                <Box p='4'>
+                                    <Text>Total</Text>
+                                    <Input background='gray'/>
+                                </Box>
+                            </Flex>
                         </Flex>
                     </Flex>
                 </Box>
-                <Box m={20} bg='white' w='100%' p={5} color='white'></Box>
+                <Box bg='white' w='100%' p={5} color='white'></Box>
                 <Flex w='170vh' alignItems="center" justifyContent="center">
                     <Box p='2'>
                     </Box>
@@ -94,4 +114,4 @@ function nueva_Solicitud_Paso_2() {
     );
 }
 
-export default nueva_Solicitud_Paso_2;
+export default nueva_Solicitud_Paso_1;
