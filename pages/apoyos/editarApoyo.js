@@ -18,6 +18,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
+import { BiXCircle } from "react-icons/bi";
 
 let rutas = [
   {
@@ -52,19 +53,29 @@ function Apoyos() {
             p={10}
             rounded={6}
           >
-            <FormControl id="Nombre del Apoyo">
-              <FormLabel>FNombre del Apoyo</FormLabel>
-              <Input placeholder="" />
-            </FormControl>
 
-            <FormLabel>Tipo de Apoyo</FormLabel>
-            <RadioGroup defaultValue="1">
-              <Stack spacing={4} direction="row">
-                <Radio value="1">Material</Radio>
-                <Radio value="2">Construcción</Radio>
-                <Radio value="3">Económico</Radio>
-              </Stack>
-            </RadioGroup>
+            <Flex
+              w="48%"
+              p={1}
+              rounded={6}>
+                <FormControl id="Nombre del Apoyo">
+                  <FormLabel> Nombre del Apoyo</FormLabel>
+                  <Input placeholder="" />
+                </FormControl>
+            </Flex>
+
+            <Spacer/>
+                <FormLabel marginTop="30px">Tipo de Apoyo</FormLabel>
+                <Spacer/>
+                  <RadioGroup defaultValue="1">
+                    <Stack spacing={4} direction="row">
+                      <Radio value="1">Material</Radio>
+                      <Radio value="2">Construcción</Radio>
+                      <Radio value="3">Económico</Radio>
+                    </Stack>
+                  </RadioGroup>
+              
+              
           </Flex>
         </Flex>
       </Box>
@@ -77,32 +88,28 @@ function Apoyos() {
             background="gray.150"
             direction="column"
             w="96%">
-        <Flex
-        
-        w="50%"
-        p={10}
-        rounded={6}
-      >
-        <FormLabel>Descripción</FormLabel>
-        <Textarea placeholder="La descripción es..." />
-      </Flex>
+          <Flex
+              w="50%"
+              p={10}
+              rounded={6}>
+                <FormLabel>Descripción</FormLabel>
+                <Textarea placeholder="La descripción es..." />
+          </Flex>
         </Flex>
     
-
-      <Flex  
-            direction="column"
-            w="100%"
-            p={5}
-            rounded={6}>
-        <Stack direction="row" spacing={4} marginRight="10px">
-          <Button colorScheme="red" variant="outline">
-            Descartar
-          </Button>
-          <Button colorScheme="blue" variant="solid">
-            Guardar
-          </Button>
-        </Stack>
-      </Flex>
+        <Flex m={5}
+        p={10}
+        >
+          <Spacer />
+            <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>}>
+              Descartar
+            </Button>
+            <Button colorScheme="blue" variant="solid">
+             Guardar
+            </Button>
+        </Flex>
+        
+          
     </Scaffold>
   );
 }
