@@ -30,9 +30,16 @@ function Apoyos() {
       header: "Status",
     },
   ];
+  let rutas = [
+    {
+      url: "/Apoyos",
+      nombre: "Apoyo",
+      isCurrentPage: true,
+    },
+  ];
 
   return (
-    <Scaffold titulo="Apoyos" descripcion="Catalogo de apoyos">
+    <Scaffold titulo="Apoyos" descripcion="Catalogo de apoyos" rutas={rutas} >
       <div style={{ margin: "2rem" }}>
         <IBMDataTable headers={headers} rows={rows} />
       </div>

@@ -1,9 +1,12 @@
 import Scaffold from "../../components/layout/Scaffold";
 import { Divider, Stack, Text, Input, Box, HStack } from "@chakra-ui/react";
 import { transparentize } from "@chakra-ui/theme-tools";
+import Datetime from 'react-datetime';
+import React from 'react';
+
 let rutas = [
   {
-    url: "/Apoyos",
+    url: "/Apoyos/aprobar",
     nombre: "Aprobar Apoyo",
     isCurrentPage: true,
   },
@@ -11,8 +14,8 @@ let rutas = [
 function aprobacionApoyo() {
   return (
     <Scaffold
-      titulo="Catalogo de apoyos"
-      descripcion="apoyo por aceptar"
+      titulo="Ver Solicitud"
+      descripcion="Folio xxx"
       rutas={rutas}
     >
       <Box
