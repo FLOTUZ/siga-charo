@@ -63,7 +63,7 @@ const NavLateral = () => {
           src={Logo}
           alt="Logo ayuntamiento charo"
         />
-        <Spacer paddingY="0.5rem" />
+        <Spacer paddingY="0.2rem" />
         {paginas.map((pagina) => {
           return (
             <Link href={pagina.url} key={pagina.id}>
