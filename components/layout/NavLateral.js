@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../assets/img/logo-ayuntamiento.svg";
 
-import { VStack, Center, Button, Spacer, Tooltip } from "@chakra-ui/react";
+import { VStack, Center, Button, Spacer, Tooltip, Container } from "@chakra-ui/react";
 
 import { AiFillDashboard } from "react-icons/ai";
 import { FiFilePlus } from "react-icons/fi";
@@ -15,44 +15,42 @@ const NavLateral = () => {
       id: 1,
       nombre: "Dashboard",
       url: "/dashboard",
-      icono: <AiFillDashboard size="70px" />,
+      icono: <AiFillDashboard size="2rem" />,
     },
     {
       id: 2,
       nombre: "Nueva Solicitud",
       url: "/solicitudes/catalogo",
 
-      icono: <FiFilePlus size="70px" />,
-
-      icono: <FiFilePlus size="70px"/>,
+      icono: <FiFilePlus size="2rem" />,
 
     },
     {
       id: 3,
       nombre: "Apoyos",
       url: "/apoyos",
-      icono: <FiGrid size="70px"/>,
+      icono: <FiGrid size="2rem"/>,
     },
     {
       id: 4,
       nombre: "Reportes",
       url: "/reportes",
 
-      icono: <FaRegChartBar  size="70px" ></FaRegChartBar>,
+      icono: <FaRegChartBar  size="2rem" />,
     },
     {
       id: 5,
       nombre: "Configuracion",
       url: "/gestion_usuarios/usuarios",
 
-      icono: <FaRegChartBar size="70px" />,
+      icono: <FaRegChartBar size="2rem" />,
     },
     {
       id: 5,
       nombre: "Dashboard",
       url: "/configuracion",
 
-      icono: <AiFillSetting size="70px" />,
+      icono: <AiFillSetting size="2rem" />,
     },
   ];
 
@@ -60,8 +58,8 @@ const NavLateral = () => {
     <Center h="100vh">
       <VStack>
         <Image
-          height={200}
-          width={200}
+          height={100}
+          width={100}
           src={Logo}
           alt="Logo ayuntamiento charo"
         />
@@ -76,14 +74,16 @@ const NavLateral = () => {
                   label={pagina.nombre}
                   bg="transparent"
                 >
-                  <Button
-                    h="7rem"
-                    w="7rem"
+                  <Container
+                    h="4rem"
+                    w="4rem"
                     color="core.800"
                     bg='#242B42'
+                    
                     _hover={{ bg: "core.800" }}
-                    leftIcon={pagina.icono}
-                  />
+                  >
+                    <Center h="4rem">{pagina.icono}</Center>
+                  </Container>
                 </Tooltip>
               </a>
             </Link>
