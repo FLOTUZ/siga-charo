@@ -68,10 +68,18 @@ const data = [
         </Stack>,
   },
 ]
+let rutas = [
+  {
+    url: "/solicitudes",
+    nombre: "Solicitudes",
+    isCurrentPage: true,
+  },
+];
+
 
 export default function Catalogo() {
   return (
-    <Scaffold titulo="Solicitudes" descripcion="Lista de Solicitudes">
+    <Scaffold titulo="Solicitudes" descripcion="Lista de Solicitudes" rutas={rutas}>
     <div>
       <Head>
         <title>Catalogo de Solicitudes</title>
