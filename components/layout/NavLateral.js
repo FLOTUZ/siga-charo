@@ -6,7 +6,7 @@ import { VStack, Center, Button, Spacer, Tooltip, Container } from "@chakra-ui/r
 
 import { AiFillDashboard } from "react-icons/ai";
 import { FiFilePlus } from "react-icons/fi";
-import { FaRegChartBar } from "react-icons/fa";
+import { FaRegChartBar, FaUserFriends } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiGrid } from "react-icons/fi";
 const NavLateral = () => {
@@ -40,14 +40,14 @@ const NavLateral = () => {
     },
     {
       id: 5,
-      nombre: "Configuracion",
+      nombre: "Usuarios",
       url: "/gestion_usuarios/usuarios",
 
-      icono: <FaRegChartBar size="2rem" />,
+      icono: <FaUserFriends size="2rem" />,
     },
     {
       id: 5,
-      nombre: "Dashboard",
+      nombre: "Configuracion",
       url: "/configuracion",
 
       icono: <AiFillSetting size="2rem" />,
