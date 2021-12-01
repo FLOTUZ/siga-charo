@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Heading, Button, Stack, Flex, Box, Spacer} from '@chakra-ui/react';
 import DataTable from 'react-data-table-component';
+import Scaffold from "../../components/layout/Scaffold";
 
 const columns = [
     {
@@ -70,6 +71,7 @@ const data = [
 
 export default function Catalogo() {
   return (
+    <Scaffold titulo="Solicitudes" descripcion="Lista de Solicitudes">
     <div>
       <Head>
         <title>Catalogo de Solicitudes</title>
@@ -77,8 +79,7 @@ export default function Catalogo() {
       </Head>
       <Flex>
         <Box p='2'>
-          <Heading as='h1' size='3xl'>Solicitudes</Heading>
-          <Heading size='md'>Lista de Solicitudes</Heading>
+          
         </Box>
         <Spacer />
         <Flex direction="column" alignItems="center" justifyContent="center">
@@ -90,7 +91,7 @@ export default function Catalogo() {
         <Box bg='white' w='100%' p={5} color='white'></Box>
         <Box maxW='large' borderWidth='1px' borderRadius='lg' overflow='hidden'>
           <DataTable
-            title="solicitudes"
+            title="Lista de Solicitudes"
             columns={columns}
             data={data}
             pagination
@@ -99,5 +100,6 @@ export default function Catalogo() {
         </Box>
       </main>
     </div>
+    </Scaffold>
   );
 }

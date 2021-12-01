@@ -23,7 +23,7 @@ function Dashboard() {
 
   return (
     <>
-      <Scaffold titulo="Inicio"  rutas={rutas}>
+      <Scaffold titulo="Inicio"  >
         <Wrap spacing='5rem' m={10}  textAlign='center'   >
             <WrapItem>
               <Center w='140px' h='100px' bg='core.850' borderRadius='10px'>
