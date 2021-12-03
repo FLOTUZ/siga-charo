@@ -10,6 +10,7 @@ import {
     Spacer
 } from '@chakra-ui/react';
 import Scaffold from "../../components/layout/Scaffold";
+import Link from 'next/link';
 
 function nueva_Solicitud_Paso_1() {
 
@@ -85,9 +86,13 @@ function nueva_Solicitud_Paso_1() {
                     </Box>
                     <Spacer />
                     <Box>
+                        <Link href='/solicitudes/nueva_Solicitud_Paso_2'>
+                            <a>
                         <Button colorScheme='teal' variant='solid' mr='4'>
                         Siguiente
                         </Button>
+                        </a>
+                        </Link>
                         <Button colorScheme='teal' variant='outline'>Descartar</Button>
                     </Box>
                 </Flex>
