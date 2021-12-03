@@ -1,26 +1,24 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
+import Link from "next/link";
 import React, { useRef } from "react";
-import { BiArchive,BiUserPlus } from "react-icons/bi";
+import { BiArchive, BiUserPlus } from "react-icons/bi";
 import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    useDisclosure,Button,Input
-  } from '@chakra-ui/react'
-
-
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  Button,
+  Input,
+} from "@chakra-ui/react";
 
 function usuarios() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
-
-
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
 
   let rutas = [
     {
@@ -68,43 +66,49 @@ function usuarios() {
       key: "configuration",
       header: "Configuracion",
     },
-
   ];
 
   return (
     <Scaffold rutas={rutas} titulo="Gestion de Usuarios" descripcion="Usuarios">
-
-
-<Button m ={5} rightIcon= {<BiArchive size = "40px "/>} ref={btnRef} background='gray.200'   onClick={onOpen}>
+      <Button
+        m={5}
+        rightIcon={<BiArchive size="40px " />}
+        ref={btnRef}
+        background="gray.200"
+        onClick={onOpen}
+      >
         Actividad mas reciente...
       </Button>
-      <Button  leftIcon={<BiUserPlus size = "40px "/>} colorScheme='teal' url = "/agregar_usuarios">
-        Agregar nuevo usuario
-      </Button>      
-      
+      <Link href="/gestion_usuarios/agregar_usuarios">
+        <a>
+          <Button
+            leftIcon={<BiUserPlus size="40px " />}
+            colorScheme="teal"
+          >
+            Agregar nuevo usuario
+          </Button>
+        </a>
+      </Link>
+
       <Drawer onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px'>Ultima Actividad</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">Ultima Actividad</DrawerHeader>
           <DrawerBody>
             <p>Some contents...</p>
             <p>Some contents...</p>
             <p>Some contents...</p>
           </DrawerBody>
           <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
+            <Button variant="outline" mr={3} onClick={onClose}>
               Salir
             </Button>
-            <Button colorScheme='blue'>Exportar</Button>
+            <Button colorScheme="blue">Exportar</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
 
-
       <IBMDataTable headers={headers} rows={rows}></IBMDataTable>
-
-
-
     </Scaffold>
   );
 }
