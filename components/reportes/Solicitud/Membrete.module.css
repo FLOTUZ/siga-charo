@@ -1,0 +1,9 @@
+.base{
+    height: 11in;
+    width: 8.5in;
+    border: 1px solid black;
+    margin: 3rem;
+    background-size: cover;
+    background-image: url(../../../assets/img/membrete.jpg);
+}
+

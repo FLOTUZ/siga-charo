@@ -1,4 +1,9 @@
 import Scaffold from "../../components/layout/Scaffold";
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
 import {
   Divider,Select,Textarea,
   Stack,
@@ -11,6 +16,10 @@ import {
   Flex,
   Spacer,
 } from "@chakra-ui/react";
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 import { transparentize } from "@chakra-ui/theme-tools";
 import Datetime from "react-datetime";
 import React from "react";
@@ -27,6 +36,10 @@ let rutas = [
 ];
 function aprobacionApoyo() {
   return (
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     <Scaffold titulo="Apoyo" descripcion="Folio : 007" rutas={rutas}>
 
       <Box
@@ -44,7 +57,10 @@ function aprobacionApoyo() {
             <Divider orientation="vertical" />
             <Text fontSize="2xl">Detalles de la solicitud</Text>
           </Stack>
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
           <HStack align="stretch" m={5}>
             <Text fontWeight="bold" mb="10px">
               Fecha de solicitud:

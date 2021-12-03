@@ -45,13 +45,7 @@ const NavLateral = () => {
 
       icono: <FaUserFriends size="2rem" />,
     },
-    {
-      id: 5,
-      nombre: "Configuracion",
-      url: "/configuracion",
 
-      icono: <AiFillSetting size="2rem" />,
-    },
   ];
 
   return (
