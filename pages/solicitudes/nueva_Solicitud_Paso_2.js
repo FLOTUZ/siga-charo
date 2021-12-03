@@ -10,6 +10,8 @@ import {
     Select
 } from '@chakra-ui/react';
 import Scaffold from "../../components/layout/Scaffold";
+import Link from 'next/link';
+
 
 function nueva_Solicitud_Paso_2() {
 
@@ -82,10 +84,16 @@ function nueva_Solicitud_Paso_2() {
                     </Box>
                     <Spacer />
                     <Box>
+                        <Link href='/solicitudes/nueva_Solicitud_Paso_3'>
+                            <a>
                         <Button colorScheme='teal' variant='solid' mr='4'>
                         Siguiente
                         </Button>
-                        <Button colorScheme='teal' variant='outline'>Descartar</Button>
+                            </a>
+                        </Link>
+                        <Button colorScheme='teal' variant='outline'>
+                            Descartar
+                            </Button>
                     </Box>
                 </Flex>
             </main>
