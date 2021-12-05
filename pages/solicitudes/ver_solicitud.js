@@ -108,7 +108,7 @@ function ver_solicitud() {
                                     <Spacer />
                                     <Box>
                                         <Button colorScheme='teal' variant='solid' mr='4'>
-                                        Aprovar
+                                        Aprobar
                                         </Button>
                                         <Button colorScheme='teal' variant='outline'>Rechazar</Button>
                                     </Box>

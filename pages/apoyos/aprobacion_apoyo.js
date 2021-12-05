@@ -10,6 +10,11 @@ import {
   Button,
   Flex,
   Spacer,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper
 } from "@chakra-ui/react";
 import { transparentize } from "@chakra-ui/theme-tools";
 import Datetime from "react-datetime";
@@ -179,26 +184,33 @@ function aprobacionApoyo() {
 
           <HStack align="stretch" m={5}>
             <Text fontWeight="bold" mb="10px">
-              Cantidad a Solicitar:
+              Cantidad a Autorizar:
             </Text>
-            <Select placeholder="Seleccione Cantidad">
-              <option value="option1"> 10</option>
-              <option value="option2"> 20</option>
-              <option value="option3"> 30</option>
-            </Select>
+            <NumberInput defaultValue={0} min={100} max={2000}>
+                                            <NumberInputField />
+                                            <NumberInputStepper>
+                                              <NumberIncrementStepper />
+                                               <NumberDecrementStepper />
+                                            </NumberInputStepper>
+                                        </NumberInput>
           </HStack>
+          <Spacer/>
+          
+          <Box>
+              <Text m={5} fontWeight="bold" mb="10px">Total Autorizado: </Text>
+              <Text m={5} color='green' fontWeight="bold" mb="10px" >$4,000</Text>
+          </Box>
           <HStack m={5}>
             <Text fontWeight="bold" mb="10px">
               Fecha:
             </Text>
-
+            <Input type='date'/>
           </HStack>
           <HStack m={5}>
             <Text mb="10px" fontWeight="bold">
               Motivo de Rechazo:
             </Text>
-
-            <Textarea placeholder="Motivo de Rechazo" />
+            <Input type='textBox' />
           </HStack>
         </Box>
       </Box>

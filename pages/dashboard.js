@@ -32,6 +32,11 @@ function Dashboard() {
       nombre: "Dashboard",
       isCurrentPage: true,
     },
+    {
+      url: "/dashboard",
+      nombre: "Dashboard",
+      isCurrentPage: true,
+    },
   ];
 
   return (
