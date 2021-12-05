@@ -54,7 +54,7 @@ async function Eliminar(url = "") {
       method: "DELETE",
       url: process.env.NEXT_PUBLIC_API_URL + url,
     });
-    respuesta.data;
+    return(respuesta.data);
   } catch (error) {
     console.error(error);
     return error;
