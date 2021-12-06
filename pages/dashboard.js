@@ -18,7 +18,8 @@ import {
   Center,
   AspectRatio,
 } from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
+import { PhoneIcon, AddIcon, WarningIcon} from "@chakra-ui/icons";
+import {AiFillFileAdd} from "react-icons/ai"
 
 function Dashboard() {
   useEffect(() => {
@@ -91,6 +92,7 @@ function Dashboard() {
               </Stat>
             </Center>
           </WrapItem>
+       
           <WrapItem>
             <Center w="140px" h="100px" bg="core.850" borderRadius="10px">
               <Stat>
@@ -110,17 +112,17 @@ function Dashboard() {
           <Link href="/solicitudes/catalogo">
             <a>
               <WrapItem>
-                <Button
-                  rightIcon={<AddIcon color="white" />}
+                <Button 
+                  rightIcon={<AiFillFileAdd size="40px "  color="white" />}
                   colorScheme="white"
                   variant="ghost"
                   size="lg"
                   background="teal"
-                  borderRadius="50px"
-                  w="180px"
+                  borderRadius="10px"
+                  w="280px"
                   h="100px"
                 >
-                  <Text color="white" fontSize="20px">
+                  <Text m = "1" color="white" fontSize="20px">
                     Nueva Solicitud
                   </Text>
                 </Button>
