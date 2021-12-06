@@ -72,15 +72,15 @@ function nueva_Solicitud_Paso_1() {
                 rounded={6}
               >
                 <Text m={1}>Nombre(s)</Text>
-                <Input m={1} placeholder="Nombre(s)" required={true} />
+                <Input m={1} id="name" placeholder="Nombre(s)" required={true} />
                 <Text m={1}>Apellido Paterno</Text>
-                <Input m={1} placeholder="Apellido" required={true} />
+                <Input m={1} id="apellidoP" placeholder="Apellido" required={true} />
                 <Text m={1}>Apellido Materno</Text>
-                <Input m={1} placeholder="Apellido Materno" required={true} />
+                <Input m={1} id="apellidoM" placeholder="Apellido Materno" required={true} />
                 <Text m={1}>Telefono Celular</Text>
-                <Input m={1} placeholder="Celular" required={true} />
+                <Input m={1} id="celular" placeholder="Celular" required={true} />
                 <Text m={1}>Telefono</Text>
-                <Input m={1} placeholder="Telefono" required={true} />
+                <Input m={1} id="telefono" placeholder="Telefono" required={true} />
               </Flex>
             </Flex>
           </Box>
