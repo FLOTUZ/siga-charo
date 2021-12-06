@@ -135,7 +135,7 @@ function IBMDataTable({ headers = [], rows = [] }) {
 
                     <TableToolbarMenu>
                       <TableToolbarAction onClick={() => alert("Alert 1")}>
-                        Desabilitar
+                        Deshabilitar
                       </TableToolbarAction>
                       <TableToolbarAction onClick={() => alert("Alert 2")}>
                         Bitacora

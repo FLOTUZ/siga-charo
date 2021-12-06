@@ -120,5 +120,4 @@ function nueva_Solicitud_Paso_1() {
     </Scaffold>
   );
 }
-
 export default nueva_Solicitud_Paso_1;

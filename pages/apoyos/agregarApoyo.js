@@ -1,26 +1,15 @@
 import Scaffold from "../../components/layout/Scaffold";
 import {
   Switch,
-  Grid,
   Button,
-  ButtonGroup,
-  Container,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Radio,
-  RadioGroup,
   Input,
   Textarea,
   Box,
   Flex,
   Spacer,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper
+  Link
 } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
 import { BiXCircle, BiUpArrowCircle } from "react-icons/bi";
@@ -61,7 +50,7 @@ function AgregarApoyo() {
 
             <Flex
               w="48%"
-              p={1}
+
               rounded={6}>
                 <FormControl id="Nombre del Apoyo">
                   <FormLabel> Nombre del Apoyo:</FormLabel>
@@ -105,9 +94,15 @@ function AgregarApoyo() {
         p={10}
         >
           <Spacer />
-            <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>} m={5}>
-              Descartar
-            </Button>
+             <Link href="/apoyos">
+                <a>
+                  <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>} m={5}>
+                    Descartar
+                  </Button>
+                </a>
+              </Link>
+
+            
             <Button colorScheme="blue" variant="solid" rightIcon= {<BiUpArrowCircle size = "25px "/>} m={5}>
              Guardar
             </Button>

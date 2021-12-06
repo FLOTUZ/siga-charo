@@ -23,12 +23,12 @@ function Apoyos() {
 
   const headers = [
     {
-      key: "name",
-      header: "Name",
+      key: "Nombre",
+      header: "Nombre",
     },
     {
-      key: "status",
-      header: "Status",
+      key: "Estado",
+      header: "Estado",
     },
   ];
   let rutas = [

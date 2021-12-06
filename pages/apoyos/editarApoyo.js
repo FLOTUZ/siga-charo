@@ -16,6 +16,7 @@ import {
   Box,
   Flex,
   Spacer,
+  Link
 } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
 import { BiXCircle, BiUpArrowCircle } from "react-icons/bi";
@@ -101,9 +102,14 @@ function Apoyos() {
         p={10}
         >
           <Spacer />
-            <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>} m={5}>
-              Descartar
-            </Button>
+          <Link href="/apoyos">
+              <a>
+                <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>} m={5}>
+                  Descartar
+                </Button>
+              </a>
+            </Link>
+          
             <Button colorScheme="blue" variant="solid" rightIcon= {<BiUpArrowCircle size = "25px "/>} m={5}>
              Guardar
             </Button>

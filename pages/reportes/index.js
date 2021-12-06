@@ -1,8 +1,14 @@
-
+import Scaffold from "../../components/layout/Scaffold";
 import { Button } from "@chakra-ui/button";
 import Solicitud from "../../components/reportes/Solicitud/Solicitud";
 
-
+let rutas = [
+    {
+      url: "/Reporte",
+      nombre: "Generar Reporte",
+      isCurrentPage: true,
+    },
+  ];
 
 function Reportes() {
 
@@ -11,16 +17,21 @@ function Reportes() {
     }
 
     return (
-       <>
-       
-        <Solicitud solicitante="Josue Joyarib"/>
+        <Scaffold
+            titulo="Reportes"
+            descripcion="Generación de Reporte"
+            rutas={rutas}>
 
-        <Button onClick={imprimir}></Button>
         
-       </>
+            <>
+        
+            <Solicitud solicitante="Josue Joyarib"/>
+
+            <Button onClick={imprimir}></Button>
+            
+            </>
+        </Scaffold>
     );
 }
-
-
 
 export default Reportes;
