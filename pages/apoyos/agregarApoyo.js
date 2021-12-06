@@ -9,10 +9,7 @@ import {
   Box,
   Flex,
   Spacer,
-<<<<<<< Updated upstream
   Link
-=======
->>>>>>> Stashed changes
 } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
 import { BiXCircle, BiUpArrowCircle } from "react-icons/bi";
@@ -65,7 +62,6 @@ function AgregarApoyo() {
                 <FormLabel> Nombre del Apoyo:</FormLabel>
                 <Input placeholder="" onChange={() => {}} />
               </FormControl>
-<<<<<<< Updated upstream
             </Flex>
 
             <Flex
@@ -77,17 +73,6 @@ function AgregarApoyo() {
                   <Input placeholder="" />
                 </FormControl>
             </Flex>
-=======
-            </Flex>
-
-            <Flex w="48%">
-              <Spacer />
-              <FormControl id="Nombre del Encargado" marginTop="30px">
-                <FormLabel> Encargado:</FormLabel>
-                <Input placeholder="Nombre del Encargado" />
-              </FormControl>
-            </Flex>
->>>>>>> Stashed changes
           </Flex>
         </Flex>
       </Box>
@@ -123,24 +108,6 @@ function AgregarApoyo() {
           rightIcon={<BiXCircle size="25px " />}
           m={5}
         >
-<<<<<<< Updated upstream
-          <Spacer />
-             <Link href="/apoyos">
-                <a>
-                  <Button colorScheme="red" variant="outline" rightIcon= {<BiXCircle size = "25px "/>} m={5}>
-                    Descartar
-                  </Button>
-                </a>
-              </Link>
-
-            
-            <Button colorScheme="blue" variant="solid" rightIcon= {<BiUpArrowCircle size = "25px "/>} m={5}>
-             Guardar
-            </Button>
-        </Flex>
-        
-          
-=======
           Descartar
         </Button>
         <Button
@@ -152,7 +119,6 @@ function AgregarApoyo() {
           Guardar
         </Button>
       </Flex>
->>>>>>> Stashed changes
     </Scaffold>
   );
 }
