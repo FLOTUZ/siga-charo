@@ -8,7 +8,7 @@ async function Consultar(url = "", params = {}) {
       url: process.env.NEXT_PUBLIC_API_URL + url,
       params: params,
     });
-    return respuesta.data;
+    return respuesta;
   } catch (error) {
     console.error(error);
   }
@@ -23,7 +23,7 @@ async function Crear(url = "", data = {}) {
       url: process.env.NEXT_PUBLIC_API_URL + url,
       data: data,
     });
-    return respuesta.data;
+    return respuesta;
   } catch (error) {
     console.error(error);
     return error;
@@ -39,7 +39,7 @@ async function Actualizar(url = "", data = {}) {
       url: process.env.NEXT_PUBLIC_API_URL + url,
       data: data,
     });
-    return respuesta.data;
+    return respuesta;
   } catch (error) {
     console.error(error);
     return error;
@@ -54,7 +54,7 @@ async function Eliminar(url = "") {
       method: "DELETE",
       url: process.env.NEXT_PUBLIC_API_URL + url,
     });
-    return(respuesta.data);
+    return(respuesta);
   } catch (error) {
     console.error(error);
     return error;
