@@ -18,14 +18,14 @@ import {
   TableSelectRow,
   TableCell,
   Button,
-  PaginationNav
+  PaginationNav,
 } from "carbon-components-react";
 import { IconName } from "react-icons/bi";
 import React, { useState } from "react";
 
 import { Delete, Save, Download } from "carbon-icons";
 
-function IBMDataTable({ headers = [], rows = [] }) {
+function IBMDataTable({ headers = [], rows = [], filaClickeada, editar }) {
   const [buscar, setBusqueda] = useState("");
 
   const eliminar = (selectedRows) => {
@@ -103,7 +103,6 @@ function IBMDataTable({ headers = [], rows = [] }) {
                   }
                   onChange={onInputChange}
                 />
- 
               </TableToolbarContent>
             </TableToolbar>
             <Table {...getTableProps()}>
@@ -118,19 +117,20 @@ function IBMDataTable({ headers = [], rows = [] }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, i) => (
+                
+                {rows.map((row, index) => (
                   <TableRow
-                    onClick={() => itemClickeado(row)}
-                    key={i}
+                    onClick={() => {
+                      filaClickeada !== undefined
+                        ? filaClickeada(index + 1)
+                        : itemClickeado(index + 1);
+                    }}
+                    key={index}
                     {...getRowProps({ row })}
                   >
                     <TableSelectRow {...getSelectionProps({ row })} />
                     {row.cells.map((cell) => (
-                      <TableCell key={cell.id}>
-                        <Link href="http://google.com" alt="holi">
-                          <a>{cell.value}</a>
-                        </Link>
-                      </TableCell>
+                      <TableCell key={cell.id}>{cell.value}</TableCell>
                     ))}
 
                     <TableToolbarMenu>
@@ -140,11 +140,14 @@ function IBMDataTable({ headers = [], rows = [] }) {
                       <TableToolbarAction onClick={() => alert("Alert 2")}>
                         Bitacora
                       </TableToolbarAction>
-                      <TableToolbarAction onClick={() => alert("Alert 3")}>
+                      <TableToolbarAction
+                        onClick={() => {
+                          editar !== undefined ? editar() : alert("Alert 3");
+                        }}
+                      >
                         Editar
                       </TableToolbarAction>
                     </TableToolbarMenu>
-                    
                   </TableRow>
                 ))}
               </TableBody>

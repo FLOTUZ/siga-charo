@@ -17,10 +17,28 @@ import {
   EditablePreview,
   EditableInput,
   Switch,
+  VStack,
+  StackDivider,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import Scaffold from "../../components/layout/Scaffold";
+import { Consultar } from "../../services/API";
 
-function editar_usuario() {
+import { useEffect, useState } from "react";
+
+function Editar_usuario() {
+  const router = useRouter();
+
+  const [usuario, setUsuario] = useState({});
+
+  useEffect(() => {
+    const ejecutar = async () => {
+      let respuesta = await Consultar(`/usuarios/${router.query.index}`);
+      setUsuario(respuesta.data);
+      console.log(respuesta);
+    };
+    ejecutar();
+  }, []);
   let rutas = [
     {
       url: "/gestion_de_usuarios",
@@ -53,65 +71,57 @@ function editar_usuario() {
             </Heading>
             <Text m={1}>Nombre(s)</Text>
             <Editable placeholder="Nombre(s)" />
-            <Editable
-              borderStyle="solid"
-              rounded={6}
-              borderWidth="1px"
-              color="gray.500"
-              m={2}
-              defaultValue="Juan"
-            >
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
+            <Input
+              pr="4.5rem"
+              placeholder="Nombre de usuario"
+              variant="filled"
+              value={usuario.nombre}
+            />
 
             <Text>Apellidos</Text>
-            <Editable
-              borderStyle="solid"
-              rounded={6}
-              borderWidth="1px"
-              color="gray.500"
-              m={2}
-              defaultValue="Gomez"
+            <VStack
+              divider={<StackDivider borderColor="gray.200" />}
+              spacing={1}
+              align="stretch"
             >
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-            <Editable
-              borderStyle="solid"
-              rounded={6}
-              borderWidth="1px"
-              color="gray.500"
-              m={2}
-              defaultValue="Gonzales"
-            >
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
+              <Input
+                pr="4.5rem"
+                placeholder="Nombre de usuario"
+                variant="filled"
+                value={usuario.apellidoPaterno}
+              />
 
-            <Flex
-              borderStyle="solid"
-              borderColor="gray.200"
-              borderWidth="2px"
-              background="gray.200"
-              direction="column"
-              w="100%"
-              p={4}
-              rounded={6}
-            >
-              <FormControl display="flex">
-                <FormLabel>Habilitar opciones</FormLabel>
-                <Switch />
-              </FormControl>
-              <FormControl m={1} id="country">
-                <FormLabel m={2}>Rol del Usuario</FormLabel>
-                <Select m={2} placeholder="Rol...">
-                  <option>Capturador</option>
-                  <option>Administrador</option>
-                  <option>Director</option>
-                </Select>
-              </FormControl>
-            </Flex>
+              <Input
+                pr="4.5rem"
+                placeholder="Nombre de usuario"
+                variant="filled"
+                value={usuario.apellidoMaterno}
+              />
+
+              <Flex
+                borderStyle="solid"
+                borderColor="gray.200"
+                borderWidth="2px"
+                background="gray.200"
+                direction="column"
+                w="100%"
+                p={4}
+                rounded={6}
+              >
+                <FormControl display="flex">
+                  <FormLabel>Habilitar opciones</FormLabel>
+                  <Switch />
+                </FormControl>
+                <FormControl m={1} id="country">
+                  <FormLabel m={2}>Rol del Usuario</FormLabel>
+                  <Select m={2} placeholder="Rol...">
+                    <option>Capturador</option>
+                    <option>Administrador</option>
+                    <option>Director</option>
+                  </Select>
+                </FormControl>
+              </Flex>
+            </VStack>
           </Flex>
 
           <Box
@@ -146,13 +156,12 @@ function editar_usuario() {
               <FormControl display="flex" alignItems="center">
                 <Switch id="email-alerts" />
               </FormControl>
-          
             </Heading>
             <Text m={1}>usuario</Text>
-              <Input m={2} placeholder="Nombre de usuario" />
+            <Input m={2} placeholder="Nombre de usuario" value={usuario.nombre}/>
             <FormControl id="email">
               <FormLabel>Correo Electronico</FormLabel>
-              <Input type="email" />
+              <Input type="email" value={usuario.email}/>
             </FormControl>
             <FormLabel>Contraseña</FormLabel>
             <InputGroup size="md">
@@ -160,6 +169,7 @@ function editar_usuario() {
                 pr="4.5rem"
                 type={"password"}
                 placeholder="Enter password"
+                value={usuario.password}
               />
             </InputGroup>
           </Flex>
@@ -177,4 +187,4 @@ function editar_usuario() {
     </Scaffold>
   );
 }
-export default editar_usuario;
+export default Editar_usuario;

@@ -1,7 +1,8 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
 import Link from "next/link";
-import React, { useRef } from "react";
+import Router from "next/router";
+import { useRef, useEffect, useState } from "react";
 import { BiArchive, BiUserPlus } from "react-icons/bi";
 import {
   Drawer,
@@ -16,9 +17,14 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-function usuarios() {
+import { Consultar } from "../../services/API";
+
+function Usuarios() {
+  //TODO: Poner el drawer en un componente
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  const btnRef = useRef();
+
+  const [usuarios, setUsuarios] = useState([]);
 
   let rutas = [
     {
@@ -28,45 +34,77 @@ function usuarios() {
     },
   ];
 
-  const rows = [
+  const headers = [
     {
-      id: "a",
-      name: "Laura Gomez",
-      status: "Deshabilitado",
-      rol: "Administrador",
+      key: "idUsuario",
+      header: "idUsuario",
     },
     {
-      id: "b",
-      name: "Joe Sierra",
-      status: "Activo",
-      rol: "Capturador",
+      key: "nombreUsuario",
+      header: "nombreUsuario",
     },
     {
-      id: "c",
-      name: "Emmanuel Esquivel",
-      status: "Activo",
-      rol: "Director",
+      key: "nombre",
+      header: "nombre",
+    },
+    {
+      key: "apellidoPaterno",
+      header: "apellidoPaterno",
+    },
+    {
+      key: "apellidoMaterno",
+      header: "apellidoMaterno",
+    },
+    {
+      key: "email",
+      header: "email",
+    },
+    {
+      key: "password",
+      header: "password",
+    },
+    {
+      key: "puesto",
+      header: "puesto",
+    },
+
+    {
+      key: "haceSolicitudes",
+      header: "haceSolicitudes",
+    },
+
+    {
+      key: "altaDeApoyos",
+      header: "altaDeApoyos",
+    },
+
+    {
+      key: "autorizaApoyos",
+      header: "autorizaApoyos",
+    },
+    {
+      key: "haceReportes",
+      header: "haceReportes",
+    },
+    {
+      key: "administraSistema",
+      header: "administraSistema",
+    },
+    {
+      key: "activo",
+      header: "activo",
     },
   ];
 
-  const headers = [
-    {
-      key: "name",
-      header: "Nombre",
-    },
-    {
-      key: "status",
-      header: "Estado",
-    },
-    {
-      key: "rol",
-      header: "Rol",
-    },
-    {
-      key: "configuration",
-      header: "Configuracion",
-    },
-  ];
+  useEffect(() => {
+    const datosTabla = async () => {
+      let respuesta = await Consultar("/usuarios");
+
+      setUsuarios(respuesta.data);
+    };
+
+    datosTabla();
+  }, []);
 
   return (
     <Scaffold rutas={rutas} titulo="Gestion de Usuarios" descripcion="Usuarios">
@@ -81,10 +119,7 @@ function usuarios() {
       </Button>
       <Link href="/gestion_usuarios/agregar_usuarios">
         <a>
-          <Button
-            leftIcon={<BiUserPlus size="40px " />}
-            colorScheme="teal"
-          >
+          <Button leftIcon={<BiUserPlus size="40px " />} colorScheme="teal">
             Agregar nuevo usuario
           </Button>
         </a>
@@ -108,9 +143,19 @@ function usuarios() {
         </DrawerContent>
       </Drawer>
 
-      <IBMDataTable headers={headers} rows={rows}></IBMDataTable>
+      <IBMDataTable
+        headers={headers}
+        rows={usuarios}
+        filaClickeada={(index) => {
+          Router.push({
+            pathname: "/gestion_usuarios/editar_usuario",
+            query:{index}
+          })
+          console.log("Redireccion");
+        }}
+      ></IBMDataTable>
     </Scaffold>
   );
 }
 
-export default usuarios;
+export default Usuarios;
