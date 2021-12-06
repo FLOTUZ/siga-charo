@@ -95,6 +95,7 @@ const data = [
     ),
   },
 ];
+
 let rutas = [
   {
     url: "/solicitudes",
