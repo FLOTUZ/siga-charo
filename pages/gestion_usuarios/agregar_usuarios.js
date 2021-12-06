@@ -51,8 +51,9 @@ function agregar_usuarios() {
             <Text m={1}>Nombre(s)</Text>
             <Input m={2} placeholder="Nombre(s)" />
             <Text m={1}>Apellidos</Text>
-            <Input m={2} placeholder="Apellido" />
-            <FormControl m={1} id="country">
+            <Input m={2} placeholder="Apellido Paterno" />
+            <Input m={2} placeholder="Apellido Materno" />
+            <FormControl m={1} id="Rol">
               <FormLabel m={2}>Rol del Usuario</FormLabel>
               <Select m={2} placeholder="Rol...">
                 <option>Capturador</option>
@@ -90,6 +91,8 @@ function agregar_usuarios() {
               Detalles de login
             </Heading>
 
+            <Input m={2} placeholder="Nombre de usuario" />
+            <Text m={1}>usuario</Text>
             <FormControl id="email">
               <FormLabel>Correo Electronico</FormLabel>
               <Input type="email" />

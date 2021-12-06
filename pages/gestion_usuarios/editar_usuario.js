@@ -15,7 +15,8 @@ import {
   MdBuild,
   Editable,
   EditablePreview,
-  EditableInput,Switch
+  EditableInput,
+  Switch,
 } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 
@@ -76,36 +77,41 @@ function editar_usuario() {
               <EditablePreview />
               <EditableInput />
             </Editable>
+            <Editable
+              borderStyle="solid"
+              rounded={6}
+              borderWidth="1px"
+              color="gray.500"
+              m={2}
+              defaultValue="Gonzales"
+            >
+              <EditablePreview />
+              <EditableInput />
+            </Editable>
 
-
-            <Flex borderStyle="solid"
-            borderColor="gray.200"
-            borderWidth="2px"
-            background="gray.200"
-            direction="column"
-            w="100%"
-            p={4}
-            rounded={6}>
-
-         <FormControl display="flex">
-            <FormLabel >
-              Habilitar opciones
-            </FormLabel>
-            <Switch  />
-          </FormControl>
-            <FormControl m={1} id="country">
-              <FormLabel m={2}>Rol del Usuario</FormLabel>
-              <Select m={2} placeholder="Rol...">
-                <option>Capturador</option>
-                <option>Administrador</option>
-                <option>Director</option>
-              </Select>
-            </FormControl>
+            <Flex
+              borderStyle="solid"
+              borderColor="gray.200"
+              borderWidth="2px"
+              background="gray.200"
+              direction="column"
+              w="100%"
+              p={4}
+              rounded={6}
+            >
+              <FormControl display="flex">
+                <FormLabel>Habilitar opciones</FormLabel>
+                <Switch />
+              </FormControl>
+              <FormControl m={1} id="country">
+                <FormLabel m={2}>Rol del Usuario</FormLabel>
+                <Select m={2} placeholder="Rol...">
+                  <option>Capturador</option>
+                  <option>Administrador</option>
+                  <option>Director</option>
+                </Select>
+              </FormControl>
             </Flex>
-        
-
-
-
           </Flex>
 
           <Box
@@ -134,15 +140,16 @@ function editar_usuario() {
               fontSize="2xl"
             >
               Detalles de login
-
+              <FormLabel htmlFor="email-alerts" mb="0">
+                editar opciones de login
+              </FormLabel>
               <FormControl display="flex" alignItems="center">
-            <FormLabel htmlFor="email-alerts" mb="0">
-              editar opciones de login 
-            </FormLabel>
-            <Switch id="email-alerts" />
-          </FormControl>
-            </Heading> 
-
+                <Switch id="email-alerts" />
+              </FormControl>
+          
+            </Heading>
+            <Text m={1}>usuario</Text>
+              <Input m={2} placeholder="Nombre de usuario" />
             <FormControl id="email">
               <FormLabel>Correo Electronico</FormLabel>
               <Input type="email" />
@@ -155,7 +162,6 @@ function editar_usuario() {
                 placeholder="Enter password"
               />
             </InputGroup>
-
           </Flex>
         </Flex>
 
