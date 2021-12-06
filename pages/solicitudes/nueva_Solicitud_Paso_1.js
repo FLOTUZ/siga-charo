@@ -38,7 +38,7 @@ function nueva_Solicitud_Paso_1() {
                 <Box bg='white' w='100%' p={5} color='white'></Box>
                 <Box><Progress  m={5} value={30} />
                     <Flex w='170vh' alignItems="center" justifyContent="center">
-                    <Progress  m={5} value={30} />
+            
                         <Flex alignItems="center" justifyContent="center"  w='100vh'>
                             <Box p='4' bg='green.400' rounded={40}>
                                 1
