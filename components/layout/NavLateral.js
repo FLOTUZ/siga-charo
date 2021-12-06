@@ -41,7 +41,7 @@ const NavLateral = () => {
     {
       id: 5,
       nombre: "Usuarios",
-      url: "/gestion_usuarios/usuarios",
+      url: "/gestion_usuarios",
 
       icono: <FaUserFriends size="2rem" />,
     },
