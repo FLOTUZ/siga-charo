@@ -11,6 +11,7 @@ async function Consultar(url = "", params = {}) {
     return respuesta;
   } catch (error) {
     console.error(error);
+    return error;
   }
 }
 
@@ -35,7 +36,7 @@ async function Crear(url = "", data = {}) {
 async function Actualizar(url = "", data = {}) {
   try {
     let respuesta = await Axios({
-      method: "PUT",
+      method: "PATCH",
       url: process.env.NEXT_PUBLIC_API_URL + url,
       data: data,
     });
@@ -54,7 +55,7 @@ async function Eliminar(url = "") {
       method: "DELETE",
       url: process.env.NEXT_PUBLIC_API_URL + url,
     });
-    return(respuesta);
+    return respuesta;
   } catch (error) {
     console.error(error);
     return error;
