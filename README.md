@@ -179,3 +179,6 @@ Para aprender más sobre Next.js, echale un ojo a los siguientes recursos:
   
 
 El camino facil para desplegar tu Next.js app es usar [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) una vez teniendo el proyecto en [Github](github.com) podrás enlazarlo fácilmente a un entorno de producción en Vercel Platform
+
+
+// Texto de prueba
