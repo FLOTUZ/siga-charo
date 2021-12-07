@@ -2,6 +2,8 @@ import Head from "next/head";
 import {
   FormControl,
   FormLabel,
+  FormErrorMessage,
+  FormHelperText,
   Text,
   Button,
   Flex,
@@ -13,8 +15,21 @@ import {
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
+import { useState } from "react";
 
 function nueva_Solicitud_Paso_1() {
+
+  const [name, setName] = useState("");
+  const [apellidoP, setApellidoP] = useState("");
+  const [apellidoM, setApellidoM] = useState("");
+  const [celular, setCelular] = useState("");
+  const [telefono, setTelefono] = useState("");
+
+  const ejecutar = async (name, apellidoP, apellidoM, celular, telefono) =>{
+    let datos = [name, apellidoP, apellidoM, celular, telefono];
+    console.log(datos);
+  };
+
   let rutas = [
     {
       url: "/nueva_solicitud_paso_1",
@@ -72,18 +87,23 @@ function nueva_Solicitud_Paso_1() {
                 rounded={6}
               >
                 <Text m={1}>Nombre(s)</Text>
-                <Input m={1} id="name" placeholder="Nombre(s)" required={true} />
+                <Input m={1} id="name" value={name} onChange={(e) => { setName(e.currentTarget.value); }} placeholder="Nombre(s)" required={true} />
                 <Text m={1}>Apellido Paterno</Text>
-                <Input m={1} id="apellidoP" placeholder="Apellido" required={true} />
+                <Input m={1} id="apellidoP" value={apellidoP} onChange={(e) => { setApellidoP(e.currentTarget.value); }} placeholder="Apellido" required={true} />
                 <Text m={1}>Apellido Materno</Text>
-                <Input m={1} id="apellidoM" placeholder="Apellido Materno" required={true} />
+                <Input m={1} id="apellidoM" value={apellidoM} onChange={(e) => { setApellidoM(e.currentTarget.value); }} placeholder="Apellido Materno" required={true} />
                 <Text m={1}>Telefono Celular</Text>
-                <Input m={1} id="celular" placeholder="Celular" required={true} />
+                <Input m={1} id="celular" value={celular} onChange={(e) => { setCelular(e.currentTarget.value); }} type="tel" placeholder="Celular" required={true} />
                 <Text m={1}>Telefono</Text>
-                <Input m={1} id="telefono" placeholder="Telefono" required={true} />
+                <Input m={1} id="telefono" value={telefono} onChange={(e) => { setTelefono(e.currentTarget.value); }} type="tel" placeholder="Telefono" required={true} />
               </Flex>
             </Flex>
           </Box>
+
+          <Button colorScheme="teal" variant="solid" mr="4" onClick={(event) => ejecutar(name, apellidoP, apellidoM, celular, telefono)}>
+                    test
+          </Button>
+
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Flex w="170vh" alignItems="center" justifyContent="center">
             <Box p="2"></Box>
