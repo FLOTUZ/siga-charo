@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-
 function nuevaSesion(key, value, vidaDeLaSesionMins = 10) {
-  let expirationDate = new Date(new Date().getTime() + 60000 * vidaDeLaSesionMins);
+  let expirationDate = new Date(
+    new Date().getTime() + 60000 * vidaDeLaSesionMins
+  );
   let newValue = {
     value: value,
     expirationDate: expirationDate.toISOString(),
@@ -9,15 +9,15 @@ function nuevaSesion(key, value, vidaDeLaSesionMins = 10) {
   window.sessionStorage.setItem(key, JSON.stringify(newValue));
 }
 
-function obtenerSesion(key) {
-  let session = window.sessionStorage.getItem(key);
+function sesion() {
+  let session = window.sessionStorage.getItem("user");
   if (session) {
     session = JSON.parse(session);
     if (session.expirationDate < new Date().toISOString()) {
-      window.sessionStorage.removeItem(key);
+      window.sessionStorage.removeItem("user");
       return null;
     }
-    nuevaSesion(key, session.value); //Se renueva la sesion
+    nuevaSesion("user", session.value); //Se renueva la sesion
     return session.value;
   }
   return null;
@@ -25,5 +25,5 @@ function obtenerSesion(key) {
 
 module.exports = {
   nuevaSesion,
-  obtenerSesion,
+  sesion,
 };

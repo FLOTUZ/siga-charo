@@ -1,5 +1,9 @@
 import Scaffold from "../../components/layout/Scaffold";
+import Router from "next/router";
+import { Consultar, Crear } from "../../services/API";
 import {
+  useToast,
+  useDisclosure,
   Switch,
   Button,
   FormControl,
@@ -10,27 +14,139 @@ import {
   Flex,
   Spacer,
   HStack,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Stack,
 } from "@chakra-ui/react";
-import { BiXCircle, BiUpArrowCircle } from "react-icons/bi";
-import { useState } from "react";
-import Router from "next/router";
 
+import { ChevronDownIcon } from "@chakra-ui/icons";
+
+import { BiXCircle, BiUpArrowCircle, BiSave } from "react-icons/bi";
+import { GiCancel } from "react-icons/gi";
+import { useEffect, useState, useRef } from "react";
+import { sesion } from "../../utils/Utils";
+import { useRouter } from "next/router";
 function AgregarApoyo() {
+  //------------------ Estado de la interfaz  ---------------
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [cargandoUnidades, setCargandoUnidades] = useState(true);
+  const btnRef = useRef();
+  const toast = useToast();
+  //------------------ Datos de apoyo  ---------------
   const [nombreApoyo, setNombreApoyo] = useState("");
-  const [encargado, setEncargado] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [costo, setCosto] = useState(0.0);
-  const [activo, setActivo] = useState(true);
+  const [activo, setActivo] = useState(false);
+  const [vigencia, setVigencia] = useState("");
+  //------------------ Datos de unidad  ---------------
+  const [unidad, setUnidad] = useState({ idUnidad: 0, nombre: "" });
+  const [listaDeUnidades, setListaDeUnidades] = useState([]);
+  const [nuevaUnidad, setNuevaUnidad] = useState("");
+  //------------------ Usuario Logueado  ---------------
+  const [usuarioLogueado, setUsuarioLogueado] = useState({
+    idUsuario: 0,
+    nombreUsuario: "",
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    email: "",
+    puesto: "",
+    haceSolicitudes: false,
+    altaDeApoyos: false,
+    autorizaApoyos: false,
+    haceReportes: false,
+    administraSistema: false,
+    activo: false,
+  });
 
-  const guardar = async () => {
-    let apoyoAGuardar = {
-      nombreApoyo,
-      encargado,
-      descripcion,
-      costo,
+  useEffect(() => {
+    let usuario = sesion();
+    setUsuarioLogueado(usuario);
+  }, []);
+
+  const altaUnidad = async () => {
+    let respuesta = await Crear("/unidades", { nombre: nuevaUnidad });
+    if (respuesta.status == 200) {
+      consultarUnidades();
+      toast({
+        title: "Nueva unidad Creada",
+        description: `La unidad ${nuevaUnidad} se ha creado`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+  const consultarUnidades = async () => {
+    let respuesta = await Consultar("/unidades");
+
+    if (respuesta.status == 200) {
+      setListaDeUnidades(respuesta.data);
+      setCargandoUnidades(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+  const guardarApoyo = async () => {
+    let programa = {
+      nombre: nombreApoyo,
+      costoUnitario: Number(costo),
+      descripcion: descripcion,
+      habilitado: activo,
+      fechaRegistro: new Date(Date.now()).toISOString(),
+      fechaFinalizacion: new Date(vigencia).toISOString(),
+      usuarioId: usuarioLogueado.idUsuario,
+      unidadId: unidad.idUnidad,
     };
 
-    console.log(apoyoAGuardar);
+    let respuesta = await Crear("/programas", programa);
+
+    if (respuesta.status == 200) {
+      toast({
+        title: "Apoyo Creado",
+        description: "Se ha creado el apoyo",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      router.back();
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
 
   let rutas = [
@@ -47,99 +163,170 @@ function AgregarApoyo() {
       descripcion="Agregar Apoyo"
       rutas={rutas}
     >
-      <Flex>
-        <Spacer />
-        <HStack m="2rem">
-          <FormLabel htmlFor="email-alerts" mb="0">
-            Activo
-          </FormLabel>
-          <Switch
-            size="lg"
-            align="right"
-            onChange={() => {
-              setActivo(!activo);
-            }}
-          />
-        </HStack>
-      </Flex>
+      <Box p="1rem">
+        <Flex
+          borderStyle="solid"
+          borderColor="gray.200"
+          borderWidth="2px"
+          direction="column"
+          w="100%"
+          p={10}
+          rounded={6}
+        >
+          <Flex>
+            <Spacer />
+            <HStack spacing="1rem">
+              <FormLabel htmlFor="email-alerts" mb="0">
+                Activo
+              </FormLabel>
+              <Switch
+                isChecked={activo}
+                size="lg"
+                align="right"
+                onChange={() => {
+                  setActivo(!activo);
+                }}
+              />
+            </HStack>
+          </Flex>
+          <HStack spacing="3rem">
+            <FormControl id="Nombre del Apoyo">
+              <FormLabel> Nombre del Apoyo:</FormLabel>
+              <Input
+                variant="filled"
+                placeholder=""
+                onChange={(e) => {
+                  setNombreApoyo(e.target.value);
+                }}
+              />
+              <FormLabel htmlFor="unidad">Unidad de medida</FormLabel>
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton
+                      isActive={isOpen}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                      onClick={() => {
+                        setCargandoUnidades(true);
+                        consultarUnidades();
+                      }}
+                    >
+                      {isOpen
+                        ? unidad.nombre
+                        : unidad.nombre != ""
+                        ? unidad.nombre
+                        : "Seleccione"}
+                    </MenuButton>
+                    <MenuList>
+                      {cargandoUnidades ? (
+                        <Stack p="0.5rem">
+                          <Skeleton height="1.5rem" />
+                          <Skeleton height="1.5rem" />
+                          <Skeleton height="1.5rem" />
+                        </Stack>
+                      ) : listaDeUnidades.length == 0 ? (
+                        <MenuItem>No hay unidades</MenuItem>
+                      ) : (
+                        listaDeUnidades.map((u, index) => {
+                          return (
+                            <MenuItem key={index} onClick={() => setUnidad(u)}>
+                              {u.nombre}
+                            </MenuItem>
+                          );
+                        })
+                      )}
+                      <MenuDivider />
+                      <MenuItem ref={btnRef} onClick={onOpen}>
+                        Crear nueva unidad
+                      </MenuItem>
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
 
-      <Box m={5}>
-        <Flex m={2}>
-          <Flex
-            borderStyle="solid"
-            borderColor="gray.200"
-            borderWidth="2px"
-            direction="column"
-            w="100%"
-            p={10}
-            rounded={6}
-          >
-            <Flex w="48%" p={1} rounded={6}>
-              <FormControl id="Nombre del Apoyo">
-                <FormLabel> Nombre del Apoyo:</FormLabel>
-                <Input
-                  placeholder=""
-                  onChange={(e) => {
-                    setNombreApoyo(e.target.value);
-                  }}
-                />
-              </FormControl>
-            </Flex>
+              <FormLabel htmlFor="fecha-vigencia">Fecha de vigencia</FormLabel>
+              <Input
+                id="fecha-vigencia"
+                type="date"
+                width="100%"
+                placeholder="Fecha de vigencia"
+                variant="filled"
+                value={vigencia}
+                onChange={(e) => setVigencia(e.target.value)}
+              />
 
-            <Flex w="48%" rounded={6}></Flex>
+              <FormLabel htmlFor="descripcion">Descripción: </FormLabel>
+              <Textarea
+                id="descripcion"
+                variant="filled"
+                placeholder="La descripción es..."
+                onChange={(e) => setDescripcion(e.target.value)}
+              />
+
+              <FormLabel htmlFor="costo">Costo Unitario: </FormLabel>
+
+              <Input
+                id="costo"
+                variant="filled"
+                type="number"
+                placeholder="$0.00"
+                onChange={(e) => setCosto(e.target.value)}
+              />
+            </FormControl>
+          </HStack>
+
+          <Flex>
+            <Spacer />
+            <HStack my={2} spacing={2}>
+              <Button
+                colorScheme="red"
+                variant="outline"
+                rightIcon={<GiCancel />}
+                onClick={() => Router.back()}
+              >
+                Cancelar
+              </Button>
+              <Button
+                colorScheme="blue"
+                variant="solid"
+                rightIcon={<BiSave />}
+                onClick={guardarApoyo}
+              >
+                Guardar
+              </Button>
+            </HStack>
           </Flex>
         </Flex>
       </Box>
-
-      <Flex
-        m={6}
-        borderStyle="solid"
-        borderColor="gray.200"
-        borderWidth="2px"
-        background="gray.150"
-        direction="column"
-        rounded={6}
-        w="96%"
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
       >
-        <Flex w="88%">
-          <FormLabel p="4" m={1}>
-            Descripción:{" "}
-          </FormLabel>
-          <Textarea m={4} placeholder="La descripción es..." />
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Crear nueva unidad</DrawerHeader>
 
-          <FormLabel p="4">Costo: </FormLabel>
-          <FormControl m={1} id="Costo" marginTop="30px">
+          <DrawerBody>
             <Input
-              m={4}
-              type="number"
-              placeholder="$0.00"
-              onChange={(e) => setCosto(e.target.value)}
+              placeholder="Nombre de la unidad"
+              onChange={(e) => setNuevaUnidad(e.target.value)}
             />
-          </FormControl>
-        </Flex>
-      </Flex>
+          </DrawerBody>
 
-      <Flex m={5} p={10}>
-        <Spacer />
-        <Button
-          colorScheme="red"
-          variant="outline"
-          rightIcon={<BiXCircle size="25px " />}
-          m={5}
-          onClick={() => Router.back()}
-        >
-          Descartar
-        </Button>
-        <Button
-          colorScheme="blue"
-          variant="solid"
-          rightIcon={<BiUpArrowCircle size="25px " />}
-          m={5}
-          onClick={guardar}
-        >
-          Guardar
-        </Button>
-      </Flex>
+          <DrawerFooter>
+            <Box>
+              <Button onClick={onClose}>Cancelar</Button>
+              <Button colorScheme="blue" onClick={() => altaUnidad()}>
+                Guardar
+              </Button>
+            </Box>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </Scaffold>
   );
 }

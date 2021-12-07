@@ -2,11 +2,12 @@ import Axios from "axios";
 // Obtener los datos de una tabla de
 // acuerdo a sus parametros
 async function Consultar(url = "", params = {}) {
+  let filtros = "?filter=" + encodeURIComponent(JSON.stringify(params));
   try {
     let respuesta = await Axios({
       method: "GET",
       url: process.env.NEXT_PUBLIC_API_URL + url,
-      params: params,
+      params: filtros,
     });
     return respuesta;
   } catch (error) {

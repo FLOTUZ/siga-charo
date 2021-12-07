@@ -1,7 +1,7 @@
 import Scaffold from "../components/layout/Scaffold";
 import Link from "next/link";
-import { useEffect } from "react";
-import { obtenerSesion } from "../utils/Utils";
+import { useEffect, useState } from "react";
+import { sesion } from "../utils/Utils";
 import {
   WrapItem,
   Wrap,
@@ -18,14 +18,15 @@ import {
   Center,
   AspectRatio,
 } from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, WarningIcon} from "@chakra-ui/icons";
-import {AiFillFileAdd} from "react-icons/ai"
+import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
+import { AiFillFileAdd } from "react-icons/ai";
 
 function Dashboard() {
+  const [usuarioLoguado, setUsuarioLoguado] = useState({});
   useEffect(() => {
-    let user = obtenerSesion("user");
-    console.log(user);
-  });
+    let user = sesion();
+    setUsuarioLoguado(user);
+  }, []);
 
   let rutas = [
     {
@@ -42,7 +43,12 @@ function Dashboard() {
 
   return (
     <>
-      <Scaffold titulo="Inicio" rutas={rutas}>
+      <Scaffold
+        titulo={`Bienvenid(a) ${
+          usuarioLoguado != undefined ? usuarioLoguado.nombreUsuario : ""
+        }`}
+        rutas={rutas}
+      >
         <Wrap spacing="5rem" m={10} textAlign="center">
           <WrapItem>
             <Center w="140px" h="100px" bg="core.850" borderRadius="10px">
@@ -92,7 +98,7 @@ function Dashboard() {
               </Stat>
             </Center>
           </WrapItem>
-       
+
           <WrapItem>
             <Center w="140px" h="100px" bg="core.850" borderRadius="10px">
               <Stat>
@@ -112,8 +118,8 @@ function Dashboard() {
           <Link href="/solicitudes/catalogo">
             <a>
               <WrapItem>
-                <Button 
-                  rightIcon={<AiFillFileAdd size="40px "  color="white" />}
+                <Button
+                  rightIcon={<AiFillFileAdd size="40px " color="white" />}
                   colorScheme="white"
                   variant="ghost"
                   size="lg"
@@ -122,7 +128,7 @@ function Dashboard() {
                   w="280px"
                   h="100px"
                 >
-                  <Text m = "1" color="white" fontSize="20px">
+                  <Text m="1" color="white" fontSize="20px">
                     Nueva Solicitud
                   </Text>
                 </Button>
