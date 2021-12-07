@@ -30,8 +30,6 @@ function nueva_Solicitud_Paso_1() {
 
 
   const ejecutar = async () => {
-    let datosPersonales = { name, apellidoP, apellidoM, celular, telefono };
-    console.log(datosPersonales);
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_2",
       query: { name, apellidoP, apellidoM, celular, telefono },
@@ -154,17 +152,6 @@ function nueva_Solicitud_Paso_1() {
               </Flex>
             </Flex>
           </Box>
-
-          <Button
-            colorScheme="teal"
-            variant="solid"
-            mr="4"
-            onClick={(event) =>
-              ejecutar(name, apellidoP, apellidoM, celular, telefono)
-            }
-          >
-            test
-          </Button>
 
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Flex w="170vh" alignItems="center" justifyContent="center">

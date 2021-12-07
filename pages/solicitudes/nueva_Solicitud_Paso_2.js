@@ -12,17 +12,32 @@ import {
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
-import { useRouter } from 'next/router'
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 function nueva_Solicitud_Paso_2() {
-
+  const { query } = useRouter();
   const router = useRouter();
-  useEffect(()=>{
+
+  const [localidad, setLocalidad] = useState("");
+
+  useEffect(() => {
     console.log(router.query);
-  },[])
-  
-  
+  }, []);
+
+  const ejecutar = async () => {
+    let name = query.name;
+    let apellidoP = query.apellidoP;
+    let apellidoM = query.apellidoM;
+    let celular = query.celular;
+    let telefono = query.telefono;
+
+    router.push({
+      pathname: "/solicitudes/nueva_Solicitud_Paso_3",
+      query: {name, apellidoP, apellidoM, celular, telefono, localidad },
+    });
+  };
+
   let rutas = [
     {
       url: "/nueva_solicitud_paso_2",
@@ -78,14 +93,22 @@ function nueva_Solicitud_Paso_2() {
                 p={2}
                 rounded={6}
               >
-                <Text m={1}>Lugar de Origen</Text>
-                <Select m={1} placeholder="Lugar...">
-                  <option>Ejemplo 1</option>
-                  <option>Ejemplo 2</option>
-                  <option>Ejemplo 3</option>
+                <Text m={1}>Localidad</Text>
+                <Select
+                  m={1}
+                  id="localidad"
+                  value={localidad}
+                  onChange={(e) => {
+                    setLocalidad(e.currentTarget.value);
+                  }}
+                  placeholder="Lugar..."
+                  required={true}
+                >
+                  <option>Charo</option>
+                  <option>La Goleta</option>
                 </Select>
                 <Button m={1} colorScheme="teal" variant="solid">
-                  Agregar Nuevo Lugar de Origen
+                  Agregar Nueva Localidad
                 </Button>
               </Flex>
             </Flex>
@@ -95,13 +118,9 @@ function nueva_Solicitud_Paso_2() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Link href="/solicitudes/nueva_Solicitud_Paso_3">
-                <a>
-                  <Button colorScheme="teal" variant="solid" mr="4">
-                    Siguiente
-                  </Button>
-                </a>
-              </Link>
+              <Button colorScheme="teal" variant="solid" mr="4" onClick={()=>ejecutar()}>
+                Siguiente
+              </Button>
               <Link href="/dashboard">
                 <a>
                   <Button colorScheme="teal" variant="outline">

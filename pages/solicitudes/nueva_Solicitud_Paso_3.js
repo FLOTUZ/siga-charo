@@ -8,15 +8,24 @@ import {
   Box,
   Input,
   Spacer,
-  Select,Link
+  Select,
+  Link,
 } from "@chakra-ui/react";
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 function nueva_Solicitud_Paso_1() {
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(router.query);
+  }, []);
+
   let rutas = [
     {
-      url: "/nueva_solicitud_paso_1",
+      url: "/nueva_solicitud_paso_3",
       nombre: "Nueva Solicitud",
       isCurrentPage: true,
     },
