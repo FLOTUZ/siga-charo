@@ -12,8 +12,17 @@ import {
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
+import { useRouter } from 'next/router'
+import { useEffect } from "react";
 
 function nueva_Solicitud_Paso_2() {
+
+  const router = useRouter();
+  useEffect(()=>{
+    console.log(router.query);
+  },[])
+  
+  
   let rutas = [
     {
       url: "/nueva_solicitud_paso_2",
