@@ -1,4 +1,7 @@
+import Scaffold from "../../components/layout/Scaffold";
+import Link from "next/link";
 import Head from "next/head";
+import  React  from "react";
 import {
   FormControl,
   FormLabel,
@@ -9,12 +12,23 @@ import {
   Input,
   Spacer,
   Switch,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  HStack,
+  Progress,
 } from "@chakra-ui/react";
-import { Progress } from "@chakra-ui/react";
-import Scaffold from "../../components/layout/Scaffold";
-import Link from "next/link";
+
 
 function NuevoBeneficiarioMoralPaso1() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = React.useRef()
+
   let rutas = [
     {
       url: "/nuevo_beneficiario_moral_paso_1",
@@ -35,6 +49,48 @@ function NuevoBeneficiarioMoralPaso1() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
+        <HStack>
+       <Spacer />
+       <Spacer />
+       <Spacer />
+       <Spacer />
+       <Spacer />
+       <Spacer />
+       <Spacer />
+       <Spacer />
+       <>
+       <Flex margin="2rem">
+       <Button ref={btnRef} colorScheme='teal' onClick={onOpen} margin="2rem">
+        Agregar Comunidad
+      </Button>
+       </Flex>
+      
+      <Drawer
+        isOpen={isOpen}
+        placement='right'
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Agregar Comunidad</DrawerHeader>
+
+          <DrawerBody>
+            <Input placeholder='Comunidad' />
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button variant='outline' mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme='blue'>Save</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
+    <Spacer />
+       </HStack>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={30} />
