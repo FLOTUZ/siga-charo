@@ -18,7 +18,7 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useState } from "react";
 
-function nueva_Solicitud_Paso_1() {
+function Nueva_Solicitud_Paso_1() {
 
   const router = useRouter();
 
@@ -87,7 +87,7 @@ function nueva_Solicitud_Paso_1() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex height="50vh" w="170vh" justifyContent="center">
+            <Flex height="100vh" w="170vh" justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -240,4 +240,4 @@ function nueva_Solicitud_Paso_1() {
   );
 }
 
-export default nueva_Solicitud_Paso_1;
+export default Nueva_Solicitud_Paso_1;

@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-function nueva_Solicitud_Paso_2() {
+function Nueva_Solicitud_Paso_2() {
   const { query } = useRouter();
   const router = useRouter();
 
@@ -141,4 +141,4 @@ function nueva_Solicitud_Paso_2() {
   );
 }
 
-export default nueva_Solicitud_Paso_2;
+export default Nueva_Solicitud_Paso_2;

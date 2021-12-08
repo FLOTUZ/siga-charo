@@ -15,12 +15,12 @@ import {
 } from '@chakra-ui/react';
 import Scaffold from "../../components/layout/Scaffold";
 
-function ver_solicitud() {
+function Ver_solicitud() {
 
     let rutas = [
         {
           url: "/ver_solicitud",
-          nombre: "Ver Solicitud",
+          nombre: "ver Solicitud",
           isCurrentPage: true,
         },
       ];
@@ -189,4 +189,4 @@ function ver_solicitud() {
     );
 }
 
-export default ver_solicitud;
+export default Ver_solicitud;

@@ -10,16 +10,18 @@ import {
   Spacer,
   Select,
   Link,
+  useToast,
 } from "@chakra-ui/react";
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Crear } from "../../services/API";
 
-function nueva_Solicitud_Paso_1() {
-
+function Nueva_Solicitud_Paso_3() {
   const { query } = useRouter();
   const router = useRouter();
+  const toast = useToast();
 
   const [apoyo, setApoyo] = useState("");
   const [cantidad, setCantidad] = useState("");
@@ -33,44 +35,68 @@ function nueva_Solicitud_Paso_1() {
 
   const ejecutar = async () => {
     let beneficiario = {
-      nombre : query.name,
-      direccion : query.direccion,
-      rfc : query.rfc,
-      telefonoLocal : query.telefono,
-      telefonoCelular : query.celular,
-      correo : query.correo,
-      fechaRegistro: new Date(Date.now()).toISOString() ,
+      nombre: query.name,
+      direccion: query.direccion,
+      rfc: query.rfc,
+      telefonoLocal: query.telefono,
+      telefonoCelular: query.celular,
+      correo: query.correo,
+      fechaRegistro: new Date(Date.now()).toISOString(),
       fechaBaja: new Date(Date.now()).toISOString(),
       usuarioCargaId: 1,
       comunidadId: 1,
       //localidad : query.localidad,
-    }
+    };
 
-    let personaFisica ={
-      apellidoPaterno : query.apellidoP,
-      apellidoMaterno : query.apellidoM,
+    let respuestaB = await Crear("/beneficiarios", beneficiario);
+
+    let personaFisica = {
+      apellidoPaterno: query.apellidoP,
+      apellidoMaterno: query.apellidoM,
       estadoSocioEconomico: "NA",
-      fechaNacimiento : query.nacimiento,
-      curp : query.curp,
+      fechaNacimiento: new Date(query.nacimiento).toISOString(),
+      curp: new Date(Date.now()).toISOString(),
       beneficiarioId: 1,
-    }
+    };
 
-    let Solicitud ={
-      fechaSolicitud:new Date(fecha).toISOString(),
-      fechaAutorizacion:new Date(Date.now()).toISOString(),
+    let respuestaP = await Crear("/personas-fisicas", personaFisica);
+
+    let solicitud = {
+      fechaSolicitud: new Date(fecha).toISOString(),
+      fechaAutorizacion: new Date(Date.now()).toISOString(),
       estatus: "pendiente",
-      cantidad:cantidad,
-      descuento:descuento,
-      costoTotal:total,
+      cantidad: Number(cantidad),
+      descuento: Number(descuento),
+      costoTotal: Number(total),
       motivoRechazo: "NA",
-      fechaEntrega:new Date(Date.now()).toISOString(),
-      notas:"NA",
-      usuarioAutorizadorId:1,
-      usuarioEntregaId:1,
-      programaId:1,
-      beneficiarioId:1,
-    }
+      fechaEntrega: new Date(Date.now()).toISOString(),
+      notas: "NA",
+      usuarioAutorizadorId: 1,
+      usuarioEntregaId: 1,
+      programaId: 1,
+      beneficiarioId: 1,
+    };
 
+    let respuestaS = await Crear("/solicitudes", solicitud);
+
+    if (respuestaS == 200) {
+      toast({
+        title: "Solicitud Creada",
+        description: "Se ha creado Solicitud",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      router.back();
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuestaS.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
 
   let rutas = [
@@ -203,7 +229,12 @@ function nueva_Solicitud_Paso_1() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Button colorScheme="teal" variant="solid" mr="4" onClick={()=>ejecutar()}>
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                mr="4"
+                onClick={() => ejecutar()}
+              >
                 Guardar
               </Button>
               <Link href="/dashboard">
@@ -220,4 +251,4 @@ function nueva_Solicitud_Paso_1() {
     </Scaffold>
   );
 }
-export default nueva_Solicitud_Paso_1;
+export default Nueva_Solicitud_Paso_3;

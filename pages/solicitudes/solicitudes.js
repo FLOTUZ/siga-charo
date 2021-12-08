@@ -16,7 +16,7 @@ import {
 
 
 
-function solicitudes() {
+function Solicitudes() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
 
@@ -110,4 +110,4 @@ function solicitudes() {
   );
 }
 
-export default solicitudes;
+export default Solicitudes;
