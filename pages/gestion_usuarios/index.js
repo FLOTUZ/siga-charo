@@ -12,6 +12,7 @@ import {
   DrawerContent,
   useDisclosure,
   Button,
+  Skeleton,
 } from "@chakra-ui/react";
 
 import { Consultar } from "../../services/API";
@@ -20,6 +21,7 @@ function Usuarios() {
   //TODO: Poner el drawer en un componente
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const [cargandoTabla, setCargandoTabla] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
 
   let rutas = [
@@ -43,6 +45,7 @@ function Usuarios() {
       });
       if (respuesta.status === 200) {
         setUsuarios(respuesta.data);
+        setCargandoTabla(true);
       } else {
         console.log("No hay data");
       }
@@ -68,7 +71,6 @@ function Usuarios() {
           </Button>
         </a>
       </Link>
-
       <Drawer onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -86,8 +88,9 @@ function Usuarios() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-
-      <IBMDataTable rows={usuarios}></IBMDataTable>
+      <Skeleton isLoaded={cargandoTabla}>
+        <IBMDataTable rows={usuarios}></IBMDataTable>
+      </Skeleton>
     </Scaffold>
   );
 }
