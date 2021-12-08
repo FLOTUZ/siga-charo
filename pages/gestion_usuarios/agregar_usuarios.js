@@ -5,6 +5,7 @@ import {
   FormHelperText,
   Box,
   Grid,
+  HStack,
   GridItem,
   Text,
   Button,
@@ -15,7 +16,8 @@ import {
   Select,
   InputGroup,
   useDisclosure,
-  useToast
+  useToast,
+  Switch,
 } from "@chakra-ui/react";
 import { duration } from "@mui/material";
 import { useRouter } from "next/router";
@@ -38,6 +40,9 @@ function Agregar_usuarios() {
   const [password, setpassword] = useState("");
   const [puesto, setpuesto] = useState("");
   const [email, setemail] = useState("");
+
+  const [haceSolicitudes, setHaceSolicitudes] = useState(false);
+  const [altaApoyos, setAltaApoyos] = useState(false);
 
   const guardarUsuario = async () => {
     try {
@@ -116,14 +121,40 @@ function Agregar_usuarios() {
             <Text m={1}>Apellidos</Text>
             <Input m={2} placeholder="Apellido Paterno" />
             <Input m={2} placeholder="Apellido Materno" />
+
             <FormControl m={1} id="Rol">
               <FormLabel m={2}>Rol del Usuario</FormLabel>
               <Select m={2} placeholder="Rol...">
+                <option>Personalizado</option>
                 <option>Capturador</option>
                 <option>Administrador</option>
                 <option>Director</option>
               </Select>
             </FormControl>
+            <Box >
+              <HStack spacing="1rem">
+                <FormLabel mb="0">Hace Solicitudes</FormLabel>
+                <Switch
+                  isChecked={haceSolicitudes}
+                  size="lg"
+                  align="right"
+                  onChange={() => {
+                    setHaceSolicitudes(!haceSolicitudes);
+                  }}
+                />
+              </HStack>
+              <HStack spacing="1rem">
+                <FormLabel mb="0">Alta de apoyos</FormLabel>
+                <Switch
+                  isChecked={altaApoyos}
+                  size="lg"
+                  align="right"
+                  onChange={() => {
+                    setAltaApoyos(!altaApoyos);
+                  }}
+                />
+              </HStack>
+            </Box>
           </Flex>
 
           <Box
