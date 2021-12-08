@@ -18,6 +18,8 @@ import {
   useDisclosure,
   useToast,
   Switch,
+  Collapse,
+  Lorem,Checkbox
 } from "@chakra-ui/react";
 import { duration } from "@mui/material";
 import { useRouter } from "next/router";
@@ -29,8 +31,6 @@ function Agregar_usuarios() {
   //----------Estado de la interfaz--------//
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cargandoUnidades, setCargandoUnidades] = useState(true);
-  const btnRef = useRef();
   const toast = useToast();
   //-------DATOS DE USUARIO-----------//
   const [nombreUsuario, setNombreApoyo] = useState("");
@@ -43,7 +43,6 @@ function Agregar_usuarios() {
 
   const [haceSolicitudes, setHaceSolicitudes] = useState(false);
   const [altaApoyos, setAltaApoyos] = useState(false);
-
   const guardarUsuario = async () => {
     try {
       let usuario = {
@@ -121,38 +120,27 @@ function Agregar_usuarios() {
             <Text m={1}>Apellidos</Text>
             <Input m={2} placeholder="Apellido Paterno" />
             <Input m={2} placeholder="Apellido Materno" />
-
-            <FormControl m={1} id="Rol">
-              <FormLabel m={2}>Rol del Usuario</FormLabel>
-              <Select m={2} placeholder="Rol...">
-                <option>Personalizado</option>
-                <option>Capturador</option>
-                <option>Administrador</option>
-                <option>Director</option>
-              </Select>
-            </FormControl>
-            <Box >
-              <HStack spacing="1rem">
-                <FormLabel mb="0">Hace Solicitudes</FormLabel>
-                <Switch
-                  isChecked={haceSolicitudes}
-                  size="lg"
-                  align="right"
-                  onChange={() => {
-                    setHaceSolicitudes(!haceSolicitudes);
-                  }}
-                />
-              </HStack>
-              <HStack spacing="1rem">
-                <FormLabel mb="0">Alta de apoyos</FormLabel>
-                <Switch
-                  isChecked={altaApoyos}
-                  size="lg"
-                  align="right"
-                  onChange={() => {
-                    setAltaApoyos(!altaApoyos);
-                  }}
-                />
+            <Box>
+              <FormControl m={1} id="Rol">
+                <FormLabel m={2}>Rol del Usuario</FormLabel>
+                <Select m={2} placeholder="Rol...">
+                  <option>Personalizado</option>
+                  <option>Capturador</option>
+                  <option>Administrador</option>
+                  <option>Director</option>
+                </Select>
+              </FormControl>
+              <FormLabel m={5}>Permisos personalizados</FormLabel>
+              <HStack spacing={10} direction="row">
+                <Checkbox size="md" colorScheme="green" defaultValue>
+                  Aceptar apoyos
+                </Checkbox>
+                <Checkbox size="md" colorScheme="green" defaultValue>
+                  Registrar apoyos
+                </Checkbox>
+                <Checkbox size="md" colorScheme="green" defaultValue >
+                  Dar de alta un apoyo
+                </Checkbox>
               </HStack>
             </Box>
           </Flex>
