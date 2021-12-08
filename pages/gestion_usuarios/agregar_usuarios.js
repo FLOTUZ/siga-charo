@@ -14,71 +14,72 @@ import {
   Input,
   Select,
   InputGroup,
+  useDisclosure,
+  useToast
 } from "@chakra-ui/react";
 import { duration } from "@mui/material";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Scaffold from "../../components/layout/Scaffold";
+import { useState, useRef } from "react";
 import { Crear } from "../../services/API";
 
-function agregar_usuarios() {
-
+function Agregar_usuarios() {
   //----------Estado de la interfaz--------//
   const router = useRouter();
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [cargandoUnidades, setCargandoUnidades] = useState(true);
   const btnRef = useRef();
   const toast = useToast();
   //-------DATOS DE USUARIO-----------//
   const [nombreUsuario, setNombreApoyo] = useState("");
-  const [nombre,setnombre]= useState("");
+  const [nombre, setnombre] = useState("");
   const [apellidoPaterno, setapellidoPaterno] = useState("");
   const [apellidoMaterno, setapellidoMaterno] = useState("");
   const [password, setpassword] = useState("");
   const [puesto, setpuesto] = useState("");
   const [email, setemail] = useState("");
 
-const guardarUsuario = async()=>{
-  try{
-    let usuario ={
-      nombre:nombreUsuario,
-      nombre:nombre,
-      apellidoPaterno:apellidoPaterno,
-      apellidoPaterno:apellidoMaterno,
-      password:password,
-      puesto:puesto,
-      email:email,
-    };
-    let respuesta = await Crear ("/usuarios", usuario);
-    if(respuesta.status==200){
-      consultarUsuarios();
+  const guardarUsuario = async () => {
+    try {
+      let usuario = {
+        nombre: nombreUsuario,
+        nombre: nombre,
+        apellidoPaterno: apellidoPaterno,
+        apellidoPaterno: apellidoMaterno,
+        password: password,
+        puesto: puesto,
+        email: email,
+      };
+      let respuesta = await Crear("/usuarios", usuario);
+      if (respuesta.status == 200) {
+        consultarUsuarios();
+        toast({
+          title: "Nuevo usuario creado",
+          descripcion: `El usuario ${nuevoUsuario} se ha creado`,
+          status: "succes",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Oops.. Algo salio mal",
+          descripcion: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
       toast({
-        title:"Nuevo usuario creado",
-        descripcion:`El usuario ${nuevoUsuario} se ha creado`,
-        status:"succes",
-        duration:9000,
+        title: "Verifica los datos",
+        description: e.message,
+        status: "error",
+        duration: 9000,
         isClosable: true,
       });
-    }else{
-      toast({
-        title:"Oops.. Algo salio mal",
-        descripcion: respuesta.message,
-        status: "error",
-        duration:9000,
-        isClosable:true,
-      });
+      console.log(e.message);
     }
-  }catch (e) {
-    toast({
-      title: "Verifica los datos",
-      description: e.message,
-      status: "error",
-      duration: 9000,
-      isClosable: true,
-    });
-    console.log(e.message);
-  }
-};
-
+  };
 
   let rutas = [
     {
@@ -170,12 +171,13 @@ const guardarUsuario = async()=>{
           </Flex>
         </Flex>
 
-        <Box 
-            direction="column"
-            w="100%"
-            p={5}
-            rounded={6}>
-          <Button onClick={() => guardarUsuario()} m={1} colorScheme="teal" variant="solid">
+        <Box direction="column" w="100%" p={5} rounded={6}>
+          <Button
+            onClick={() => guardarUsuario()}
+            m={1}
+            colorScheme="teal"
+            variant="solid"
+          >
             Agregar
           </Button>
           <Button onClick={onClose} m={1} colorScheme="teal" variant="outline">
@@ -187,4 +189,4 @@ const guardarUsuario = async()=>{
   );
 }
 
-export default agregar_usuarios;
+export default Agregar_usuarios;
