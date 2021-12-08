@@ -58,50 +58,6 @@ function Usuarios() {
     },
   ];
 
-  let mich = {
-    id: "asda",
-    idUsuario: 1,
-    nombreUsuario: "Tokho",
-    nombre: "Michelle",
-    email: "mich@mail.com",
-    puesto: "Sistemas",
-  };
-
-  const rows = [
-    {
-      id: "asda",
-      idUsuario: 1,
-      nombreUsuario: "Tokho",
-      nombre: "Michelle",
-      email: "mich@mail.com",
-      puesto: "Sistemas",
-    },
-    {
-      id: "ba",
-      idUsuario: 29,
-      nombreUsuario: "Jaqui",
-      nombre: "Jaqui",
-      email: "flotuz10@gmail.com",
-      puesto: "SISTEMAS",
-    },
-    {
-      id: "cta",
-      idUsuario: 30,
-      nombreUsuario: "Thoko",
-      nombre: "Michelle",
-      email: "mich@mail.com",
-      puesto: "Sistemas",
-    },
-    {
-      id: "da",
-      idUsuario: 31,
-      nombreUsuario: "Jaqui",
-      nombre: "Jaqui",
-      email: "Jaqui",
-      puesto: "SISTEMAS",
-    },
-  ];
-
   useEffect(() => {
     const datosTabla = async () => {
       let respuesta = await Consultar("/usuarios", {
@@ -114,12 +70,9 @@ function Usuarios() {
         },
       });
       if (respuesta.status === 200) {
-        let listaU = respuesta.data;
-        listaU.map(()=>{
-          
-        })
-
         setUsuarios(respuesta.data);
+      } else {
+        console.log("No hay data");
       }
     };
     datosTabla();
@@ -132,6 +85,13 @@ function Usuarios() {
       llaves.map((header) => {
         head.push({ key: header, header: header });
       });
+
+      let listaU = [];
+      usuarios.map((u) => {
+        u.id = GenerateHash({ length: 8 });
+        listaU.push(u);
+      });
+      setRows2(listaU);
       setHeader2(head);
     }
   }, [usuarios]);
@@ -173,19 +133,7 @@ function Usuarios() {
         </DrawerContent>
       </Drawer>
 
-      {/* <IBMDataTable
-        headers={headers}
-        rows={usuarios}
-        filaClickeada={(index) => {
-          Router.push({
-            pathname: "/gestion_usuarios/editar_usuario",
-            query:{index}
-          })
-          console.log("Redireccion");
-        }}
-      ></IBMDataTable> */}
-
-      <DataTable rows={rows} headers={header2}>
+      <DataTable rows={rows2} headers={header2}>
         {({
           rows,
           headers,
