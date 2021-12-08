@@ -32,24 +32,45 @@ function nueva_Solicitud_Paso_1() {
   }, []);
 
   const ejecutar = async () => {
-    let solicitud = {
-      name : query.name,
-      apellidoP : query.apellidoP,
-      apellidoM : query.apellidoM,
+    let beneficiario = {
+      nombre : query.name,
       direccion : query.direccion,
       rfc : query.rfc,
-      nacimiento : query.nacimiento,
-      curp : query.curp,
-      celular : query.celular,
-      telefono : query.telefono,
+      telefonoLocal : query.telefono,
+      telefonoCelular : query.celular,
       correo : query.correo,
-      localidad : query.localidad,
-      apoyo:apoyo,
-      cantidad:cantidad,
-      fecha:fecha,
-      descuento:descuento,
-      total:total
+      fechaRegistro: new Date(Date.now()).toISOString() ,
+      fechaBaja: new Date(Date.now()).toISOString(),
+      usuarioCargaId: 1,
+      comunidadId: 1,
+      //localidad : query.localidad,
     }
+
+    let personaFisica ={
+      apellidoPaterno : query.apellidoP,
+      apellidoMaterno : query.apellidoM,
+      estadoSocioEconomico: "NA",
+      fechaNacimiento : query.nacimiento,
+      curp : query.curp,
+      beneficiarioId: 1,
+    }
+
+    let Solicitud ={
+      fechaSolicitud:new Date(fecha).toISOString(),
+      fechaAutorizacion:new Date(Date.now()).toISOString(),
+      estatus: "pendiente",
+      cantidad:cantidad,
+      descuento:descuento,
+      costoTotal:total,
+      motivoRechazo: "NA",
+      fechaEntrega:new Date(Date.now()).toISOString(),
+      notas:"NA",
+      usuarioAutorizadorId:1,
+      usuarioEntregaId:1,
+      programaId:1,
+      beneficiarioId:1,
+    }
+
   };
 
   let rutas = [
