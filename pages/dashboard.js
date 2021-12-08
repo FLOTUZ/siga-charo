@@ -5,27 +5,49 @@ import { sesion } from "../utils/Utils";
 import {
   WrapItem,
   Wrap,
-  Stack,
   Button,
-  Textarea,
   Text,
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText,
-  StatArrow,
-  StatGroup,
   Center,
   AspectRatio,
 } from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
 import { AiFillFileAdd } from "react-icons/ai";
+
+import { Consultar } from "../services/API";
 
 function Dashboard() {
   const [usuarioLoguado, setUsuarioLoguado] = useState({});
+  const [solicitudesEnEspera, setSolicitudesEnEspera] = useState("");
+  const [solicitudesAprobadas, setSolicitudesAprobadas] = useState("");
+
   useEffect(() => {
     let user = sesion();
     setUsuarioLoguado(user);
+  }, []);
+
+  useEffect(() => {
+    const enEspera = async () => {
+      let respuesta = await Consultar("/solicitudes", {
+        where: {
+          estatus: "pendiente",
+        },
+      });
+      setSolicitudesEnEspera(respuesta.data.length);
+    };
+
+    const aprobados = async () => {
+      let respuesta = await Consultar("/solicitudes", {
+        where: {
+          estatus: "aprobado",
+        },
+      });
+      setSolicitudesAprobadas(respuesta.data.length);
+    };
+
+    enEspera();
+    aprobados();
   }, []);
 
   let rutas = [
@@ -60,7 +82,7 @@ function Dashboard() {
                 </StatLabel>
                 <StatNumber>
                   <Text color="white" fontSize="20px">
-                    2
+                    {solicitudesEnEspera}
                   </Text>
                 </StatNumber>
               </Stat>
@@ -76,40 +98,7 @@ function Dashboard() {
                 </StatLabel>
                 <StatNumber>
                   <Text color="white" fontSize="20px">
-                    5
-                  </Text>
-                </StatNumber>
-              </Stat>
-            </Center>
-          </WrapItem>
-          <WrapItem>
-            <Center w="140px" h="100px" bg="core.850" borderRadius="10px">
-              <Stat>
-                <StatLabel>
-                  <Text color="white" fontSize="20px">
-                    Entregados Hoy
-                  </Text>
-                </StatLabel>
-                <StatNumber>
-                  <Text color="white" fontSize="20px">
-                    5
-                  </Text>
-                </StatNumber>
-              </Stat>
-            </Center>
-          </WrapItem>
-
-          <WrapItem>
-            <Center w="140px" h="100px" bg="core.850" borderRadius="10px">
-              <Stat>
-                <StatLabel>
-                  <Text color="white" fontSize="20px">
-                    Borradores
-                  </Text>
-                </StatLabel>
-                <StatNumber>
-                  <Text color="white" fontSize="20px">
-                    2
+                    {solicitudesAprobadas}
                   </Text>
                 </StatNumber>
               </Stat>
