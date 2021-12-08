@@ -116,36 +116,47 @@ function AgregarApoyo() {
     }
   };
   const guardarApoyo = async () => {
-    let programa = {
-      nombre: nombreApoyo,
-      costoUnitario: Number(costo),
-      descripcion: descripcion,
-      habilitado: activo,
-      fechaRegistro: new Date(Date.now()).toISOString(),
-      fechaFinalizacion: new Date(vigencia).toISOString(),
-      usuarioId: usuarioLogueado.idUsuario,
-      unidadId: unidad.idUnidad,
-    };
+    try {
+      let programa = {
+        nombre: nombreApoyo,
+        costoUnitario: Number(costo),
+        descripcion: descripcion,
+        habilitado: activo,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+        fechaFinalizacion: new Date(vigencia).toISOString(),
+        usuarioId: usuarioLogueado.idUsuario,
+        unidadId: unidad.idUnidad,
+      };
 
-    let respuesta = await Crear("/programas", programa);
+      let respuesta = await Crear("/programas", programa);
 
-    if (respuesta.status == 200) {
+      if (respuesta.status == 200) {
+        toast({
+          title: "Apoyo Creado",
+          description: "Se ha creado el apoyo",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        router.back();
+      } else {
+        toast({
+          title: "Oops.. Algo sucedió",
+          description: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
       toast({
-        title: "Apoyo Creado",
-        description: "Se ha creado el apoyo",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      router.back();
-    } else {
-      toast({
-        title: "Oops.. Algo sucedió",
-        description: respuesta.message,
+        title: "Verifica los campos",
+        description: e.message,
         status: "error",
         duration: 9000,
         isClosable: true,
       });
+      console.log(e.message);
     }
   };
 

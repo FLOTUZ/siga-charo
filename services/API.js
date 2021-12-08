@@ -6,8 +6,7 @@ async function Consultar(url = "", params = {}) {
   try {
     let respuesta = await Axios({
       method: "GET",
-      url: process.env.NEXT_PUBLIC_API_URL + url,
-      params: filtros,
+      url: process.env.NEXT_PUBLIC_API_URL + url + filtros,
     });
     return respuesta;
   } catch (error) {

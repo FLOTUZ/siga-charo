@@ -117,7 +117,7 @@ function IBMDataTable({ headers = [], rows = [], filaClickeada, editar }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                
+                {console.log(rows)}
                 {rows.map((row, index) => (
                   <TableRow
                     onClick={() => {
