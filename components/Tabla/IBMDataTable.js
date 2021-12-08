@@ -1,4 +1,3 @@
-import Link from "next/link";
 import GenerateHash from "random-hash";
 import {
   DataTable,
@@ -8,8 +7,6 @@ import {
   TableBatchAction,
   TableToolbarContent,
   TableToolbarSearch,
-  TableToolbarMenu,
-  TableToolbarAction,
   Table,
   TableHead,
   TableRow,
@@ -18,18 +15,17 @@ import {
   TableBody,
   TableSelectRow,
   TableCell,
-  Button,
   PaginationNav,
 } from "carbon-components-react";
-import { IconName } from "react-icons/bi";
 import { useState, useEffect } from "react";
 
-import { Delete, Save, Download } from "carbon-icons";
+import { Delete, Download } from "carbon-icons";
 
 function IBMDataTable({
   rows = [],
   exportar = undefined,
   eliminar = undefined,
+  clickeada = undefined,
 }) {
   const [headers, setHeaders] = useState([]);
   const [filas, setFilas] = useState([]);
@@ -129,7 +125,11 @@ function IBMDataTable({
                 {rows.map((row, i) => (
                   <TableRow
                     onClick={() => {
-                      console.log(row.cells);
+                      clickeada !== undefined
+                        ? clickeada()
+                        : console.log({
+                            message: "Funcion clikeada no definida",
+                          });
                     }}
                     key={i}
                     {...getRowProps({ row })}
