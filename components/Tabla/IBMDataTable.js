@@ -26,7 +26,11 @@ import { useState, useEffect } from "react";
 
 import { Delete, Save, Download } from "carbon-icons";
 
-function IBMDataTable({ rows = [] }) {
+function IBMDataTable({
+  rows = [],
+  exportar = undefined,
+  eliminar = undefined,
+}) {
   const [headers, setHeaders] = useState([]);
   const [filas, setFilas] = useState([]);
 
@@ -40,17 +44,17 @@ function IBMDataTable({ rows = [] }) {
 
       let registro = [];
       rows.map((u) => {
-        u.id = GenerateHash({ length: 8 });
+        u.id = GenerateHash({ length: 5 });
         registro.push(u);
       });
-      setFilas(filas);
       setHeaders(head);
+      setFilas(registro);
     }
-  }, [filas, rows]);
+  }, [rows]);
 
   return (
     <>
-      <DataTable rows={rows} headers={headers}>
+      <DataTable rows={filas} headers={headers}>
         {({
           rows,
           headers,
@@ -77,21 +81,12 @@ function IBMDataTable({ rows = [] }) {
                   }
                   renderIcon={Delete}
                   onClick={() =>
-                    console.log({ message: "Eliminando", selectedRows })
+                    eliminar !== undefined
+                      ? elimnar(selectedRows)
+                      : console.log({ message: "Funcion eliminar no definida" })
                   }
                 >
-                  Delete
-                </TableBatchAction>
-                <TableBatchAction
-                  tabIndex={
-                    getBatchActionProps().shouldShowBatchActions ? 0 : -1
-                  }
-                  renderIcon={Save}
-                  onClick={() => {
-                    console.log({ message: "Guardando", selectedRows });
-                  }}
-                >
-                  Save
+                  Eliminar
                 </TableBatchAction>
                 <TableBatchAction
                   tabIndex={
@@ -99,10 +94,14 @@ function IBMDataTable({ rows = [] }) {
                   }
                   renderIcon={Download}
                   onClick={() => {
-                    console.log({ message: "Descargando", selectedRows });
+                    exportar !== undefined
+                      ? exportar(selectedRows)
+                      : console.log({
+                          message: "Funcion exportar no definida",
+                        });
                   }}
                 >
-                  Download
+                  Exportar
                 </TableBatchAction>
               </TableBatchActions>
               <TableToolbarContent>
@@ -111,35 +110,8 @@ function IBMDataTable({ rows = [] }) {
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? -1 : 0
                   }
-                  onChange={() => onInputChange}
+                  onChange={onInputChange}
                 />
-                <TableToolbarMenu
-                  tabIndex={
-                    getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                  }
-                >
-                  <TableToolbarAction onClick={() => alert("Alert 1")}>
-                    Action 1
-                  </TableToolbarAction>
-                  <TableToolbarAction onClick={() => alert("Alert 2")}>
-                    Action 2
-                  </TableToolbarAction>
-                  <TableToolbarAction onClick={() => alert("Alert 3")}>
-                    Action 3
-                  </TableToolbarAction>
-                </TableToolbarMenu>
-                <Button
-                  tabIndex={
-                    getBatchActionProps().shouldShowBatchActions ? -1 : 0
-                  }
-                  onClick={() =>
-                    console.log({ message: "A;adiendo neuva columna" })
-                  }
-                  size="small"
-                  kind="primary"
-                >
-                  Add new
-                </Button>
               </TableToolbarContent>
             </TableToolbar>
             <Table {...getTableProps()}>
@@ -157,7 +129,7 @@ function IBMDataTable({ rows = [] }) {
                 {rows.map((row, i) => (
                   <TableRow
                     onClick={() => {
-                      console.log(row.cells[i]);
+                      console.log(row.cells);
                     }}
                     key={i}
                     {...getRowProps({ row })}
