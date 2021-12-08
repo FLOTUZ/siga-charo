@@ -1,7 +1,7 @@
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
 import Head from "next/head";
-import  React  from "react";
+import React from "react";
 import {
   FormControl,
   FormLabel,
@@ -26,8 +26,8 @@ import {
 
 
 function NuevoBeneficiarioMoralPaso1() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = React.useRef()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
 
   let rutas = [
     {
@@ -49,48 +49,53 @@ function NuevoBeneficiarioMoralPaso1() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-        <HStack>
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <>
-       <Flex margin="2rem">
-       <Button ref={btnRef} colorScheme='teal' onClick={onOpen} margin="2rem">
-        Agregar Comunidad
-      </Button>
-       </Flex>
-      
-      <Drawer
-        isOpen={isOpen}
-        placement='right'
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Agregar Comunidad</DrawerHeader>
+          <HStack>
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <>
+              <Flex margin="2rem">
+                <Button
+                  ref={btnRef}
+                  colorScheme="teal"
+                  onClick={onOpen}
+                  margin="2rem"
+                >
+                  Agregar Comunidad
+                </Button>
+              </Flex>
 
-          <DrawerBody>
-            <Input placeholder='Comunidad' />
-          </DrawerBody>
+              <Drawer
+                isOpen={isOpen}
+                placement="right"
+                onClose={onClose}
+                finalFocusRef={btnRef}
+              >
+                <DrawerOverlay />
+                <DrawerContent>
+                  <DrawerCloseButton />
+                  <DrawerHeader>Agregar Comunidad</DrawerHeader>
 
-          <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme='blue'>Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
-    <Spacer />
-       </HStack>
+                  <DrawerBody>
+                    <Input placeholder="Comunidad" />
+                  </DrawerBody>
+
+                  <DrawerFooter>
+                    <Button variant="outline" mr={3} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button colorScheme="blue">Save</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+            </>
+            <Spacer />
+          </HStack>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={30} />
@@ -109,7 +114,7 @@ function NuevoBeneficiarioMoralPaso1() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex  w="170vh" justifyContent="center">
+            <Flex w="170vh" justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -120,15 +125,40 @@ function NuevoBeneficiarioMoralPaso1() {
                 rounded={6}
               >
                 <Text m={1}>Nombre(s)</Text>
-                <Input m={1} id="name" placeholder="Nombre(s)" required={true} />
+                <Input
+                  m={1}
+                  id="name"
+                  placeholder="Nombre(s)"
+                  required={true}
+                />
                 <Text m={1}>Direccion</Text>
-                <Input m={1} id="Direccion" placeholder="Direccion" required={true} />
+                <Input
+                  m={1}
+                  id="Direccion"
+                  placeholder="Direccion"
+                  required={true}
+                />
                 <Text m={1}>Comunidad</Text>
-                <Input m={1} id="Comunidad" placeholder="Comunidad" required={true} />
+                <Input
+                  m={1}
+                  id="Comunidad"
+                  placeholder="Comunidad"
+                  required={true}
+                />
                 <Text m={1}>Telefono Celular</Text>
-                <Input m={1} id="celular" placeholder="Celular" required={true} />
+                <Input
+                  m={1}
+                  id="celular"
+                  placeholder="Celular"
+                  required={true}
+                />
                 <Text m={1}>Telefono</Text>
-                <Input m={1} id="telefono" placeholder="Telefono" required={true} />
+                <Input
+                  m={1}
+                  id="telefono"
+                  placeholder="Telefono"
+                  required={true}
+                />
                 <Text m={1}>correo</Text>
                 <Input m={1} id="correo" placeholder="correo" required={true} />
                 <Text m={1}>rfc</Text>

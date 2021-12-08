@@ -53,7 +53,7 @@ function NuevoBeneficiarioMoralPaso2() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex  w="170vh" justifyContent="center">
+            <Flex w="170vh" justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -64,13 +64,33 @@ function NuevoBeneficiarioMoralPaso2() {
                 rounded={6}
               >
                 <Text m={1}>Nombre(s)</Text>
-                <Input m={1} id="name" placeholder="Nombre(s)" required={true} />
+                <Input
+                  m={1}
+                  id="name"
+                  placeholder="Nombre(s)"
+                  required={true}
+                />
                 <Text m={1}>Apellido Paterno</Text>
-                <Input m={1} id="apellidoP" placeholder="Apellido" required={true} />
+                <Input
+                  m={1}
+                  id="apellidoP"
+                  placeholder="Apellido"
+                  required={true}
+                />
                 <Text m={1}>Apellido Materno</Text>
-                <Input m={1} id="apellidoM" placeholder="Apellido Materno" required={true} />
+                <Input
+                  m={1}
+                  id="apellidoM"
+                  placeholder="Apellido Materno"
+                  required={true}
+                />
                 <Text m={1}>Telefono</Text>
-                <Input m={1} id="telefono" placeholder="Telefono" required={true} />
+                <Input
+                  m={1}
+                  id="telefono"
+                  placeholder="Telefono"
+                  required={true}
+                />
                 <Text m={1}>correo</Text>
                 <Input m={1} id="correo" placeholder="correo" required={true} />
               </Flex>
