@@ -1,36 +1,43 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
-import { Link, Button, Spacer } from "@chakra-ui/react";
-import { BiArchive, BiUserPlus, BiAddToQueue } from "react-icons/bi";
+import { Link, Button, Skeleton, useToast } from "@chakra-ui/react";
+import { BiAddToQueue } from "react-icons/bi";
+import { Consultar } from "../../services/API";
+import { useEffect, useState } from "react";
 function Apoyos() {
-  const rows = [
-    {
-      id: "a",
-      name: "Load balancer 1",
-      status: "Disabled",
-    },
-    {
-      id: "b",
-      name: "Load balancer 2",
-      status: "Starting",
-    },
-    {
-      id: "c",
-      name: "Load balancer 3",
-      status: "Active",
-    },
-  ];
+  const [apoyos, setApoyos] = useState([]);
+  const [cargandoTabla, setCargandoTabla] = useState(false);
 
-  const headers = [
-    {
-      key: "Nombre",
-      header: "Nombre",
-    },
-    {
-      key: "Estado",
-      header: "Estado",
-    },
-  ];
+  const toast = useToast();
+
+  useEffect(() => {
+    const consultarApoyos = async () => {
+      let respuesta = await Consultar("/programas", {
+        fields: {
+          idPrograma: true,
+          fechaRegistro: true,
+          nombre: true,
+          descripcion: true,
+          fechaFinalizacion: true,
+          habilitado: true,
+        },
+      });
+      if (respuesta.status === 200) {
+        setCargandoTabla(true);
+        setApoyos(respuesta.data);
+      } else {
+        toast({
+          title: "Error",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    };
+    consultarApoyos();
+  }, []);
+
   let rutas = [
     {
       url: "/Apoyos",
@@ -53,7 +60,9 @@ function Apoyos() {
             </Button>
           </a>
         </Link>
-        <IBMDataTable headers={headers} rows={rows} />
+        <Skeleton isLoaded={cargandoTabla}>
+          <IBMDataTable rows={apoyos} />
+        </Skeleton>
       </div>
     </Scaffold>
   );
