@@ -25,7 +25,8 @@ function Reportes() {
         
             <>
         
-            <Solicitud solicitante="Josue Joyarib"/>
+            <Solicitud solicitante="Nombre del usuario"/>
+           
 
             <Button onClick={imprimir}></Button>
             
