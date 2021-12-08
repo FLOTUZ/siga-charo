@@ -32,14 +32,24 @@ function nueva_Solicitud_Paso_1() {
   }, []);
 
   const ejecutar = async () => {
-    let name = query.name;
-    let apellidoP = query.apellidoP;
-    let apellidoM = query.apellidoM;
-    let celular = query.celular;
-    let telefono = query.telefono;
-    let localidad = query.localidad;
-
-    console.log({name, apellidoP, apellidoM, celular, telefono, localidad, apoyo, cantidad, fecha, descuento, total });
+    let solicitud = {
+      name : query.name,
+      apellidoP : query.apellidoP,
+      apellidoM : query.apellidoM,
+      direccion : query.direccion,
+      rfc : query.rfc,
+      nacimiento : query.nacimiento,
+      curp : query.curp,
+      celular : query.celular,
+      telefono : query.telefono,
+      correo : query.correo,
+      localidad : query.localidad,
+      apoyo:apoyo,
+      cantidad:cantidad,
+      fecha:fecha,
+      descuento:descuento,
+      total:total
+    }
   };
 
   let rutas = [
@@ -108,9 +118,8 @@ function nueva_Solicitud_Paso_1() {
                   placeholder="Apoyo..."
                   required={true}
                 >
-                  <option>Ejemplo 1</option>
-                  <option>Ejemplo 2</option>
-                  <option>Ejemplo 3</option>
+                  <option>Calentador Solar</option>
+                  <option>Arena</option>
                 </Select>
                 <Flex m={1}>
                   <Box p="4">

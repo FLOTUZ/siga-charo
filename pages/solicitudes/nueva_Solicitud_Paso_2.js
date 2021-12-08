@@ -29,12 +29,17 @@ function nueva_Solicitud_Paso_2() {
     let name = query.name;
     let apellidoP = query.apellidoP;
     let apellidoM = query.apellidoM;
+    let direccion = query.direccion;
+    let rfc = query.rfc;
+    let nacimiento = query.nacimiento;
+    let curp = query.curp;
     let celular = query.celular;
     let telefono = query.telefono;
+    let correo = query.correo;
 
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_3",
-      query: {name, apellidoP, apellidoM, celular, telefono, localidad },
+      query: {name, apellidoP, apellidoM, direccion, rfc, nacimiento, curp, celular, telefono, correo, localidad },
     });
   };
 
