@@ -1,7 +1,7 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
 import Link from "next/link";
-import Router from "next/router";
+import GenerateHash from "random-hash";
 import { useRef, useEffect, useState } from "react";
 import { BiArchive, BiUserPlus } from "react-icons/bi";
 import {
@@ -58,32 +58,47 @@ function Usuarios() {
     },
   ];
 
+  let mich = {
+    id: "asda",
+    idUsuario: 1,
+    nombreUsuario: "Tokho",
+    nombre: "Michelle",
+    email: "mich@mail.com",
+    puesto: "Sistemas",
+  };
+
   const rows = [
     {
-      id: "a",
-      name: "Load balancer 1",
-      status: "Disabled",
+      id: "asda",
+      idUsuario: 1,
+      nombreUsuario: "Tokho",
+      nombre: "Michelle",
+      email: "mich@mail.com",
+      puesto: "Sistemas",
     },
     {
-      id: "b",
-      name: "Load balancer 2",
-      status: "Starting",
+      id: "ba",
+      idUsuario: 29,
+      nombreUsuario: "Jaqui",
+      nombre: "Jaqui",
+      email: "flotuz10@gmail.com",
+      puesto: "SISTEMAS",
     },
     {
-      id: "c",
-      name: "Load balancer 3",
-      status: "Active",
-    },
-  ];
-
-  const headers = [
-    {
-      key: "name",
-      header: "Name",
+      id: "cta",
+      idUsuario: 30,
+      nombreUsuario: "Thoko",
+      nombre: "Michelle",
+      email: "mich@mail.com",
+      puesto: "Sistemas",
     },
     {
-      key: "status",
-      header: "Status",
+      id: "da",
+      idUsuario: 31,
+      nombreUsuario: "Jaqui",
+      nombre: "Jaqui",
+      email: "Jaqui",
+      puesto: "SISTEMAS",
     },
   ];
 
@@ -98,7 +113,14 @@ function Usuarios() {
           puesto: true,
         },
       });
-      setUsuarios(respuesta.data);
+      if (respuesta.status === 200) {
+        let listaU = respuesta.data;
+        listaU.map(()=>{
+          
+        })
+
+        setUsuarios(respuesta.data);
+      }
     };
     datosTabla();
   }, []);
@@ -111,12 +133,10 @@ function Usuarios() {
         head.push({ key: header, header: header });
       });
       setHeader2(head);
-      console.log(usuarios);
     }
   }, [usuarios]);
 
   return (
-    
     <Scaffold rutas={rutas} titulo="Gestion de Usuarios" descripcion="Usuarios">
       <Button
         m={5}
@@ -165,7 +185,7 @@ function Usuarios() {
         }}
       ></IBMDataTable> */}
 
-      <DataTable rows={usuarios} headers={header2}>
+      <DataTable rows={rows} headers={header2}>
         {({
           rows,
           headers,
@@ -272,7 +292,7 @@ function Usuarios() {
                 {rows.map((row, i) => (
                   <TableRow
                     onClick={() => {
-                      console.log(row.cells[i].value);
+                      console.log(row.cells[i]);
                     }}
                     key={i}
                     {...getRowProps({ row })}
