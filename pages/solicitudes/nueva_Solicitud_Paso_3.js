@@ -79,7 +79,7 @@ function Nueva_Solicitud_Paso_3() {
 
     let respuestaS = await Crear("/solicitudes", solicitud);
 
-    if (respuestaS == 200) {
+    if (respuestaB.status == 200 && respuestaP == 200 && respuestaS == 200) {
       toast({
         title: "Solicitud Creada",
         description: "Se ha creado Solicitud",
