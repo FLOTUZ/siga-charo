@@ -25,14 +25,19 @@ function nueva_Solicitud_Paso_1() {
   const [name, setName] = useState("");
   const [apellidoP, setApellidoP] = useState("");
   const [apellidoM, setApellidoM] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [rfc, setRfc] = useState("");
+  const [nacimiento, setNacimiento] = useState("");
+  const [curp, setCurp] = useState("");
   const [celular, setCelular] = useState("");
   const [telefono, setTelefono] = useState("");
+  const [correo, setCorreo] = useState("");
 
 
   const ejecutar = async () => {
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_2",
-      query: { name, apellidoP, apellidoM, celular, telefono },
+      query: { name, apellidoP, apellidoM, direccion, rfc, nacimiento, curp, celular, telefono, correo },
     });
   };
 
@@ -125,6 +130,51 @@ function nueva_Solicitud_Paso_1() {
                   placeholder="Apellido Materno"
                   required={true}
                 />
+                <Text m={1}>Direccion</Text>
+                <Input
+                  m={1}
+                  id="direccion"
+                  value={direccion}
+                  onChange={(e) => {
+                    setDireccion(e.currentTarget.value);
+                  }}
+                  placeholder="Direccion"
+                  required={true}
+                />
+                <Text m={1}>RFC</Text>
+                <Input
+                  m={1}
+                  id="rfc"
+                  value={rfc}
+                  onChange={(e) => {
+                    setRfc(e.currentTarget.value);
+                  }}
+                  placeholder="RFC"
+                  required={true}
+                />
+                <Text m={1}>Fecha de Nacimiento</Text>
+                <Input
+                  m={1}
+                  id="nacimiento"
+                  value={nacimiento}
+                  onChange={(e) => {
+                    setNacimiento(e.currentTarget.value);
+                  }}
+                  type="date"
+                  placeholder="DD/MM/AAA"
+                  required={true}
+                />
+                <Text m={1}>CURP</Text>
+                <Input
+                  m={1}
+                  id="curp"
+                  value={curp}
+                  onChange={(e) => {
+                    setCurp(e.currentTarget.value);
+                  }}
+                  placeholder="CURP"
+                  required={true}
+                />
                 <Text m={1}>Telefono Celular</Text>
                 <Input
                   m={1}
@@ -147,6 +197,18 @@ function nueva_Solicitud_Paso_1() {
                   }}
                   type="tel"
                   placeholder="Telefono"
+                  required={true}
+                />
+                <Text m={1}>Correo</Text>
+                <Input
+                  m={1}
+                  id="correo"
+                  value={correo}
+                  onChange={(e) => {
+                    setCorreo(e.currentTarget.value);
+                  }}
+                  type="email"
+                  placeholder="Correo"
                   required={true}
                 />
               </Flex>

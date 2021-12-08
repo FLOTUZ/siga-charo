@@ -22,6 +22,7 @@
     "form-urlencoded": "^6.0.5",
     "framer-motion": "^4.1.17",
     "next": "12.0.4",
+    "random-hash": "^4.0.1",
     "react": "17.0.2",
     "react-data-table-component": "^7.4.5",
     "react-datetime": "^3.1.1",

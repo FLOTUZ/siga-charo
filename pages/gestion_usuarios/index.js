@@ -1,7 +1,7 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
 import Link from "next/link";
-import Router from "next/router";
+import GenerateHash from "random-hash";
 import { useRef, useEffect, useState } from "react";
 import { BiArchive, BiUserPlus } from "react-icons/bi";
 import {
@@ -58,35 +58,6 @@ function Usuarios() {
     },
   ];
 
-  const rows = [
-    {
-      id: "a",
-      name: "Load balancer 1",
-      status: "Disabled",
-    },
-    {
-      id: "b",
-      name: "Load balancer 2",
-      status: "Starting",
-    },
-    {
-      id: "c",
-      name: "Load balancer 3",
-      status: "Active",
-    },
-  ];
-
-  const headers = [
-    {
-      key: "name",
-      header: "Name",
-    },
-    {
-      key: "status",
-      header: "Status",
-    },
-  ];
-
   useEffect(() => {
     const datosTabla = async () => {
       let respuesta = await Consultar("/usuarios", {
@@ -98,7 +69,11 @@ function Usuarios() {
           puesto: true,
         },
       });
-      setUsuarios(respuesta.data);
+      if (respuesta.status === 200) {
+        setUsuarios(respuesta.data);
+      } else {
+        console.log("No hay data");
+      }
     };
     datosTabla();
   }, []);
@@ -110,13 +85,18 @@ function Usuarios() {
       llaves.map((header) => {
         head.push({ key: header, header: header });
       });
+
+      let listaU = [];
+      usuarios.map((u) => {
+        u.id = GenerateHash({ length: 8 });
+        listaU.push(u);
+      });
+      setRows2(listaU);
       setHeader2(head);
-      console.log(usuarios);
     }
   }, [usuarios]);
 
   return (
-    
     <Scaffold rutas={rutas} titulo="Gestion de Usuarios" descripcion="Usuarios">
       <Button
         m={5}
@@ -153,19 +133,7 @@ function Usuarios() {
         </DrawerContent>
       </Drawer>
 
-      {/* <IBMDataTable
-        headers={headers}
-        rows={usuarios}
-        filaClickeada={(index) => {
-          Router.push({
-            pathname: "/gestion_usuarios/editar_usuario",
-            query:{index}
-          })
-          console.log("Redireccion");
-        }}
-      ></IBMDataTable> */}
-
-      <DataTable rows={usuarios} headers={header2}>
+      <DataTable rows={rows2} headers={header2}>
         {({
           rows,
           headers,
@@ -272,7 +240,7 @@ function Usuarios() {
                 {rows.map((row, i) => (
                   <TableRow
                     onClick={() => {
-                      console.log(row.cells[i].value);
+                      console.log(row.cells[i]);
                     }}
                     key={i}
                     {...getRowProps({ row })}
