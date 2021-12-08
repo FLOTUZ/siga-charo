@@ -19,7 +19,8 @@ import {
   useToast,
   Switch,
   Collapse,
-  Lorem,Checkbox
+  Lorem,
+  Checkbox,
 } from "@chakra-ui/react";
 import { duration } from "@mui/material";
 import { useRouter } from "next/router";
@@ -130,18 +131,20 @@ function Agregar_usuarios() {
                   <option>Director</option>
                 </Select>
               </FormControl>
-              <FormLabel m={5}>Permisos personalizados</FormLabel>
-              <HStack spacing={10} direction="row">
-                <Checkbox size="md" colorScheme="green" defaultValue>
-                  Aceptar apoyos
-                </Checkbox>
-                <Checkbox size="md" colorScheme="green" defaultValue>
-                  Registrar apoyos
-                </Checkbox>
-                <Checkbox size="md" colorScheme="green" defaultValue >
-                  Dar de alta un apoyo
-                </Checkbox>
-              </HStack>
+              <Box>
+                <FormLabel m={5}>Permisos personalizados</FormLabel>
+                <HStack spacing={10} direction="row">
+                  <Checkbox size="md" colorScheme="green" defaultValue>
+                    Aceptar apoyos
+                  </Checkbox>
+                  <Checkbox size="md" colorScheme="green" defaultValue>
+                    Registrar apoyos
+                  </Checkbox>
+                  <Checkbox size="md" colorScheme="green" defaultValue>
+                    Dar de alta un apoyo
+                  </Checkbox>
+                </HStack>
+              </Box>
             </Box>
           </Flex>
 
