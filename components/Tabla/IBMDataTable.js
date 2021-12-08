@@ -126,7 +126,7 @@ function IBMDataTable({
                   <TableRow
                     onClick={() => {
                       clickeada !== undefined
-                        ? clickeada()
+                        ? clickeada(row)
                         : console.log({
                             message: "Funcion clikeada no definida",
                           });
