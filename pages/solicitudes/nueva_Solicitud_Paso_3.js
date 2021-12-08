@@ -17,11 +17,30 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 function nueva_Solicitud_Paso_1() {
+
+  const { query } = useRouter();
   const router = useRouter();
+
+  const [apoyo, setApoyo] = useState("");
+  const [cantidad, setCantidad] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [descuento, setdescuento] = useState("");
+  const [total, setTotal] = useState("");
 
   useEffect(() => {
     console.log(router.query);
   }, []);
+
+  const ejecutar = async () => {
+    let name = query.name;
+    let apellidoP = query.apellidoP;
+    let apellidoM = query.apellidoM;
+    let celular = query.celular;
+    let telefono = query.telefono;
+    let localidad = query.localidad;
+
+    console.log({name, apellidoP, apellidoM, celular, telefono, localidad, apoyo, cantidad, fecha, descuento, total });
+  };
 
   let rutas = [
     {
@@ -79,7 +98,16 @@ function nueva_Solicitud_Paso_1() {
                 rounded={6}
               >
                 <Text m={1}>Elegir Apoyo</Text>
-                <Select m={1} placeholder="Apoyo...">
+                <Select
+                  m={1}
+                  id="apoyo"
+                  value={apoyo}
+                  onChange={(e) => {
+                    setApoyo(e.currentTarget.value);
+                  }}
+                  placeholder="Apoyo..."
+                  required={true}
+                >
                   <option>Ejemplo 1</option>
                   <option>Ejemplo 2</option>
                   <option>Ejemplo 3</option>
@@ -87,21 +115,54 @@ function nueva_Solicitud_Paso_1() {
                 <Flex m={1}>
                   <Box p="4">
                     <Text>Cantidad</Text>
-                    <Input />
+                    <Input
+                      type="number"
+                      id="cantidad"
+                      value={cantidad}
+                      onChange={(e) => {
+                        setCantidad(e.currentTarget.value);
+                      }}
+                      required={true}
+                    />
                   </Box>
                   <Box p="4">
                     <Text>Fecha</Text>
-                    <Input type="date" />
+                    <Input
+                      type="date"
+                      id="fecha"
+                      value={fecha}
+                      onChange={(e) => {
+                        setFecha(e.currentTarget.value);
+                      }}
+                      required={true}
+                    />
                   </Box>
                 </Flex>
                 <Flex m={1}>
                   <Box p="4">
                     <Text>Descuento</Text>
-                    <Input />
+                    <Input
+                      type="number"
+                      id="descuento"
+                      value={descuento}
+                      onChange={(e) => {
+                        setdescuento(e.currentTarget.value);
+                      }}
+                      required={true}
+                    />
                   </Box>
                   <Box p="4">
                     <Text>Total</Text>
-                    <Input background="gray" />
+                    <Input
+                      type="number"
+                      background="gray"
+                      id="total"
+                      value={total}
+                      onChange={(e) => {
+                        setTotal(e.currentTarget.value);
+                      }}
+                      required={true}
+                    />
                   </Box>
                 </Flex>
               </Flex>
@@ -112,8 +173,8 @@ function nueva_Solicitud_Paso_1() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Button colorScheme="teal" variant="solid" mr="4">
-                Siguiente
+              <Button colorScheme="teal" variant="solid" mr="4" onClick={()=>ejecutar()}>
+                Guardar
               </Button>
               <Link href="/dashboard">
                 <a>
