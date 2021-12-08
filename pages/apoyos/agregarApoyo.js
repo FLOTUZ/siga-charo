@@ -91,7 +91,7 @@ function AgregarApoyo() {
       });
     } else {
       toast({
-        title: "Oops.. Algo sucedió",
+        title: "Oops.. Algo salio mal",
         description: respuesta.message,
         status: "error",
         duration: 9000,
@@ -99,6 +99,7 @@ function AgregarApoyo() {
       });
     }
   };
+  //---------------------------------------
   const consultarUnidades = async () => {
     let respuesta = await Consultar("/unidades");
 
