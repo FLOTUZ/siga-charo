@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GenerateHash from "random-hash";
 import {
   DataTable,
   TableContainer,
@@ -21,32 +22,35 @@ import {
   PaginationNav,
 } from "carbon-components-react";
 import { IconName } from "react-icons/bi";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Delete, Save, Download } from "carbon-icons";
 
-function IBMDataTable({ headers = [], rows = [], filaClickeada, editar }) {
-  const [buscar, setBusqueda] = useState("");
+function IBMDataTable({ rows = [] }) {
+  const [headers, setHeaders] = useState([]);
+  const [filas, setFilas] = useState([]);
 
-  const eliminar = (selectedRows) => {
-    console.log("Eliminando", selectedRows);
-  };
-  const exportar = (selectedRows) => {
-    console.log("Exportando", selectedRows);
-  };
-  const guardar = (selectedRows) => {
-    console.log("Guardando", selectedRows);
-  };
-  const nuevoItem = () => {
-    console.log("Nueva Cosa");
-  };
+  useEffect(() => {
+    if (rows.length !== 0) {
+      let head = [];
+      let llaves = Object.keys(rows[0]);
+      llaves.map((header) => {
+        head.push({ key: header, header: header });
+      });
 
-  const itemClickeado = (row) => {
-    console.log(row);
-  };
+      let registro = [];
+      rows.map((u) => {
+        u.id = GenerateHash({ length: 8 });
+        registro.push(u);
+      });
+      setFilas(filas);
+      setHeaders(head);
+    }
+  }, [filas, rows]);
+
   return (
     <>
-      <DataTable rows={rows} headers={headers} isSortable>
+      <DataTable rows={rows} headers={headers}>
         {({
           rows,
           headers,
@@ -61,8 +65,8 @@ function IBMDataTable({ headers = [], rows = [], filaClickeada, editar }) {
           getTableContainerProps,
         }) => (
           <TableContainer
-            title="Tabla de datos"
-            description="Descripcion de la tabla"
+            title="DataTable"
+            description="With batch actions"
             {...getTableContainerProps()}
           >
             <TableToolbar {...getToolbarProps()}>
@@ -72,37 +76,70 @@ function IBMDataTable({ headers = [], rows = [], filaClickeada, editar }) {
                     getBatchActionProps().shouldShowBatchActions ? 0 : -1
                   }
                   renderIcon={Delete}
-                  onClick={() => eliminar(selectedRows)}
+                  onClick={() =>
+                    console.log({ message: "Eliminando", selectedRows })
+                  }
                 >
-                  Eliminar
+                  Delete
                 </TableBatchAction>
                 <TableBatchAction
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? 0 : -1
                   }
                   renderIcon={Save}
-                  onClick={() => guardar(selectedRows)}
+                  onClick={() => {
+                    console.log({ message: "Guardando", selectedRows });
+                  }}
                 >
-                  Guardar
+                  Save
                 </TableBatchAction>
                 <TableBatchAction
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? 0 : -1
                   }
                   renderIcon={Download}
-                  onClick={() => exportar(selectedRows)}
+                  onClick={() => {
+                    console.log({ message: "Descargando", selectedRows });
+                  }}
                 >
-                  Exportar
+                  Download
                 </TableBatchAction>
               </TableBatchActions>
               <TableToolbarContent>
                 <TableToolbarSearch
-                  persistent={true}
+                  persistent="true"
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? -1 : 0
                   }
-                  onChange={onInputChange}
+                  onChange={() => onInputChange}
                 />
+                <TableToolbarMenu
+                  tabIndex={
+                    getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                  }
+                >
+                  <TableToolbarAction onClick={() => alert("Alert 1")}>
+                    Action 1
+                  </TableToolbarAction>
+                  <TableToolbarAction onClick={() => alert("Alert 2")}>
+                    Action 2
+                  </TableToolbarAction>
+                  <TableToolbarAction onClick={() => alert("Alert 3")}>
+                    Action 3
+                  </TableToolbarAction>
+                </TableToolbarMenu>
+                <Button
+                  tabIndex={
+                    getBatchActionProps().shouldShowBatchActions ? -1 : 0
+                  }
+                  onClick={() =>
+                    console.log({ message: "A;adiendo neuva columna" })
+                  }
+                  size="small"
+                  kind="primary"
+                >
+                  Add new
+                </Button>
               </TableToolbarContent>
             </TableToolbar>
             <Table {...getTableProps()}>
@@ -117,37 +154,18 @@ function IBMDataTable({ headers = [], rows = [], filaClickeada, editar }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {console.log(rows)}
-                {rows.map((row, index) => (
+                {rows.map((row, i) => (
                   <TableRow
                     onClick={() => {
-                      filaClickeada !== undefined
-                        ? filaClickeada(index + 1)
-                        : itemClickeado(index + 1);
+                      console.log(row.cells[i]);
                     }}
-                    key={index}
+                    key={i}
                     {...getRowProps({ row })}
                   >
                     <TableSelectRow {...getSelectionProps({ row })} />
                     {row.cells.map((cell) => (
                       <TableCell key={cell.id}>{cell.value}</TableCell>
                     ))}
-
-                    <TableToolbarMenu>
-                      <TableToolbarAction onClick={() => alert("Alert 1")}>
-                        Deshabilitar
-                      </TableToolbarAction>
-                      <TableToolbarAction onClick={() => alert("Alert 2")}>
-                        Bitacora
-                      </TableToolbarAction>
-                      <TableToolbarAction
-                        onClick={() => {
-                          editar !== undefined ? editar() : alert("Alert 3");
-                        }}
-                      >
-                        Editar
-                      </TableToolbarAction>
-                    </TableToolbarMenu>
                   </TableRow>
                 ))}
               </TableBody>
