@@ -36,7 +36,7 @@ function Apoyos() {
       }
     };
     consultarApoyos();
-  }, []);
+  }, [toast]);
 
   let rutas = [
     {
