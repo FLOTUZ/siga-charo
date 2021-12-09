@@ -43,7 +43,7 @@ function AgregarApoyo() {
   //------------------ Estado de la interfaz  ---------------
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cargandoUnidades, setCargandoUnidades] = useState(true);
+  const [cargandoUnidades, setCargandoUnidades] = useState(true); //---
   const btnRef = useRef();
   const toast = useToast();
   //------------------ Datos de apoyo  ---------------
@@ -55,7 +55,7 @@ function AgregarApoyo() {
   //------------------ Datos de unidad  ---------------
   const [unidad, setUnidad] = useState({ idUnidad: 0, nombre: "" });
   const [listaDeUnidades, setListaDeUnidades] = useState([]);
-  const [nuevaUnidad, setNuevaUnidad] = useState("");
+  const [nuevaUnidad, setNuevaUnidad] = useState(""); //------
   //------------------ Usuario Logueado  ---------------
   const [usuarioLogueado, setUsuarioLogueado] = useState({
     idUsuario: 0,
@@ -78,7 +78,7 @@ function AgregarApoyo() {
     setUsuarioLogueado(usuario);
   }, []);
 
-  const altaUnidad = async () => {
+  const altaUnidad = async () => {                                     //--------inicia
     let respuesta = await Crear("/unidades", { nombre: nuevaUnidad });
     if (respuesta.status == 200) {
       consultarUnidades();
@@ -88,7 +88,7 @@ function AgregarApoyo() {
         status: "success",
         duration: 9000,
         isClosable: true,
-      });
+      });                                                             
     } else {
       toast({
         title: "Oops.. Algo salio mal",
@@ -98,9 +98,9 @@ function AgregarApoyo() {
         isClosable: true,
       });
     }
-  };
+  };  //--- termina
   //---------------------------------------
-  const consultarUnidades = async () => {
+  const consultarUnidades = async () => {    //---- inicia
     let respuesta = await Consultar("/unidades");
 
     if (respuesta.status == 200) {
@@ -115,7 +115,7 @@ function AgregarApoyo() {
         isClosable: true,
       });
     }
-  };
+  };    //---termina
   const guardarApoyo = async () => {
     try {
       let programa = {
@@ -211,7 +211,7 @@ function AgregarApoyo() {
                   setNombreApoyo(e.target.value);
                 }}
               />
-              <FormLabel htmlFor="unidad">Unidad de medida</FormLabel>
+              <FormLabel htmlFor="unidad">Unidad de medida</FormLabel>  {/* se ocupa para menu comunidades*/}
               <Menu>
                 {({ isOpen }) => (
                   <>
@@ -255,9 +255,9 @@ function AgregarApoyo() {
                     </MenuList>
                   </>
                 )}
-              </Menu>
+              </Menu>    {/*  termina menu*/ }
 
-              <FormLabel htmlFor="fecha-vigencia">Fecha de vigencia</FormLabel>
+              <FormLabel htmlFor="fecha-vigencia">Fecha de vigencia</FormLabel>   
               <Input
                 id="fecha-vigencia"
                 type="date"

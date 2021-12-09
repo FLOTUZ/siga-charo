@@ -1,7 +1,8 @@
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
 import Head from "next/head";
-import  React  from "react";
+import React from "react";
+import { sesion } from "../../utils/Utils";
 import {
   FormControl,
   FormLabel,
@@ -21,77 +22,171 @@ import {
   DrawerCloseButton,
   useDisclosure,
   HStack,
+  useToast,
 } from "@chakra-ui/react";
-
-
+import { useRouter } from "next/router";
+import { useState, useRef, useEffect } from "react";
+import { Crear } from "../../services/API";
 
 function NuevoBeneficiarioFisica() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = React.useRef()
+  //----------Estado de la interfaz--------//
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+  const toast = useToast();
+  //-------DATOS DE Beneficiario Tabla Beneficiario-----------//
+  const [nombreBeneficiario, setNombreBeneficiario] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [telefonoLocal, setTelefonoLocal] = useState("");
+  const [telefonoCelular, setTelefonoCelular] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [rfc, setRfc] = useState("");
+
+  //-------DATOS DE Beneficiario Tabla Fisica-----------//
+  const [apellidoPaterno, setApellidoPaterno] = useState("");
+  const [apellidoMaterno, setApellidoMaterno] = useState("");
+  const [socioEconomico, setSocioEconomico] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [curp, setCurp] = useState("");
+  //------------------ Usuario Logueado  ---------------
+  const [usuarioLogueado, setUsuarioLogueado] = useState({
+    idUsuario: 0, // completar
+  });
+  useEffect(() => {
+    let usuario = sesion();
+    setUsuarioLogueado(usuario);
+  }, []);
+
+  const [comunidad, setComunindad] = useState("");
+
+  const guardarBeneficiario = async () => {
+    try {
+      let beneficiario = {
+        nombre: nombreBeneficiario,
+        direccion: direccion,
+        telefonoLocal: telefonoLocal,
+        telefonoCelular: telefonoCelular,
+        correo: correo,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+        rfc: rfc,
+        usuarioCargaId: 1,
+        comunidadId: 1,
+      };
+      console.log(beneficiario);
+      let respuesta = await Crear("/beneficiarios", beneficiario);
+
+      console.log(respuesta);
+      /*
+   let beneficiarioFisica = {
+     idBenficiario: respuesta.idBenficiario,
+     nombreBeneficiario: nombreBeneficiario,
+     direccion: direccion,
+     telefonoLocal: telefonoLocal,
+     telefonoCelular: telefonoCelular,
+     correo: correo,
+     comunidad: comunidad,
+     fechaRegistro: new Date(Date.now()).toISOString(),
+   };
+
+   let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
+    if (respuestaF.status === 200) {
+       toast({
+         title: "Nuevo Beneficiario Guardaro",
+         descripcion: `El Beneficiario se ha guardado`,
+         status: "success",
+         duration: 9000,
+         isClosable: true,
+       });
+     } else {
+       toast({
+         title: "Oops.. Algo salio mal",
+         descripcion: respuesta.message,
+         status: "error",
+         duration: 9000,
+         isClosable: true,
+       });
+     } */
+    } catch (e) {
+      toast({
+        title: "Verifica los datos",
+        description: e.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.log(e.message);
+    }
+  };
 
   let rutas = [
-      {
-        url: "/nuevo_beneficiario_fisica",
-        nombre: "Nuevo Beneficiario",
-        isCurrentPage: true,
-      },
-    ];
-  
-    return (
-      <Scaffold rutas={rutas}
+    {
+      url: "/nuevo_beneficiario_fisica",
+      nombre: "Nuevo Beneficiario",
+      isCurrentPage: true,
+    },
+  ];
+
+  return (
+    <Scaffold
+      rutas={rutas}
       titulo="Nuevo Beneficiario"
       descripcion="Informacion del Beneficiario"
-      >
+    >
       <div>
         <Head>
           <title>Nuevo Beneficiario</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-       <HStack>
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <Spacer />
-       <>
-       <Flex margin="2rem">
-       <Button ref={btnRef} colorScheme='teal' onClick={onOpen} margin="2rem">
-        Agregar Comunidad
-      </Button>
-       </Flex>
-      
-      <Drawer
-        isOpen={isOpen}
-        placement='right'
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Agregar Comunidad</DrawerHeader>
+          <HStack>
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <Spacer />
+            <>
+              <Flex margin="2rem">
+                <Button
+                  ref={btnRef}
+                  colorScheme="teal"
+                  onClick={onOpen}
+                  margin="2rem"
+                >
+                  Agregar Comunidad
+                </Button>
+              </Flex>
 
-          <DrawerBody>
-            <Input placeholder='Comunidad' />
-          </DrawerBody>
+              <Drawer
+                isOpen={isOpen}
+                placement="right"
+                onClose={onClose}
+                finalFocusRef={btnRef}
+              >
+                <DrawerOverlay />
+                <DrawerContent>
+                  <DrawerCloseButton />
+                  <DrawerHeader>Agregar Comunidad</DrawerHeader>
 
-          <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme='blue'>Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
-    <Spacer />
-       </HStack>
+                  <DrawerBody>
+                    <Input placeholder="Comunidad" />
+                  </DrawerBody>
+
+                  <DrawerFooter>
+                    <Button variant="outline" mr={3} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button colorScheme="blue">Save</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+            </>
+            <Spacer />
+          </HStack>
           <Box>
-            <Flex  w="170vh" justifyContent="center">
+            <Flex w="170vh" justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -102,23 +197,97 @@ function NuevoBeneficiarioFisica() {
                 rounded={6}
               >
                 <Text m={1}>Nombre(s)</Text>
-                <Input m={1} id="name" placeholder="Nombre(s)" required={true} />
+                <Input
+                  m={1}
+                  id="name"
+                  placeholder="Nombre(s)"
+                  required={true}
+                  onChange={(e) => {
+                    setNombreBeneficiario(e.target.value);
+                  }}
+                />
                 <Text m={1}>Apellido Paterno</Text>
-                <Input m={1} id="apellidoP" placeholder="Apellido" required={true} />
+                <Input
+                  m={1}
+                  id="apellidoP"
+                  placeholder="Apellido Paterno"
+                  required={true}
+                />
                 <Text m={1}>Apellido Materno</Text>
-                <Input m={1} id="apellidoM" placeholder="Apellido Materno" required={true} />
+                <Input
+                  m={1}
+                  id="apellidoM"
+                  placeholder="Apellido Materno"
+                  required={true}
+                />
+                <Text m={1}>CURP</Text>
+                <Input m={1} id="curp" placeholder="curp" required={true} />
+                <Text m={1}>Fecha Nacimiento</Text>
+                <Input m={1} id="dateREfistro" type="date" required={true} />
                 <Text m={1}>Telefono Celular</Text>
-                <Input m={1} id="celular" placeholder="Celular" required={true} />
+                <Input
+                  m={1}
+                  id="celular"
+                  placeholder="Celular"
+                  required={true}
+                  onChange={(e) => {
+                    setTelefonoCelular(e.target.value);
+                  }}
+                />
                 <Text m={1}>Telefono</Text>
-                <Input m={1} id="telefono" placeholder="Telefono" required={true} />
+                <Input
+                  m={1}
+                  id="telefono"
+                  placeholder="Telefono"
+                  required={true}
+                  onChange={(e) => {
+                    setTelefonoLocal(e.target.value);
+                  }}
+                />
                 <Text m={1}>correo</Text>
-                <Input m={1} id="correo" placeholder="correo" required={true} />
-                <Text m={1}>rfc</Text>
-                <Input m={1} id="rfc" placeholder="rfc" required={true} />
+                <Input
+                  m={1}
+                  id="correo"
+                  placeholder="correo"
+                  required={true}
+                  onChange={(e) => {
+                    setCorreo(e.target.value);
+                  }}
+                />
+                <Text m={1}>RFC</Text>
+                <Input
+                  m={1}
+                  id="rfc"
+                  placeholder="rfc"
+                  required={true}
+                  onChange={(e) => {
+                    setRfc(e.target.value);
+                  }}
+                />
                 <Text m={1}>Direccion</Text>
-                <Input m={1} id="Direccion" placeholder="Direccion" required={true} />
+                <Input
+                  m={1}
+                  id="Direccion"
+                  placeholder="Direccion"
+                  required={true}
+                  onChange={(e) => {
+                    setDireccion(e.target.value);
+                  }}
+                />
                 <Text m={1}>Comunidad</Text>
-                <Input m={1} id="Comunidad" placeholder="Comunidad" required={true} />
+                <Input
+                  m={1}
+                  id="Comunidad"
+                  placeholder="Comunidad"
+                  required={true}
+                />
+                <Text m={1}>Socio Economico</Text>
+                <Input
+                  m={1}
+                  id="Comunidad"
+                  required={true}
+                  size="lg"
+                />
               </Flex>
             </Flex>
           </Box>
@@ -127,22 +296,23 @@ function NuevoBeneficiarioFisica() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Link href="/dashboard">
-                <a>
-                <Button colorScheme="teal" variant="solid" mr="4">
-                    Guardar
-                  </Button>
-                  <Button colorScheme="teal" variant="outline">
-                    Descartar
-                  </Button>
-                </a>
-              </Link>
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                mr="4"
+                onClick={() => guardarBeneficiario()}
+              >
+                Guardar
+              </Button>
+              <Button colorScheme="teal" variant="outline">
+                Descartar
+              </Button>
             </Box>
           </Flex>
         </main>
       </div>
     </Scaffold>
   );
-  }
-  
-  export default NuevoBeneficiarioFisica;
+}
+
+export default NuevoBeneficiarioFisica;
