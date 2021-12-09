@@ -1,6 +1,7 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useRef, useEffect, useState } from "react";
 import GenerateHash from "random-hash";
 import { BiArchive, BiUserPlus } from "react-icons/bi";
@@ -27,6 +28,7 @@ function Usuarios() {
   const [cargandoTabla, setCargandoTabla] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
 
+  const router = useRouter();
   let rutas = [
     {
       url: "/gestion_de_usuarios/usuarios",
@@ -92,7 +94,13 @@ function Usuarios() {
         </DrawerContent>
       </Drawer>
       <Skeleton isLoaded={cargandoTabla}>
-        <IBMDataTable rows={usuarios}></IBMDataTable>
+        <IBMDataTable
+          clickeada={(index) => {
+            let idUsuario = index.cells[0].value;
+            router.push(`/gestion_usuarios/${idUsuario}`);
+          }}
+          rows={usuarios}
+        ></IBMDataTable>
       </Skeleton>
     </Scaffold>
   );

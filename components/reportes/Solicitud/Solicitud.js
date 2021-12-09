@@ -23,7 +23,7 @@ function Solicitud({solicitante}){
     return (
 
         <div className={estilo.base}>
-        <VStack h="13in">
+        <VStack h="13in" marginTop="3rem">
             <Text>  </Text> <br /><br /><br />
             <Heading> SOLICITUD DE APOYO</Heading>
             <Heading>AYUNTAMIENTO DE CHARO</Heading><br /><br /><br />
