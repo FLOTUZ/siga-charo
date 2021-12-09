@@ -1,100 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Heading, Button, Stack, Flex, Box, Spacer } from "@chakra-ui/react";
-import DataTable from "react-data-table-component";
+import IBMDataTable from "../../components/Tabla/IBMDataTable";
+import { Button, Flex, Box, Spacer, useToast, Skeleton } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
-
-const columns = [
-  {
-    name: "Nombre",
-    selector: (row) => row.name,
-    sortable: true,
-  },
-  {
-    name: "Estatus",
-    selector: (row) => row.status,
-    sortable: true,
-  },
-  {
-    name: "Fecha de Captura",
-    selector: (row) => row.date,
-    sortable: true,
-  },
-  {
-    name: "Opciones",
-    selector: (row) => row.detalles,
-    sortable: true,
-  },
-];
-
-const data = [
-  {
-    id: 1,
-    name: "Irving",
-    status: "Aceptado",
-    date: "20/10/2021",
-    detalles: (
-      <Stack direction="row" spacing={4}>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Detalles
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Agregar
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Editar
-        </Button>
-        <Button colorScheme="red" variant="solid" h={6}>
-          Archivar
-        </Button>
-      </Stack>
-    ),
-  },
-  {
-    id: 2,
-    name: "Emmanuel",
-    status: "Rechazado",
-    date: "20/10/2021",
-    detalles: (
-      <Stack direction="row" spacing={4}>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Detalles
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Agregar
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Editar
-        </Button>
-        <Button colorScheme="red" variant="solid" h={6}>
-          Archivar
-        </Button>
-      </Stack>
-    ),
-  },
-  {
-    id: 3,
-    name: "Patricio",
-    status: "Pendiente",
-    date: "20/10/2021",
-    detalles: (
-      <Stack direction="row" spacing={4}>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Detalles
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Agregar
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Editar
-        </Button>
-        <Button colorScheme="red" variant="solid" h={6}>
-          Archivar
-        </Button>
-      </Stack>
-    ),
-  },
-];
+import { Consultar } from "../../services/API";
+import { useEffect, useState } from "react";
 
 let rutas = [
   {
@@ -105,6 +15,37 @@ let rutas = [
 ];
 
 export default function Catalogo() {
+
+  const [solicitudes, setSolicitudes] = useState([]);
+  const [cargandoTabla, setCargandoTabla] = useState(false);
+  const toast = useToast();
+
+  useEffect(() => {
+    const consultarSolicitudes = async () => {
+      let respuesta = await Consultar("/solicitudes", {
+        fields: {
+          idSolicitud: true,
+          fechaSolicitud: true,
+          estatus: true,
+          costoTotal: true,
+        },
+      });
+      if (respuesta.status === 200) {
+        setCargandoTabla(true);
+        setSolicitudes(respuesta.data);
+      } else {
+        toast({
+          title: "Error",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    };
+    consultarSolicitudes();
+  }, [toast]);
+
   return (
     <Scaffold
       titulo="Solicitudes"
@@ -136,13 +77,9 @@ export default function Catalogo() {
             borderRadius="lg"
             overflow="hidden"
           >
-            <DataTable
-              title="Lista de Solicitudes"
-              columns={columns}
-              data={data}
-              pagination
-              expandableRows
-            />
+            <Skeleton isLoaded={cargandoTabla}>
+              <IBMDataTable rows={solicitudes} />
+            </Skeleton>
           </Box>
         </main>
       </div>
