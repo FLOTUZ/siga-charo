@@ -45,7 +45,7 @@ function NuevoBeneficiarioFisica() {
   //-------DATOS DE Beneficiario Tabla Fisica-----------//
   const [apellidoPaterno, setApellidoPaterno] = useState("");
   const [apellidoMaterno, setApellidoMaterno] = useState("");
-  const [socioEconomico, setSocioEconomico] = useState("");
+  const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
   const [curp, setCurp] = useState("");
   //------------------ Usuario Logueado  ---------------
@@ -72,26 +72,25 @@ function NuevoBeneficiarioFisica() {
         usuarioCargaId: 1,
         comunidadId: 1,
       };
-      console.log(beneficiario);
+
       let respuesta = await Crear("/beneficiarios", beneficiario);
 
       console.log(respuesta);
-      /*
+      
    let beneficiarioFisica = {
-     idBenficiario: respuesta.idBenficiario,
-     nombreBeneficiario: nombreBeneficiario,
-     direccion: direccion,
-     telefonoLocal: telefonoLocal,
-     telefonoCelular: telefonoCelular,
-     correo: correo,
-     comunidad: comunidad,
-     fechaRegistro: new Date(Date.now()).toISOString(),
+     beneficiarioId: respuesta.data.idBeneficiario,
+     apellidoPaterno: apellidoPaterno,
+     apellidoMaterno: apellidoMaterno,
+     estadoSocioEconomico: estadoSocioEconomico,
+     fechaNacimiento: new Date(fechaNacimiento).toISOString(),
+     curp: curp,
    };
+    console.log(beneficiarioFisica);
 
    let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
     if (respuestaF.status === 200) {
        toast({
-         title: "Nuevo Beneficiario Guardaro",
+         title: "Nuevo Beneficiario Guardado",
          descripcion: `El Beneficiario se ha guardado`,
          status: "success",
          duration: 9000,
@@ -105,7 +104,7 @@ function NuevoBeneficiarioFisica() {
          duration: 9000,
          isClosable: true,
        });
-     } */
+     } 
     } catch (e) {
       toast({
         title: "Verifica los datos",
@@ -212,6 +211,9 @@ function NuevoBeneficiarioFisica() {
                   id="apellidoP"
                   placeholder="Apellido Paterno"
                   required={true}
+                  onChange={(e) => {
+                    setApellidoPaterno(e.target.value);
+                  }}
                 />
                 <Text m={1}>Apellido Materno</Text>
                 <Input
@@ -219,11 +221,28 @@ function NuevoBeneficiarioFisica() {
                   id="apellidoM"
                   placeholder="Apellido Materno"
                   required={true}
+                  onChange={(e) => {
+                    setApellidoMaterno(e.target.value);
+                  }}
                 />
                 <Text m={1}>CURP</Text>
-                <Input m={1} id="curp" placeholder="curp" required={true} />
+                <Input 
+                m={1} 
+                id="curp" 
+                placeholder="curp" 
+                required={true} 
+                onChange={(e) => {
+                  setCurp(e.target.value);
+                }}/>
                 <Text m={1}>Fecha Nacimiento</Text>
-                <Input m={1} id="dateREfistro" type="date" required={true} />
+                <Input 
+                m={1} 
+                id="dateREfistro" 
+                type="date" 
+                required={true} 
+                onChange={(e) => {
+                  setFechaNacimiento(e.target.value);
+                }}/>
                 <Text m={1}>Telefono Celular</Text>
                 <Input
                   m={1}
@@ -287,6 +306,9 @@ function NuevoBeneficiarioFisica() {
                   id="Comunidad"
                   required={true}
                   size="lg"
+                  onChange={(e) => {
+                    setEstadoSocioEconomico(e.target.value);
+                  }}
                 />
               </Flex>
             </Flex>
