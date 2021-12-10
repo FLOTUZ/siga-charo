@@ -6,22 +6,31 @@ import {
   Box,
   Input,
   Spacer,
-  Select,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
   Link,
   useToast,
+  Skeleton,
+  Stack,
 } from "@chakra-ui/react";
 import { Progress } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import Scaffold from "../../components/layout/Scaffold";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Crear } from "../../services/API";
+import { Crear, Consultar } from "../../services/API";
 
 function Nueva_Solicitud_Paso_3() {
   const { query } = useRouter();
   const router = useRouter();
   const toast = useToast();
 
-  const [apoyo, setApoyo] = useState("");
+  const [cargandoApoyos, setCargandoApoyos] = useState(true);
+  const [Apoyo, setApoyo] = useState({ idPrograma: 0, nombre: "" });
+  const [listaDeApoyos, setListaDeApoyos] = useState([]);
   const [cantidad, setCantidad] = useState("");
   const [fecha, setFecha] = useState("");
   const [descuento, setdescuento] = useState("");
@@ -30,6 +39,28 @@ function Nueva_Solicitud_Paso_3() {
   useEffect(() => {
     console.log(router.query);
   }, []);
+
+  const consultarApoyos = async () => {
+    let respuesta = await Consultar("/programas", {
+      fields: {
+        idPrograma: true,
+        nombre: true,
+      },
+    });
+
+    if (respuesta.status == 200) {
+      setListaDeApoyos(respuesta.data);
+      setCargandoApoyos(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   const ejecutar = async () => {
     let beneficiario = {
@@ -71,7 +102,7 @@ function Nueva_Solicitud_Paso_3() {
       notas: "NA",
       usuarioAutorizadorId: 1,
       usuarioEntregaId: 1,
-      programaId: 1,
+      programaId: Apoyo.idPrograma,
       beneficiarioId: 1,
     };
 
@@ -153,19 +184,50 @@ function Nueva_Solicitud_Paso_3() {
                 rounded={6}
               >
                 <Text m={1}>Elegir Apoyo</Text>
-                <Select
-                  m={1}
-                  id="apoyo"
-                  value={apoyo}
-                  onChange={(e) => {
-                    setApoyo(e.currentTarget.value);
-                  }}
-                  placeholder="Apoyo..."
-                  required={true}
-                >
-                  <option>Calentador Solar</option>
-                  <option>Arena</option>
-                </Select>
+                <Menu>
+                  {({ isOpen }) => (
+                    <>
+                      <MenuButton
+                        isActive={isOpen}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        onClick={() => {
+                          setCargandoApoyos(true);
+                          consultarApoyos();
+                        }}
+                      >
+                        {isOpen
+                          ? Apoyo.nombre
+                          : Apoyo.nombre != ""
+                          ? Apoyo.nombre
+                          : "Seleccione"}
+                      </MenuButton>
+                      <MenuList>
+                        {cargandoApoyos ? (
+                          <Stack p="0.5rem">
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                          </Stack>
+                        ) : listaDeApoyos.length == 0 ? (
+                          <MenuItem>No hay apoyos</MenuItem>
+                        ) : (
+                          listaDeApoyos.map((u, index) => {
+                            return (
+                              <MenuItem
+                                key={index}
+                                onClick={() => setApoyo(u)}
+                              >
+                                {u.nombre}
+                              </MenuItem>
+                            );
+                          })
+                        )}
+                        <MenuDivider />
+                      </MenuList>
+                    </>
+                  )}
+                </Menu>
                 <Flex m={1}>
                   <Box p="4">
                     <Text>Cantidad</Text>

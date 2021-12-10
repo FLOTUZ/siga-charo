@@ -39,9 +39,8 @@ function Nueva_Solicitud_Paso_2() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const toast = useToast();
-  const [localidad, setLocalidad] = useState("");
 
-  const [localidad, setLocalidad] = useState({ idComunidad: 0, nombre: "" });
+  const [localidad, setLocalidad] = useState("");
   const [listaDeLocalidades, setListaDeLocalidades] = useState([]);
   const [nuevaLocalidad, setNuevaLocalidad] = useState("");
 
