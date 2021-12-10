@@ -9,8 +9,14 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import faker from "faker";
+import { Consultar, Crear } from "../../services/API";
+import { useEffect, useState } from "react";
 
 function BarAgrupada() {
+  const [comunidades, setComunidades] = useState([]);
+  const [beneficiariosPorComunidad, setBeneficiariosPorComunidad] = useState(
+    []
+  );
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -42,39 +48,63 @@ function BarAgrupada() {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+  useEffect(() => {
+    let lista = [];
+    beneficiariosPorComunidad.map((bc) => {
+      lista.push(bc.nombre);
+    });
+    setComunidades(lista);
+  }, [beneficiariosPorComunidad]);
 
+  console.log(beneficiariosPorComunidad);
   const data = {
-    labels,
+    labels: comunidades,
     datasets: [
       {
-        label: "Dataset 1",
-        data: labels.map(() => faker.datatype.number({ min: 1000, max: 1000 })),
+        label: "Dataset",
+        data: beneficiariosPorComunidad.map((e)=> e.nBeneficiarios),
         backgroundColor: "rgb(255, 99, 132)",
         stack: "Stack 0",
       },
-      {
-        label: "Dataset 2",
-        data: labels.map(() => faker.datatype.number({ min: 1000, max: 1000 })),
-        backgroundColor: "rgb(75, 192, 192)",
-        stack: "Stack 0",
-      },
-      {
-        label: "Dataset 3",
-        data: labels.map(() => faker.datatype.number({ min: 1000, max: 1000 })),
-        backgroundColor: "rgb(53, 162, 235)",
-        stack: "Stack 1",
-      },
     ],
   };
+
+  useEffect(() => {
+    const getComunidades = async () => {
+      let respuesta = await Consultar("/comunidades", {
+        fields: {
+          idComunidad: true,
+          nombre: true,
+        },
+        include: [
+          {
+            relation: "beneficiarios",
+            scope: {
+              fields: { idBeneficiario: false },
+            },
+          },
+        ],
+      });
+
+      let lista = [];
+      respuesta.data.map((com) => {
+        if (com.beneficiarios !== undefined) {
+          lista.push({
+            nombre: com.nombre,
+            nBeneficiarios: com.beneficiarios.length,
+          });
+        } else {
+          lista.push({
+            nombre: com.nombre,
+            nBeneficiarios: 0,
+          });
+        }
+      });
+      setBeneficiariosPorComunidad(lista);
+    };
+
+    getComunidades();
+  }, []);
   return <Bar options={options} data={data} />;
 }
 

@@ -135,7 +135,7 @@ function Dashboard() {
           </Link>
         </Wrap>
         <AspectRatio ratio={16 / 9}>
-          <RadarChart/>
+          <BarAgrupada/>
         </AspectRatio>
       </Scaffold>
     </>
