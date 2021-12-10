@@ -47,7 +47,15 @@ function NuevoBeneficiarioFisica() {
   const [telefonoCelular, setTelefonoCelular] = useState("");
   const [correo, setCorreo] = useState("");
   const [rfc, setRfc] = useState("");
-
+//-------DATOS DE Beneficiario Tabla fisica-----------//
+const [apellidoPaterno, setApellidoPaterno] =
+  useState("");
+const [apellidoMaterno, setApellidoMaterno] =
+  useState("");
+const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
+const [fechaNacimiento, setFechaNacimiento] = useState("");
+const [curp, setCurp] = useState("");
+const [beneficiarioId, setBEneficiarioId] = useState("");
   //-------Comunidad-----------//
   const [cargandoComunidad, setCargandoComunidad] = useState(true);
   const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
@@ -120,14 +128,12 @@ function NuevoBeneficiarioFisica() {
       let respuesta = await Crear("/beneficiarios", beneficiario);
 
       let beneficiarioFisica = {
-        idBenficiario: respuesta.idBenficiario,
-        nombreBeneficiario: nombreBeneficiario,
-        direccion: direccion,
-        telefonoLocal: telefonoLocal,
-        telefonoCelular: telefonoCelular,
-        correo: correo,
-        comunidad: comunidad,
-        fechaRegistro: new Date(Date.now()).toISOString(),
+        benficiarioId: respuesta.idBenficiario,
+        apellidoPaterno: apellidoPaterno,
+        apellidoMaterno: apellidoMaterno,
+        estadoSocioEconomico: estadoSocioEconomico,
+        fechaNacimiento: fechaNacimiento,
+        curp: curp,
       };
 
       let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
@@ -205,19 +211,27 @@ function NuevoBeneficiarioFisica() {
                 m={1}
                 id="apellidoP"
                 placeholder="Apellido Paterno"
-                required={true}
+                required={true}onChange={(e) => {
+                  setApellidoPaterno(e.target.value);
+                }}
               />
               <Text m={1}>Apellido Materno</Text>
               <Input
                 m={1}
                 id="apellidoM"
                 placeholder="Apellido Materno"
-                required={true}
+                required={true}onChange={(e) => {
+                  setApellidoMaterno(e.target.value);
+                }}
               />
               <Text m={1}>CURP</Text>
-              <Input m={1} id="curp" placeholder="curp" required={true} />
+              <Input m={1} id="curp" placeholder="curp" required={true} onChange={(e) => {
+                  setCurp(e.target.value);
+                }} />
               <Text m={1}>Fecha Nacimiento</Text>
-              <Input m={1} id="dateREfistro" type="date" required={true} />
+              <Input m={1} id="dateREfistro" type="date" required={true} onChange={(e) => {
+                  setFechaNacimiento(e.target.value);
+                }}/>
               <Text m={1}>Telefono Celular</Text>
               <InputGroup>
                 <InputLeftElement
@@ -333,7 +347,9 @@ function NuevoBeneficiarioFisica() {
               </Menu>
               {/*  termina menu*/}
               <Text m={1}>Socio Economico</Text>
-              <Input m={1} id="Comunidad" required={true} size="lg" />
+              <Input m={1} id="Comunidad" required={true} size="lg" onChange={(e) => {
+                  setEstadoSocioEconomico(e.target.value);
+                }}/>
             </Flex>
 
             <Flex w="170vh" alignItems="center" justifyContent="center">
