@@ -1,10 +1,8 @@
 import Scaffold from "../../components/layout/Scaffold";
-import Link from "next/link";
 import Head from "next/head";
 import React from "react";
 import { sesion } from "../../utils/Utils";
 import {
-  FormControl,
   FormLabel,
   Text,
   Button,
@@ -12,7 +10,6 @@ import {
   Box,
   Input,
   Spacer,
-  Switch,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -23,14 +20,21 @@ import {
   useDisclosure,
   HStack,
   useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Skeleton,
+  Stack,
+  ChevronDownIcon,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useState, useRef, useEffect } from "react";
-import { Crear } from "../../services/API";
+import { useState, useEffect } from "react";
+import { Crear, Consultar } from "../../services/API";
 
 function NuevoBeneficiarioFisica() {
   //----------Estado de la interfaz--------//
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const toast = useToast();
@@ -42,10 +46,16 @@ function NuevoBeneficiarioFisica() {
   const [correo, setCorreo] = useState("");
   const [rfc, setRfc] = useState("");
 
+  //-------Comunidad-----------//
+  const [cargandoComunidad, setCargandoComunidad] = useState(true);
+  const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
+  const [listaComunidades, setListaComunidades] = useState([]);
+  const [nuevaComunidad, setNuevaComunidad] = useState("");
+
   //-------DATOS DE Beneficiario Tabla Fisica-----------//
   const [apellidoPaterno, setApellidoPaterno] = useState("");
   const [apellidoMaterno, setApellidoMaterno] = useState("");
-  const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
+  const [socioEconomico, setSocioEconomico] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
   const [curp, setCurp] = useState("");
   //------------------ Usuario Logueado  ---------------
@@ -57,7 +67,45 @@ function NuevoBeneficiarioFisica() {
     setUsuarioLogueado(usuario);
   }, []);
 
-  const [comunidad, setComunindad] = useState("");
+  const altaComunidad = async () => {
+    //--------inicia
+    let respuesta = await Crear("/comunidades", { nombre: nuevaComunidad });
+    if (respuesta.status == 200) {
+      consultarComunidad();
+      toast({
+        title: "Nueva Comunidad Agregada",
+        description: ` ${nuevaComunidad} se ha agregado`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Oops.. Algo salio mal",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+  const consultarComunidad = async () => {
+    //---- inicia
+    let respuesta = await Consultar("/comunidades");
+
+    if (respuesta.status == 200) {
+      setListaComunidades(respuesta.data);
+      setCargandoComunidad(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   const guardarBeneficiario = async () => {
     try {
@@ -70,38 +118,57 @@ function NuevoBeneficiarioFisica() {
         fechaRegistro: new Date(Date.now()).toISOString(),
         rfc: rfc,
         usuarioCargaId: 1,
-        comunidadId: 1,
+        comunidadId: comunidad.idComunidad,
       };
 
+      console.log(beneficiario);
       let respuesta = await Crear("/beneficiarios", beneficiario);
+<<<<<<< HEAD
       
    let beneficiarioFisica = {
-     beneficiarioId: respuesta.data.idBeneficiario,
-     apellidoPaterno: apellidoPaterno,
-     apellidoMaterno: apellidoMaterno,
-     estadoSocioEconomico: estadoSocioEconomico,
-     fechaNacimiento: new Date(fechaNacimiento).toISOString(),
-     curp: curp,
+     idBenficiario: respuesta.idBenficiario,
+     nombreBeneficiario: nombreBeneficiario,
+     direccion: direccion,
+     telefonoLocal: telefonoLocal,
+     telefonoCelular: telefonoCelular,
+     correo: correo,
+     comunidad: comunidad,
+     fechaRegistro: new Date(Date.now()).toISOString(),
    };
+=======
 
-   let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
-    if (respuestaF.status === 200) {
-       toast({
-         title: "Nuevo Beneficiario Guardado",
-         descripcion: `El Beneficiario se ha guardado`,
-         status: "success",
-         duration: 9000,
-         isClosable: true,
-       });
-     } else {
-       toast({
-         title: "Oops.. Algo salio mal",
-         descripcion: respuesta.message,
-         status: "error",
-         duration: 9000,
-         isClosable: true,
-       });
-     } 
+      console.log(respuesta);
+>>>>>>> AltaComunidad
+
+      let beneficiarioFisica = {
+        idBenficiario: respuesta.idBenficiario,
+        nombreBeneficiario: nombreBeneficiario,
+        direccion: direccion,
+        telefonoLocal: telefonoLocal,
+        telefonoCelular: telefonoCelular,
+        correo: correo,
+        comunidad: comunidad,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+      };
+
+      let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
+      if (respuestaF.status === 200) {
+        toast({
+          title: "Nuevo Beneficiario Guardaro",
+          descripcion: `El Beneficiario se ha guardado`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Oops.. Algo salio mal",
+          descripcion: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
     } catch (e) {
       toast({
         title: "Verifica los datos",
@@ -134,200 +201,192 @@ function NuevoBeneficiarioFisica() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <HStack>
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <>
-              <Flex margin="2rem">
-                <Button
-                  ref={btnRef}
-                  colorScheme="teal"
-                  onClick={onOpen}
-                  margin="2rem"
-                >
-                  Agregar Comunidad
-                </Button>
-              </Flex>
-
-              <Drawer
-                isOpen={isOpen}
-                placement="right"
-                onClose={onClose}
-                finalFocusRef={btnRef}
-              >
-                <DrawerOverlay />
-                <DrawerContent>
-                  <DrawerCloseButton />
-                  <DrawerHeader>Agregar Comunidad</DrawerHeader>
-
-                  <DrawerBody>
-                    <Input placeholder="Comunidad" />
-                  </DrawerBody>
-
-                  <DrawerFooter>
-                    <Button variant="outline" mr={3} onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button colorScheme="blue">Save</Button>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
-            </>
-            <Spacer />
-          </HStack>
           <Box>
-            <Flex w="170vh" justifyContent="center">
-              <Flex
-                direction="column"
-                w="110vh"
-                borderStyle="solid"
-                borderColor="gray.200"
-                borderWidth="2px"
-                p={2}
-                rounded={6}
-              >
-                <Text m={1}>Nombre(s)</Text>
-                <Input
-                  m={1}
-                  id="name"
-                  placeholder="Nombre(s)"
-                  required={true}
-                  onChange={(e) => {
-                    setNombreBeneficiario(e.target.value);
-                  }}
-                />
-                <Text m={1}>Apellido Paterno</Text>
-                <Input
-                  m={1}
-                  id="apellidoP"
-                  placeholder="Apellido Paterno"
-                  required={true}
-                  onChange={(e) => {
-                    setApellidoPaterno(e.target.value);
-                  }}
-                />
-                <Text m={1}>Apellido Materno</Text>
-                <Input
-                  m={1}
-                  id="apellidoM"
-                  placeholder="Apellido Materno"
-                  required={true}
-                  onChange={(e) => {
-                    setApellidoMaterno(e.target.value);
-                  }}
-                />
-                <Text m={1}>CURP</Text>
-                <Input 
-                m={1} 
-                id="curp" 
-                placeholder="curp" 
-                required={true} 
+            <Flex
+              m="2rem"
+              p="2rem"
+              direction="column"
+              borderStyle="solid"
+              borderColor="gray.200"
+              borderWidth="1px"
+              rounded={6}
+            >
+              <Text m={1}>Nombre(s)</Text>
+              <Input
+                m={1}
+                id="name"
+                placeholder="Nombre(s)"
+                required={true}
                 onChange={(e) => {
-                  setCurp(e.target.value);
-                }}/>
-                <Text m={1}>Fecha Nacimiento</Text>
-                <Input 
-                m={1} 
-                id="dateREfistro" 
-                type="date" 
-                required={true} 
+                  setNombreBeneficiario(e.target.value);
+                }}
+              />
+              <Text m={1}>Apellido Paterno</Text>
+              <Input
+                m={1}
+                id="apellidoP"
+                placeholder="Apellido Paterno"
+                required={true}
+              />
+              <Text m={1}>Apellido Materno</Text>
+              <Input
+                m={1}
+                id="apellidoM"
+                placeholder="Apellido Materno"
+                required={true}
+              />
+              <Text m={1}>CURP</Text>
+              <Input m={1} id="curp" placeholder="curp" required={true} />
+              <Text m={1}>Fecha Nacimiento</Text>
+              <Input m={1} id="dateREfistro" type="date" required={true} />
+              <Text m={1}>Telefono Celular</Text>
+              <Input
+                m={1}
+                id="celular"
+                placeholder="Celular"
+                required={true}
                 onChange={(e) => {
-                  setFechaNacimiento(e.target.value);
-                }}/>
-                <Text m={1}>Telefono Celular</Text>
-                <Input
-                  m={1}
-                  id="celular"
-                  placeholder="Celular"
-                  required={true}
-                  onChange={(e) => {
-                    setTelefonoCelular(e.target.value);
-                  }}
-                />
-                <Text m={1}>Telefono</Text>
-                <Input
-                  m={1}
-                  id="telefono"
-                  placeholder="Telefono"
-                  required={true}
-                  onChange={(e) => {
-                    setTelefonoLocal(e.target.value);
-                  }}
-                />
-                <Text m={1}>correo</Text>
-                <Input
-                  m={1}
-                  id="correo"
-                  placeholder="correo"
-                  required={true}
-                  onChange={(e) => {
-                    setCorreo(e.target.value);
-                  }}
-                />
-                <Text m={1}>RFC</Text>
-                <Input
-                  m={1}
-                  id="rfc"
-                  placeholder="rfc"
-                  required={true}
-                  onChange={(e) => {
-                    setRfc(e.target.value);
-                  }}
-                />
-                <Text m={1}>Direccion</Text>
-                <Input
-                  m={1}
-                  id="Direccion"
-                  placeholder="Direccion"
-                  required={true}
-                  onChange={(e) => {
-                    setDireccion(e.target.value);
-                  }}
-                />
-                <Text m={1}>Comunidad</Text>
-                <Input
-                  m={1}
-                  id="Comunidad"
-                  placeholder="Comunidad"
-                  required={true}
-                />
-                <Text m={1}>Socio Economico</Text>
-                <Input
-                  m={1}
-                  id="Comunidad"
-                  required={true}
-                  size="lg"
-                  onChange={(e) => {
-                    setEstadoSocioEconomico(e.target.value);
-                  }}
-                />
-              </Flex>
+                  setTelefonoCelular(e.target.value);
+                }}
+              />
+              <Text m={1}>Telefono</Text>
+              <Input
+                m={1}
+                id="telefono"
+                placeholder="Telefono"
+                required={true}
+                onChange={(e) => {
+                  setTelefonoLocal(e.target.value);
+                }}
+              />
+              <Text m={1}>correo</Text>
+              <Input
+                m={1}
+                id="correo"
+                placeholder="correo"
+                required={true}
+                onChange={(e) => {
+                  setCorreo(e.target.value);
+                }}
+              />
+              <Text m={1}>RFC</Text>
+              <Input
+                m={1}
+                id="rfc"
+                placeholder="rfc"
+                required={true}
+                onChange={(e) => {
+                  setRfc(e.target.value);
+                }}
+              />
+              <Text m={1}>Direccion</Text>
+              <Input
+                m={1}
+                id="Direccion"
+                placeholder="Direccion"
+                required={true}
+                onChange={(e) => {
+                  setDireccion(e.target.value);
+                }}
+              />
+              <FormLabel htmlFor="comunidad">Comunidad</FormLabel>{" "}
+              {/* se ocupa para menu comunidades*/}
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton
+                      isActive={isOpen}
+                      rightIcon={<ChevronDownIcon />}
+                      onClick={() => {
+                        setCargandoComunidad(true);
+                        consultarComunidad();
+                      }}
+                    >
+                      {isOpen
+                        ? comunidad.nombre
+                        : comunidad.nombre != ""
+                        ? comunidad.nombre
+                        : "Seleccione"}
+                    </MenuButton>
+                    <MenuList>
+                      {cargandoComunidad ? (
+                        <Stack p="0.5rem">
+                          <Skeleton height="1.5rem" />
+                          <Skeleton height="1.5rem" />
+                          <Skeleton height="1.5rem" />
+                        </Stack>
+                      ) : listaComunidades.length == 0 ? (
+                        <MenuItem>No comunidades agregadas</MenuItem>
+                      ) : (
+                        listaComunidades.map((com, index) => {
+                          return (
+                            <MenuItem
+                              key={index}
+                              onClick={() => setComunidad(com)}
+                            >
+                              {com.nombre}
+                            </MenuItem>
+                          );
+                        })
+                      )}
+                      <MenuDivider />
+                      <MenuItem ref={btnRef} onClick={onOpen}>
+                        Agregar Comunidad
+                      </MenuItem>
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
+              {/*  termina menu*/}
+              <Text m={1}>Socio Economico</Text>
+              <Input m={1} id="Comunidad" required={true} size="lg" />
+            </Flex>
+
+            <Flex w="170vh" alignItems="center" justifyContent="center">
+              <Spacer />
+              <Box>
+                <Button
+                  colorScheme="teal"
+                  variant="solid"
+                  mr="4"
+                  onClick={() => guardarBeneficiario()}
+                >
+                  Guardar
+                </Button>
+                <Button colorScheme="teal" variant="outline">
+                  Descartar
+                </Button>
+              </Box>
             </Flex>
           </Box>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Flex w="170vh" alignItems="center" justifyContent="center">
-            <Box p="2"></Box>
-            <Spacer />
-            <Box>
-              <Button
-                colorScheme="teal"
-                variant="solid"
-                mr="4"
-                onClick={() => guardarBeneficiario()}
-              >
-                Guardar
-              </Button>
-              <Button colorScheme="teal" variant="outline">
-                Descartar
-              </Button>
-            </Box>
-          </Flex>
+
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Agregar Comunidad</DrawerHeader>
+              <DrawerBody>
+                <Input
+                  placeholder="Nombre de la Comunidad"
+                  onChange={(e) => setNuevaComunidad(e.target.value)}
+                />
+              </DrawerBody>
+
+              <DrawerFooter>
+                <Box>
+                  <Button onClick={onClose}>Cancelar</Button>
+                  <Button colorScheme="blue" onClick={() => altaComunidad()}>
+                    Guardar
+                  </Button>
+                </Box>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </main>
       </div>
     </Scaffold>
