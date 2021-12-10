@@ -28,7 +28,7 @@ const NavLateral = () => {
     {
       id: 2,
       nombre: "Nueva Solicitud",
-      url: "/solicitudes/catalogo",
+      url: "/solicitudes",
 
       icono: <FiFilePlus size="2rem" />,
     },
