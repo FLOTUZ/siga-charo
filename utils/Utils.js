@@ -23,7 +23,22 @@ function sesion() {
   return null;
 }
 
+function imprimir(html) {
+  let mywindow = window.open("", "my div", "height=500,width=500");
+  mywindow.document.write("<html><head><title>Imprimir</title>");
+  mywindow.document.write("</head><body >");
+  mywindow.document.write(`<div class="tiket">${html}</div>`);
+  mywindow.document.write("</body></html>");
+
+  //El delay es para que cargue el css
+  setTimeout(() => {
+    mywindow.focus();
+    mywindow.print();
+    mywindow.close();
+  }, 1000);
+}
 module.exports = {
   nuevaSesion,
   sesion,
+  imprimir
 };

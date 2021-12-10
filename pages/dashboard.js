@@ -19,6 +19,7 @@ import { Consultar } from "../services/API";
 import Linea from "../components/graficas/Linea";
 import VerticalBar from "../components/graficas/VerticalBar";
 import BarAgrupada from "../components/graficas/BarAgrupada";
+import RadarChart from "../components/graficas/RadarChart";
 
 function Dashboard() {
   const [usuarioLoguado, setUsuarioLoguado] = useState({});
@@ -134,7 +135,7 @@ function Dashboard() {
           </Link>
         </Wrap>
         <AspectRatio ratio={16 / 9}>
-          <BarAgrupada/>
+          <RadarChart/>
         </AspectRatio>
       </Scaffold>
     </>
