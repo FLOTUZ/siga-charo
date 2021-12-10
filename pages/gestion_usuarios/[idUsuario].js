@@ -14,6 +14,10 @@ import {
   VStack,
   Skeleton,
   StackDivider,
+  HStack,
+  Checkbox,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Scaffold from "../../components/layout/Scaffold";
@@ -25,6 +29,73 @@ function Editar_usuario() {
   const [usuario, setUsuario] = useState({});
   const [cargando, setCargando] = useState(true);
   const router = useRouter();
+
+  //----------Estado de la interfaz--------//
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  //-------DATOS DE USUARIO-----------//
+  const [nombreUsuario, setNombreUsuario] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellidoPaterno, setApellidoPaterno] = useState("");
+  const [apellidoMaterno, setApellidoMaterno] = useState("");
+  const [password, setPassword] = useState("");
+  const [puesto, setPuesto] = useState("");
+  const [email, setEmail] = useState("");
+  //-----------------PERMISOS
+  const [haceSolicitudes, setHaceSolicitudes] = useState(false);
+  const [altadeApoyos, setAltaDeApoyos] = useState(false);
+  const [autorizaApoyos, setAutorizaApoyos] = useState(false);
+  const [haceReportes, setHaceReportes] = useState(false);
+  const [administraSistema, setAdministraSistema] = useState(false);
+
+  const editarUsuario = async () => {
+    try {
+      let usuario = {
+        nombreUsuario: nombreUsuario,
+        nombre: nombre,
+        apellidoPaterno: apellidoPaterno,
+        apellidoMaterno: apellidoMaterno,
+        email: email,
+        password: password,
+        puesto: "TI",
+        haceSolicitudes: haceSolicitudes,
+        altaDeApoyos: altadeApoyos,
+        autorizaApoyos: autorizaApoyos,
+        haceReportes: haceReportes,
+        administraSistema: administraSistema,
+        activo: true,
+      };
+      console.log(usuario);
+      let respuesta = await Crear("/usuarios/{id}", usuario);
+      if (respuesta.status === 200) {
+        toast({
+          title: "Nuevo usuario creado",
+          descripcion: `El usuario se ha creado`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Oops.. Algo salio mal",
+          descripcion: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Verifica los datos",
+        description: e.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.log(e.message);
+    }
+  };
 
   let { idUsuario } = router.query;
 
@@ -112,16 +183,95 @@ function Editar_usuario() {
                   </FormControl>
                   <FormControl m={1} id="country">
                     <FormLabel m={2}>Rol del Usuario</FormLabel>
-                    <Select m={2} placeholder="Rol...">
+                    <Select isDisabled  m={2} placeholder="Rol...">
                       <option>Capturador</option>
                       <option>Administrador</option>
                       <option>Director</option>
                     </Select>
                   </FormControl>
+                  <Box>
+                    <FormLabel m={5}>Permisos personalizados</FormLabel>
+                    <HStack spacing={10} direction="row">
+                      <Checkbox
+                        isDisabled
+                        defaultIsChecked
+                        isChecked={autorizaApoyos}
+                        onChange={() => {
+                          autorizaApoyos
+                            ? setAutorizaApoyos(false)
+                            : setAutorizaApoyos(true);
+                        }}
+                        size="md"
+                        colorScheme="green"
+                        defaultValue
+                      >
+                        Autoriza apoyos
+                      </Checkbox>
+                      <Checkbox
+                        isDisabled
+                        defaultIsChecked
+                        isChecked={altadeApoyos}
+                        onChange={() => {
+                          altadeApoyos
+                            ? setAltaDeApoyos(false)
+                            : setAltaDeApoyos(true);
+                        }}
+                        size="md"
+                        colorScheme="green"
+                        defaultValue
+                      >
+                        Alta de apoyos
+                      </Checkbox>
+                      <Checkbox
+                        isDisabled
+                        defaultIsChecked
+                        isChecked={haceSolicitudes}
+                        onChange={() => {
+                          haceSolicitudes
+                            ? setHaceSolicitudes(false)
+                            : setHaceSolicitudes(true);
+                        }}
+                        size="md"
+                        colorScheme="green"
+                        defaultValue
+                      >
+                        Alta de solicitudes
+                      </Checkbox>
+                      <Checkbox
+                        isDisabled
+                        defaultIsChecked
+                        isChecked={haceReportes}
+                        onChange={() => {
+                          haceReportes
+                            ? setHaceReportes(false)
+                            : setHaceReportes(true);
+                        }}
+                        size="md"
+                        colorScheme="green"
+                        defaultValue
+                      >
+                        Realiza Reportes
+                      </Checkbox>
+                      <Checkbox
+                        isDisabled
+                        defaultIsChecked
+                        isChecked={administraSistema}
+                        onChange={() => {
+                          administraSistema
+                            ? setAdministraSistema(false)
+                            : setAdministraSistema(true);
+                        }}
+                        size="md"
+                        colorScheme="green"
+                        defaultValue
+                      >
+                        Administrador del sistema
+                      </Checkbox>
+                    </HStack>
+                  </Box>
                 </Flex>
               </VStack>
             </Flex>
-
             <Box
               m={10}
               bg="purple.200"
@@ -129,7 +279,6 @@ function Editar_usuario() {
               direction="column"
               justifyContent="Center"
             ></Box>
-
             <Flex
               borderStyle="solid"
               borderColor="gray.200"
@@ -174,11 +323,11 @@ function Editar_usuario() {
                   value={usuario.password}
                 />
               </InputGroup>
-            </Flex>
+            </Flex>{" "}
           </Flex>
 
           <Box direction="column" w="100%" p={5} rounded={6}>
-            <Button m={1} colorScheme="teal" variant="solid">
+            <Button  onClick={() => editarUsuario()}m={1} colorScheme="teal" variant="solid">
               Guardar
             </Button>
             <Button
