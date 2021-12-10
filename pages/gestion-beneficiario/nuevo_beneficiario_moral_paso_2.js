@@ -5,9 +5,12 @@ import { Crear } from "../../services/API";
 import Scaffold from "../../components/layout/Scaffold";
 import { useState,} from "react";
 import Link from "next/link";
+import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 import {
   Text,
   Button,
+  InputGroup,
+  InputLeftElement,
   Flex,
   Box,
   Input,
@@ -161,8 +164,12 @@ function NuevoBeneficiarioMoralPaso2() {
                   }}
                 />
                 <Text m={1}>Telefono Local</Text>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<PhoneIcon color="gray.300" />}
+                  />
                 <Input
-                  m={1}
                   id="telefono"
                   placeholder="Telefono Local"
                   required={true}
@@ -170,9 +177,14 @@ function NuevoBeneficiarioMoralPaso2() {
                     setTelefonoLocalRep(e.target.value);
                   }}
                 />
+                </InputGroup>
                 <Text m={1}>Telefono Celular</Text>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<PhoneIcon color="gray.300" />}
+                  />
                 <Input
-                  m={1}
                   id="telefono"
                   placeholder="Telefono Celular"
                   required={true}
@@ -180,16 +192,22 @@ function NuevoBeneficiarioMoralPaso2() {
                     setTelefonoCelularRep(e.target.value);
                   }}
                 />
+                </InputGroup>
                 <Text m={1}>correo</Text>
-                <Input 
-                m={1} 
-                id="correo"
-                 placeholder="correo" 
-                 required={true} 
-                 onChange={(e) => {
-                  setCorreoRep(e.target.value);
-                }}
-                 />
+                <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<EmailIcon color="gray.300" />}
+                />
+                <Input
+                  id="correo"
+                  placeholder="correo"
+                  required={true}
+                  onChange={(e) => {
+                    setCorreo(e.target.value);
+                  }}
+                />
+              </InputGroup>
               </Flex>
             </Flex>
           </Box>
