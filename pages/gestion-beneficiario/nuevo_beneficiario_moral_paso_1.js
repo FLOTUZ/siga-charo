@@ -4,16 +4,15 @@ import Head from "next/head";
 import React from "react";
 import { sesion } from "../../utils/Utils";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { Crear } from "../../services/API";
 import {
-  FormControl,
-  FormLabel,
   Text,
   Button,
   Flex,
   Box,
   Input,
   Spacer,
-  Switch,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -26,8 +25,7 @@ import {
   Progress,
   useToast,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { Crear } from "../../services/API";
+
 
 function NuevoBeneficiarioMoralPaso1() {
   //--------------------Estado de la interfaz-----------------------//
@@ -64,7 +62,6 @@ function NuevoBeneficiarioMoralPaso1() {
         usuarioCargaId: 1,
         comunidadId: 1,
       };
-
       let respuesta = await Crear("/beneficiarios", beneficiario);
       if (respuesta.status === 200) {
         router.push({
@@ -78,6 +75,7 @@ function NuevoBeneficiarioMoralPaso1() {
           duration: 9000,
           isClosable: true,
         });
+        
       } else {
         toast({
           title: "Oops.. Algo salio mal",

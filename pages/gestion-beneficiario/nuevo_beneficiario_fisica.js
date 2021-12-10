@@ -51,13 +51,6 @@ function NuevoBeneficiarioFisica() {
   const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
   const [listaComunidades, setListaComunidades] = useState([]);
   const [nuevaComunidad, setNuevaComunidad] = useState("");
-
-  //-------DATOS DE Beneficiario Tabla Fisica-----------//
-  const [apellidoPaterno, setApellidoPaterno] = useState("");
-  const [apellidoMaterno, setApellidoMaterno] = useState("");
-  const [socioEconomico, setSocioEconomico] = useState("");
-  const [fechaNacimiento, setFechaNacimiento] = useState("");
-  const [curp, setCurp] = useState("");
   //------------------ Usuario Logueado  ---------------
   const [usuarioLogueado, setUsuarioLogueado] = useState({
     idUsuario: 0, // completar

@@ -1,26 +1,86 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import React from "react";
+import { Crear } from "../../services/API";
+import Scaffold from "../../components/layout/Scaffold";
+import { useState,} from "react";
+import Link from "next/link";
 import {
-  FormControl,
-  FormLabel,
   Text,
   Button,
   Flex,
   Box,
   Input,
   Spacer,
-  Switch,
   Progress,
+  useToast,
 } from "@chakra-ui/react";
-import Scaffold from "../../components/layout/Scaffold";
-import Link from "next/link";
 
 function NuevoBeneficiarioMoralPaso2() {
+  //--------------------Estado de la interfaz-----------------------//
+  //const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
   const router = useRouter();
-  const { query } = useRouter();
-  // const toast = useToast();
+  const toast = useToast();
+  //-------DATOS DE Beneficiario Tabla Beneficiario-----------//
+  const [nombreRep, setNombreRep] = useState("");
+  const [apellidoPaternoRep, setApellidoPaternoRep] =
+    useState("");
+  const [apellidoMaternoRep, setApellidoMaternoRep] =
+    useState("");
+  const [telefonoCelularRep, setTelefonoCelularRep] = useState("");
+  const [telefonoLocalRep, setTelefonoLocalRep] = useState("");
+  const [correoRep, setCorreoRep] = useState("");
+  const [beneficiarioId, setBEneficiarioId] = useState("");
+  //---------------------------------guarda el id entrante------------//
+  let { idBeneficiario } = router.query;
 
-  console.log(router.query);
+
+  const guardarBeneficiarioMoral = async () => {
+    try {
+      let personaMoral = {
+        nombreRepresentante: nombreRep,
+        apellidoPaternoRepresentante: apellidoPaternoRep,
+        apellidoMaternoRepresentante: apellidoMaternoRep,
+        telefonoLocalRep: telefonoLocalRep,
+        telefonoCelularRep: telefonoCelularRep,
+        correoRep: correoRep,
+        beneficiarioId: idBeneficiario,
+      };
+      console.log(personaMoral);
+      let respuesta = await Crear("/personas-morales", personaMoral);
+      if (respuesta.status === 200) {
+        router.push({
+          pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
+          query: { idBeneficiario: respuesta.data.idBeneficiario },
+        });
+        toast({
+          title: "Nuevo Represante",
+          descripcion: `La Institución se ha guardado`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Oops.. Algo salio mal",
+          descripcion: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Verifica los datos",
+        description: e.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.log(e.message);
+    }
+  };
 
   let rutas = [
     {
@@ -38,7 +98,7 @@ function NuevoBeneficiarioMoralPaso2() {
     >
       <div>
         <Head>
-          <title>Nuevo Beneficiario</title>
+          <title>Nuevo Represante De la Institución</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
@@ -76,6 +136,9 @@ function NuevoBeneficiarioMoralPaso2() {
                   id="name"
                   placeholder="Nombre(s)"
                   required={true}
+                  onChange={(e) => {
+                    setNombreRep(e.target.value);
+                  }}
                 />
                 <Text m={1}>Apellido Paterno</Text>
                 <Input
@@ -83,6 +146,9 @@ function NuevoBeneficiarioMoralPaso2() {
                   id="apellidoP"
                   placeholder="Apellido"
                   required={true}
+                  onChange={(e) => {
+                    setApellidoPaternoRep(e.target.value);
+                  }}
                 />
                 <Text m={1}>Apellido Materno</Text>
                 <Input
@@ -90,16 +156,40 @@ function NuevoBeneficiarioMoralPaso2() {
                   id="apellidoM"
                   placeholder="Apellido Materno"
                   required={true}
+                  onChange={(e) => {
+                    setApellidoMaternoRep(e.target.value);
+                  }}
                 />
-                <Text m={1}>Telefono</Text>
+                <Text m={1}>Telefono Local</Text>
                 <Input
                   m={1}
                   id="telefono"
-                  placeholder="Telefono"
+                  placeholder="Telefono Local"
                   required={true}
+                  onChange={(e) => {
+                    setTelefonoLocalRep(e.target.value);
+                  }}
+                />
+                <Text m={1}>Telefono Celular</Text>
+                <Input
+                  m={1}
+                  id="telefono"
+                  placeholder="Telefono Celular"
+                  required={true}
+                  onChange={(e) => {
+                    setTelefonoCelularRep(e.target.value);
+                  }}
                 />
                 <Text m={1}>correo</Text>
-                <Input m={1} id="correo" placeholder="correo" required={true} />
+                <Input 
+                m={1} 
+                id="correo"
+                 placeholder="correo" 
+                 required={true} 
+                 onChange={(e) => {
+                  setCorreoRep(e.target.value);
+                }}
+                 />
               </Flex>
             </Flex>
           </Box>
@@ -108,9 +198,14 @@ function NuevoBeneficiarioMoralPaso2() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Link href="">
+              <Link href="/gestion-beneficiario">
                 <a>
-                  <Button colorScheme="teal" variant="solid" mr="4">
+                  <Button 
+                  colorScheme="teal"
+                   variant="solid" 
+                   mr="4"
+                   onClick={() => guardarBeneficiarioMoral()}
+                   >
                     Guardar
                   </Button>
                 </a>
