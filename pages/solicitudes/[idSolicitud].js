@@ -15,11 +15,24 @@ import {
   NumberDecrementStepper,
 } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
+import { Consultar, Actualizar } from "../../services/API";
+import { useEffect, useState } from "react";
 
 function Ver_solicitud() {
+  const [solicitud, setSolicitud] = useState({});
   let router = useRouter();
   let { idSolicitud } = router.query;
   console.log(idSolicitud);
+  useEffect(() => {
+    const consultarSolicitud = async () => {
+      let respuesta = await Consultar(`/solicitudes/${idSolicitud}`);
+      if (respuesta.status === 200) {
+        setSolicitud(respuesta.data);
+      }
+    };
+    consultarSolicitud();
+  }, []);
+
   let rutas = [
     {
       url: "/ver_solicitud",
@@ -194,14 +207,6 @@ function Ver_solicitud() {
                   </Flex>
                 </Flex>
               </Flex>
-
-              <Box
-                m={10}
-                bg="white"
-                w=".1%"
-                direction="column"
-                justifyContent="Center"
-              ></Box>
 
               <Flex
                 borderStyle="solid"

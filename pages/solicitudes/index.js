@@ -1,7 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
-import { Button, Flex, Box, Spacer, useToast, Skeleton } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import {
+  Button,
+  Flex,
+  Box,
+  Spacer,
+  useToast,
+  Skeleton,
+} from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import { Consultar } from "../../services/API";
 import { useEffect, useState } from "react";
@@ -15,6 +23,7 @@ let rutas = [
 ];
 
 export default function Catalogo() {
+  let router = useRouter();
 
   const [solicitudes, setSolicitudes] = useState([]);
   const [cargandoTabla, setCargandoTabla] = useState(false);
@@ -78,7 +87,13 @@ export default function Catalogo() {
             overflow="hidden"
           >
             <Skeleton isLoaded={cargandoTabla}>
-              <IBMDataTable rows={solicitudes} />
+              <IBMDataTable
+                clickeada={(index) => {
+                  let idSolicitud = index.cells[0].value;
+                  router.push(`/solicitudes/${idSolicitud}`);
+                }}
+                rows={solicitudes}
+              />
             </Skeleton>
           </Box>
         </main>

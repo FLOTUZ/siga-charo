@@ -20,6 +20,7 @@ const Rutero = ({ rutas = [] }) => {
             );
           })
         : null}
+        
     </Breadcrumb>
   );
 };
