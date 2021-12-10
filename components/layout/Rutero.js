@@ -32,7 +32,6 @@ const Rutero = ({ rutas = [], dataDrawer = [] }) => {
   const btnRef = React.useRef();
 
   return (
-<<<<<<< Updated upstream
     <Breadcrumb
       style={{ display: "flex", alignItems: "center" }}
       h="100%"
@@ -52,29 +51,6 @@ const Rutero = ({ rutas = [], dataDrawer = [] }) => {
         : null}
         
     </Breadcrumb>
-=======
-    <>
-      <Breadcrumb
-        style={{ display: "flex", alignItems: "center" }}
-        h="100%"
-        px="2rem"
-        spacing="8px"
-        textColor="white"
-        separator={<ChevronRightIcon color="white" />}
-      >
-        {rutas.length > 0
-          ? rutas.map((ruta, index) => {
-              return (
-                <BreadcrumbItem key={index} isCurrentPage={ruta.isCurrentPage}>
-                  <BreadcrumbLink href={ruta.url}>{ruta.nombre}</BreadcrumbLink>
-                </BreadcrumbItem>
-              );
-            })
-          : null}
-      </Breadcrumb>
-     
-    </>
->>>>>>> Stashed changes
   );
 };
 
