@@ -40,6 +40,7 @@ function Nueva_Solicitud_Paso_2() {
   const btnRef = useRef();
   const toast = useToast();
 
+  const [localidadSelecionada, setLocalidadSeleccionada] = useState("");
   const [localidad, setLocalidad] = useState({ idComunidad: 0, nombre: "" });
   const [listaDeLocalidades, setListaDeLocalidades] = useState([]);
   const [nuevaLocalidad, setNuevaLocalidad] = useState("");
@@ -98,7 +99,7 @@ function Nueva_Solicitud_Paso_2() {
     let celular = query.celular;
     let telefono = query.telefono;
     let correo = query.correo;
-    let localidad = localidad.idComunidad;
+    let localidadS = localidadSelecionada;
 
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_3",
@@ -113,7 +114,7 @@ function Nueva_Solicitud_Paso_2() {
         celular,
         telefono,
         correo,
-        localidad,
+        localidadS,
       },
     });
   };
@@ -207,6 +208,7 @@ function Nueva_Solicitud_Paso_2() {
                               <MenuItem
                                 key={index}
                                 onClick={() => setLocalidad(u)}
+                                onChange={(index) => setNuevaLocalidad(index.target.value)}
                               >
                                 {u.nombre}
                               </MenuItem>

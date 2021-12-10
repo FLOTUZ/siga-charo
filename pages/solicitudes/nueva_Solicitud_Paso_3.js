@@ -73,7 +73,7 @@ function Nueva_Solicitud_Paso_3() {
       fechaRegistro: new Date(Date.now()).toISOString(),
       fechaBaja: new Date(Date.now()).toISOString(),
       usuarioCargaId: 1,
-      comunidadId: query.localidad,
+      comunidadId: Number(query.localidadS),
     };
 
     let respuestaB = await Crear("/beneficiarios", beneficiario);
@@ -107,7 +107,7 @@ function Nueva_Solicitud_Paso_3() {
 
     let respuestaS = await Crear("/solicitudes", solicitud);
 
-    if (respuestaB.status == 200 && respuestaP == 200 && respuestaS == 200) {
+    if (respuestaB.status == 200 && respuestaP.status == 200 && respuestaS.status == 200) {
       toast({
         title: "Solicitud Creada",
         description: "Se ha creado Solicitud",
@@ -115,7 +115,6 @@ function Nueva_Solicitud_Paso_3() {
         duration: 9000,
         isClosable: true,
       });
-      router.back();
     } else {
       toast({
         title: "Oops.. Algo sucedió",

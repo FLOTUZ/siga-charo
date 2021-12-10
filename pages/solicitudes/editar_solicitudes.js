@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Scaffold from "../../components/layout/Scaffold";
 import {
   Text,
   Button,
@@ -7,20 +6,34 @@ import {
   Box,
   Input,
   Spacer,
-  Select,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
   Link,
   useToast,
+  Skeleton,
+  Stack,
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import Scaffold from "../../components/layout/Scaffold";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Actualizar, Consultar } from "../../services/API";
 
 function Editar_Solicitudes() {
 
+  const toast = useToast();
 
-  const [apoyo, setApoyo] = useState("");
+  const [cargandoApoyos, setCargandoApoyos] = useState(true);
+  const [Apoyo, setApoyo] = useState({ idPrograma: 0, nombre: "" });
+  const [listaDeApoyos, setListaDeApoyos] = useState([]);
   const [cantidad, setCantidad] = useState("");
   const [fecha, setFecha] = useState("");
   const [descuento, setdescuento] = useState("");
   const [total, setTotal] = useState("");
+  const [idSolicitud, setIdSolicitud] = useState("");
 
   let rutas = [
     {
@@ -29,6 +42,66 @@ function Editar_Solicitudes() {
       isCurrentPage: true,
     },
   ];
+
+  const consultarApoyos = async () => {
+    let respuesta = await Consultar("/programas", {
+      fields: {
+        idPrograma: true,
+        nombre: true,
+      },
+    });
+
+    if (respuesta.status == 200) {
+      setListaDeApoyos(respuesta.data);
+      setCargandoApoyos(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const ejecutar = async () => {
+    let solicitud = {
+      fechaSolicitud: new Date(fecha).toISOString(),
+      fechaAutorizacion: new Date(Date.now()).toISOString(),
+      estatus: "pendiente",
+      cantidad: Number(cantidad),
+      descuento: Number(descuento),
+      costoTotal: Number(total),
+      motivoRechazo: "NA",
+      fechaEntrega: new Date(Date.now()).toISOString(),
+      notas: "NA",
+      usuarioAutorizadorId: 1,
+      usuarioEntregaId: 1,
+      programaId: Apoyo.idPrograma,
+      beneficiarioId: 1,
+    };
+
+    let respuestaS = await Actualizar(`/solicitudes/${idSolicitud}`, solicitud);
+
+    if (respuestaS.status == 204) {
+      toast({
+        title: "Solicitud Actualizada",
+        description: "Se ha Actualizado Solicitud",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuestaS.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Scaffold
@@ -44,7 +117,7 @@ function Editar_Solicitudes() {
         <Box bg="white" w="100%" p={5} color="white"></Box>
         <Box bg="white" w="100%" p={5} color="white"></Box>
         <Box>
-          <Flex height="50vh" w="170vh" justifyContent="center">
+          <Flex height="60vh" w="170vh" justifyContent="center">
             <Flex
               direction="column"
               w="110vh"
@@ -54,20 +127,60 @@ function Editar_Solicitudes() {
               p={2}
               rounded={6}
             >
+              <Box p="4">
+                  <Text>Id Solicitud</Text>
+                  <Input
+                    type="number"
+                    id="idSolicitud"
+                    value={idSolicitud}
+                    onChange={(e) => {
+                      setIdSolicitud(e.currentTarget.value);
+                    }}
+                    required={true}
+                  />
+                </Box>
               <Text m={1}>Elegir Apoyo</Text>
-              <Select
-                m={1}
-                id="apoyo"
-                value={apoyo}
-                onChange={(e) => {
-                  setApoyo(e.currentTarget.value);
-                }}
-                placeholder="Apoyo..."
-                required={true}
-              >
-                <option>Calentador Solar</option>
-                <option>Arena</option>
-              </Select>
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton
+                      isActive={isOpen}
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                      onClick={() => {
+                        setCargandoApoyos(true);
+                        consultarApoyos();
+                      }}
+                    >
+                      {isOpen
+                        ? Apoyo.nombre
+                        : Apoyo.nombre != ""
+                        ? Apoyo.nombre
+                        : "Seleccione"}
+                    </MenuButton>
+                    <MenuList>
+                      {cargandoApoyos ? (
+                        <Stack p="0.5rem">
+                          <Skeleton height="1.5rem" />
+                          <Skeleton height="1.5rem" />
+                          <Skeleton height="1.5rem" />
+                        </Stack>
+                      ) : listaDeApoyos.length == 0 ? (
+                        <MenuItem>No hay apoyos</MenuItem>
+                      ) : (
+                        listaDeApoyos.map((u, index) => {
+                          return (
+                            <MenuItem key={index} onClick={() => setApoyo(u)}>
+                              {u.nombre}
+                            </MenuItem>
+                          );
+                        })
+                      )}
+                      <MenuDivider />
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
               <Flex m={1}>
                 <Box p="4">
                   <Text>Cantidad</Text>
@@ -133,7 +246,7 @@ function Editar_Solicitudes() {
               colorScheme="teal"
               variant="solid"
               mr="4"
-              //onClick={() => ejecutar()}
+              onClick={() => ejecutar()}
             >
               Guardar
             </Button>
