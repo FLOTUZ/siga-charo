@@ -10,7 +10,7 @@ import {
   Input,
   Spacer,
   Switch,
-  Progress ,
+  Progress,
 } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
@@ -18,10 +18,8 @@ import Link from "next/link";
 function NuevoBeneficiarioMoralPaso2() {
   const router = useRouter();
   const { query } = useRouter();
- // const toast = useToast();
+  // const toast = useToast();
 
-  let beneficiarioId = query.idBeneficiario;
-  
   console.log(router.query);
 
   let rutas = [

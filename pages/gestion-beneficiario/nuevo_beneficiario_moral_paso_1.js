@@ -42,8 +42,6 @@ function NuevoBeneficiarioMoralPaso1() {
   const [telefonoCelular, setTelefonoCelular] = useState("");
   const [correo, setCorreo] = useState("");
   const [rfc, setRfc] = useState("");
-
-  const [idBeneficiario, setIdBeneficiario] = useState(0);
   //------------------ Usuario Logueado  ---------------
   const [usuarioLogueado, setUsuarioLogueado] = useState({
     idUsuario: 0, // completar
@@ -68,13 +66,10 @@ function NuevoBeneficiarioMoralPaso1() {
       };
 
       let respuesta = await Crear("/beneficiarios", beneficiario);
-
       if (respuesta.status === 200) {
-        setIdBeneficiario(respuesta.data);
-        console.log(idBeneficiario);
         router.push({
           pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
-          query: { respuesta: idBeneficiario },
+          query: { idBeneficiario: respuesta.data.idBeneficiario },
         });
         toast({
           title: "Nueva Institucion",
@@ -83,7 +78,6 @@ function NuevoBeneficiarioMoralPaso1() {
           duration: 9000,
           isClosable: true,
         });
-        
       } else {
         toast({
           title: "Oops.. Algo salio mal",
