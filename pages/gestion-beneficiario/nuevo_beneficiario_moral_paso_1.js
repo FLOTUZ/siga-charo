@@ -2,6 +2,8 @@ import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
 import Head from "next/head";
 import React from "react";
+import { sesion } from "../../utils/Utils";
+import { useRouter } from "next/router";
 import {
   FormControl,
   FormLabel,
@@ -22,12 +24,86 @@ import {
   useDisclosure,
   HStack,
   Progress,
+  useToast,
 } from "@chakra-ui/react";
-
+import { useState, useEffect } from "react";
+import { Crear } from "../../services/API";
 
 function NuevoBeneficiarioMoralPaso1() {
+  //--------------------Estado de la interfaz-----------------------//
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const router = useRouter();
+  const toast = useToast();
+  //-------DATOS DE Beneficiario Tabla Beneficiario-----------//
+  const [nombreBeneficiario, setNombreBeneficiario] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [telefonoLocal, setTelefonoLocal] = useState("");
+  const [telefonoCelular, setTelefonoCelular] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [rfc, setRfc] = useState("");
+
+  const [idBeneficiario, setIdBeneficiario] = useState(0);
+  //------------------ Usuario Logueado  ---------------
+  const [usuarioLogueado, setUsuarioLogueado] = useState({
+    idUsuario: 0, // completar
+  });
+  useEffect(() => {
+    let usuario = sesion();
+    setUsuarioLogueado(usuario);
+  }, []);
+
+  const guardarBeneficiario = async () => {
+    try {
+      let beneficiario = {
+        nombre: nombreBeneficiario,
+        direccion: direccion,
+        telefonoLocal: telefonoLocal,
+        telefonoCelular: telefonoCelular,
+        correo: correo,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+        rfc: rfc,
+        usuarioCargaId: 1,
+        comunidadId: 1,
+      };
+
+      let respuesta = await Crear("/beneficiarios", beneficiario);
+
+      if (respuesta.status === 200) {
+        setIdBeneficiario(respuesta.data);
+        console.log(idBeneficiario);
+        router.push({
+          pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
+          query: { respuesta: idBeneficiario },
+        });
+        toast({
+          title: "Nueva Institucion",
+          descripcion: `La Institución se ha guardado`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        
+      } else {
+        toast({
+          title: "Oops.. Algo salio mal",
+          descripcion: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: "Verifica los datos",
+        description: e.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.log(e.message);
+    }
+  };
 
   let rutas = [
     {
@@ -98,7 +174,7 @@ function NuevoBeneficiarioMoralPaso1() {
           </HStack>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Progress m={5} value={30} />
+            <Progress m={5} value={50} />
             <Flex w="170vh" alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
                 <Box p="4" bg="green.400" rounded={40}>
@@ -130,6 +206,9 @@ function NuevoBeneficiarioMoralPaso1() {
                   id="name"
                   placeholder="Nombre(s)"
                   required={true}
+                  onChange={(e) => {
+                    setNombreBeneficiario(e.target.value);
+                  }}
                 />
                 <Text m={1}>Direccion</Text>
                 <Input
@@ -137,6 +216,9 @@ function NuevoBeneficiarioMoralPaso1() {
                   id="Direccion"
                   placeholder="Direccion"
                   required={true}
+                  onChange={(e) => {
+                    setDireccion(e.target.value);
+                  }}
                 />
                 <Text m={1}>Comunidad</Text>
                 <Input
@@ -151,6 +233,9 @@ function NuevoBeneficiarioMoralPaso1() {
                   id="celular"
                   placeholder="Celular"
                   required={true}
+                  onChange={(e) => {
+                    setTelefonoCelular(e.target.value);
+                  }}
                 />
                 <Text m={1}>Telefono</Text>
                 <Input
@@ -158,11 +243,30 @@ function NuevoBeneficiarioMoralPaso1() {
                   id="telefono"
                   placeholder="Telefono"
                   required={true}
+                  onChange={(e) => {
+                    setTelefonoLocal(e.target.value);
+                  }}
                 />
                 <Text m={1}>correo</Text>
-                <Input m={1} id="correo" placeholder="correo" required={true} />
+                <Input
+                  m={1}
+                  id="correo"
+                  placeholder="correo"
+                  required={true}
+                  onChange={(e) => {
+                    setCorreo(e.target.value);
+                  }}
+                />
                 <Text m={1}>rfc</Text>
-                <Input m={1} id="rfc" placeholder="rfc" required={true} />
+                <Input
+                  m={1}
+                  id="rfc"
+                  placeholder="rfc"
+                  required={true}
+                  onChange={(e) => {
+                    setRfc(e.target.value);
+                  }}
+                />
               </Flex>
             </Flex>
           </Box>
@@ -171,13 +275,14 @@ function NuevoBeneficiarioMoralPaso1() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Link href="/gestion-beneficiario/nuevo_beneficiario_moral_paso_2">
-                <a>
-                  <Button colorScheme="teal" variant="solid" mr="4">
-                    Siguiente
-                  </Button>
-                </a>
-              </Link>
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                mr="4"
+                onClick={() => guardarBeneficiario()}
+              >
+                Siguiente
+              </Button>
               <Link href="/dashboard">
                 <a>
                   <Button colorScheme="teal" variant="outline">
