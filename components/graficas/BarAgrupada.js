@@ -30,7 +30,7 @@ function BarAgrupada() {
     plugins: {
       title: {
         display: true,
-        text: "Chart.js Bar Chart - Stacked",
+        text: "Beneficiarios registrados por comunidad",
       },
     },
     responsive: true,
@@ -56,15 +56,25 @@ function BarAgrupada() {
     setComunidades(lista);
   }, [beneficiariosPorComunidad]);
 
-  console.log(beneficiariosPorComunidad);
+  let datasets = comunidades.map((c) => {
+    return {
+      label: c,
+      data: beneficiariosPorComunidad.map((b) => b.nBeneficiarios),
+      backgroundColor: "rgb(255, 99, 132)",
+    };
+  });
+
   const data = {
     labels: comunidades,
     datasets: [
       {
-        label: "Dataset",
-        data: beneficiariosPorComunidad.map((e)=> e.nBeneficiarios),
-        backgroundColor: "rgb(255, 99, 132)",
-        stack: "Stack 0",
+        label: "",
+        data: beneficiariosPorComunidad.map((bc) => bc.nBeneficiarios),
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+          "rgba(255, 205, 86, 0.2)",
+        ],
       },
     ],
   };
