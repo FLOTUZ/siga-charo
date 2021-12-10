@@ -123,6 +123,7 @@ function NuevoBeneficiarioFisica() {
 
       console.log(beneficiario);
       let respuesta = await Crear("/beneficiarios", beneficiario);
+<<<<<<< HEAD
       
    let beneficiarioFisica = {
      idBenficiario: respuesta.idBenficiario,
@@ -134,6 +135,10 @@ function NuevoBeneficiarioFisica() {
      comunidad: comunidad,
      fechaRegistro: new Date(Date.now()).toISOString(),
    };
+=======
+
+      console.log(respuesta);
+>>>>>>> AltaComunidad
 
       let beneficiarioFisica = {
         idBenficiario: respuesta.idBenficiario,

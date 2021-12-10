@@ -159,6 +159,7 @@ export default function Beneficiarios() {
             borderRadius="lg"
             overflow="hidden"
           >
+<<<<<<< HEAD
             <DataTable
               title="Lista de Solicitudes"
               columns={columns}
@@ -166,6 +167,8 @@ export default function Beneficiarios() {
               pagination
               expandableRows
             />
+=======
+>>>>>>> AltaComunidad
           </Box>
         </main>
       </div>
