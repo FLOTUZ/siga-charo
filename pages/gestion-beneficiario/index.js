@@ -8,7 +8,7 @@ import { Consultar, Eliminar, Actualizar } from "../../services/API";
 import { Button, Skeleton, Flex, Box, Spacer } from "@chakra-ui/react";
 import GenerateHash from "random-hash";
 
-function Beneficiarios() {
+ export default function Beneficiarios() {
   //TODO: Poner el drawer en un componente
   const [cargandoTabla, setCargandoTabla] = useState(false);
   const [beneficiario, setBeneficiarios] = useState([]);
