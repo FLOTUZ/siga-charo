@@ -13,10 +13,11 @@ import {
 
 import { AiFillDashboard } from "react-icons/ai";
 import { FiFilePlus } from "react-icons/fi";
-import { FaRegChartBar, FaUserFriends } from "react-icons/fa";
+import { FaUserAstronaut, FaRegChartBar, FaUserFriends } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { MdWork } from "react-icons/md";
 import { FiGrid } from "react-icons/fi";
+import {RiFolderUserFill} from "react-icons/ri"
 const NavLateral = () => {
   const paginas = [
     {
@@ -39,6 +40,13 @@ const NavLateral = () => {
       icono: <FiGrid size="2rem" />,
     },
     {
+      id: 6,
+      nombre: "Beneficiarios",
+      url: "/gestion-beneficiario",
+
+      icono: <RiFolderUserFill size="2rem" />,
+    },
+    {
       id: 4,
       nombre: "Reportes",
       url: "/reportes",
@@ -50,15 +58,10 @@ const NavLateral = () => {
       nombre: "Usuarios",
       url: "/gestion_usuarios",
 
-      icono: <MdWork size="2rem" />,
+      icono: <FaUserAstronaut size="2rem" />,
     },
-    {
-      id: 6,
-      nombre: "Beneficiarios",
-      url: "/gestion-beneficiario",
-
-      icono: <FaUserFriends size="2rem" />,
-    },
+  
+  
   ];
 
   return (
