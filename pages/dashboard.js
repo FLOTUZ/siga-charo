@@ -113,7 +113,7 @@ function Dashboard() {
               </Stat>
             </Center>
           </WrapItem>
-          <Link href="/solicitudes/catalogo">
+          <Link href="/solicitudes">
             <a>
               <WrapItem>
                 <Button
