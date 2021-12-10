@@ -1,125 +1,50 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Heading, Button, Stack, Flex, Box, Spacer } from "@chakra-ui/react";
-import DataTable from "react-data-table-component";
+import IBMDataTable from "../../components/Tabla/IBMDataTable";
 import Scaffold from "../../components/layout/Scaffold";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { Consultar, Eliminar, Actualizar} from "../../services/API"
- 
+import { Consultar, Eliminar, Actualizar } from "../../services/API";
+import { Button, Skeleton, Flex, Box, Spacer } from "@chakra-ui/react";
+import GenerateHash from "random-hash";
 
-const columns = [
-  {
-    name: "Nombre",
-    selector: (row) => row.name,
-    sortable: true,
-  },
-  {
-    name: "Comunidad",
-    selector: (row) => row.comunidad,
-    sortable: true,
-  },
-  {
-    name: "Telefono(Celular)",
-    selector: (row) => row.celular,
-    sortable: true,
-  },
-  {
-    name: "Fecha de Registro",
-    selector: (row) => row.registro,
-    sortable: true,
-  },
-  {
-    name: "Opciones",
-    selector: (row) => row.detalles,
-    sortable: true,
-  },
-];
+function Beneficiarios() {
+  //TODO: Poner el drawer en un componente
+  const [cargandoTabla, setCargandoTabla] = useState(false);
+  const [beneficiario, setBeneficiarios] = useState([]);
 
-const data = [
-  {
-    id: 1,
-    name: "Esteban",
-    comunidad: "Charo",
-    celular: "0000000000",
-    registro: "04/12/2021",
-    detalles: (
-      <Stack direction="row" spacing={4}>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Historial
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Editar
-        </Button>
-        <Button colorScheme="red" variant="solid" h={6}>
-          Archivar
-        </Button>
-      </Stack>
-    ),
-  },
-  {
-    id: 2,
-    name: "Emmanuel",
-    comunidad: "Charo",
-    celular: "0000000001",
-    registro: "04/12/2021",
-    detalles: (
-      <Stack direction="row" spacing={4}>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Historial
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Editar
-        </Button>
-        <Button colorScheme="red" variant="solid" h={6}>
-          Archivar
-        </Button>
-      </Stack>
-    ),
-  },
-  {
-    id: 3,
-    name: "Patricio",
-    comunidad: "Charo",
-    celular: "0000000002",
-    registro: "04/12/2021",
-    detalles: (
-      <Stack direction="row" spacing={4}>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Historial
-        </Button>
-        <Button colorScheme="teal" variant="solid" h={6}>
-          Editar
-        </Button>
-        <Button colorScheme="red" variant="solid" h={6}>
-          Archivar
-        </Button>
-      </Stack>
-    ),
-  },
-];
 
-let rutas = [
-  {
-    url: "/gestion-beneficiario",
-    nombre: "beneficiario",
-    isCurrentPage: true,
-  },
-];
+  const router = useRouter();
+  let rutas = [
+    {
+      url: "/gestion-beneficiario",
+      nombre: "beneficiario",
+      isCurrentPage: true,
+    },
+  ];
 
-export default function Beneficiarios() {
-
-        const [cargando, setCargando] = useState(true);
-        const [listaBeneficiario, setListaBeneficiario] = useState([]);
-
-        useEffect(() => {
-          const ejecutar = async() => {
-            let apiRespuesta = await Consultar(`/beneficiarios`);
-            setListaBeneficiario(apiRespuesta);
-            setCargando(false);
-          }
-
-          ejecutar()
-        });
+  useEffect(() => {
+    const datosTabla = async () => {
+      let respuesta = await Consultar("/beneficiarios", {
+        fields: {
+          idBeneficiario: true,
+          nombre: true,
+          direccion: true,
+          telefonoLocal: true,
+          telefonoCelular: true,
+          email: true,
+          comunidad: true,
+        },
+      });
+      if (respuesta.status === 200) {
+        setBeneficiarios(respuesta.data);
+        setCargandoTabla(true);
+      } else {
+        console.log("No hay data");
+      }
+    };
+    datosTabla();
+  }, []);
 
   return (
     <Scaffold
@@ -152,21 +77,15 @@ export default function Beneficiarios() {
         </Flex>
 
         <main>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Box
-            maxW="large"
-            borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
-          >
-            <DataTable
-              title="Lista de Solicitudes"
-              columns={columns}
-              
-              pagination
-              expandableRows
-            />
-          </Box>
+          <Skeleton isLoaded={cargandoTabla}>
+            <IBMDataTable
+              clickeada={(index) => {
+                let idBeneficiario = index.cells[0].value;
+                router.push(`/gestion-beneficiarios/${idBeneficiario}`);
+              }}
+              rows={beneficiario}
+            ></IBMDataTable>
+          </Skeleton>
         </main>
       </div>
     </Scaffold>
