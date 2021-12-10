@@ -1,29 +1,92 @@
 import Head from "next/head";
 import {
-  FormControl,
-  FormLabel,
+  useToast,
+  Input,
+  useDisclosure,
   Text,
   Button,
   Flex,
   Box,
   Spacer,
-  Select,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Skeleton,
+  Stack,
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import { Consultar, Crear } from "../../services/API";
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function Nueva_Solicitud_Paso_2() {
   const { query } = useRouter();
   const router = useRouter();
 
+  const [cargandoLocalidades, setCargandoLocalidades] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
+  const toast = useToast();
   const [localidad, setLocalidad] = useState("");
+
+  const [localidad, setLocalidad] = useState({ idComunidad: 0, nombre: "" });
+  const [listaDeLocalidades, setListaDeLocalidades] = useState([]);
+  const [nuevaLocalidad, setNuevaLocalidad] = useState("");
 
   useEffect(() => {
     console.log(router.query);
   }, []);
+
+  const altaLocalidad = async () => {                                     
+    let respuesta = await Crear("/comunidades", { nombre: nuevaLocalidad });
+    if (respuesta.status == 200) {
+      consultarLocalidades();
+      toast({
+        title: "Nueva localidad Creada",
+        description: `La localidad ${nuevaLocalidad} se ha creado`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });                                                             
+    } else {
+      toast({
+        title: "Oops.. Algo salio mal",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };  
+  //---------------------------------------
+  const consultarLocalidades = async () => {    
+    let respuesta = await Consultar("/comunidades");
+
+    if (respuesta.status == 200) {
+      setListaDeLocalidades(respuesta.data);
+      setCargandoLocalidades(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   const ejecutar = async () => {
     let name = query.name;
@@ -39,7 +102,19 @@ function Nueva_Solicitud_Paso_2() {
 
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_3",
-      query: {name, apellidoP, apellidoM, direccion, rfc, nacimiento, curp, celular, telefono, correo, localidad },
+      query: {
+        name,
+        apellidoP,
+        apellidoM,
+        direccion,
+        rfc,
+        nacimiento,
+        curp,
+        celular,
+        telefono,
+        correo,
+        localidad,
+      },
     });
   };
 
@@ -99,22 +174,53 @@ function Nueva_Solicitud_Paso_2() {
                 rounded={6}
               >
                 <Text m={1}>Localidad</Text>
-                <Select
-                  m={1}
-                  id="localidad"
-                  value={localidad}
-                  onChange={(e) => {
-                    setLocalidad(e.currentTarget.value);
-                  }}
-                  placeholder="Lugar..."
-                  required={true}
-                >
-                  <option>Charo</option>
-                  <option>La Goleta</option>
-                </Select>
-                <Button m={1} colorScheme="teal" variant="solid">
-                  Agregar Nueva Localidad
-                </Button>
+                <Menu>
+                  {({ isOpen }) => (
+                    <>
+                      <MenuButton
+                        isActive={isOpen}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        onClick={() => {
+                          setCargandoLocalidades(true);
+                          consultarLocalidades();
+                        }}
+                      >
+                        {isOpen
+                          ? localidad.nombre
+                          : localidad.nombre != ""
+                          ? localidad.nombre
+                          : "Seleccione"}
+                      </MenuButton>
+                      <MenuList>
+                        {cargandoLocalidades ? (
+                          <Stack p="0.5rem">
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                          </Stack>
+                        ) : listaDeLocalidades.length == 0 ? (
+                          <MenuItem>No hay localidades</MenuItem>
+                        ) : (
+                          listaDeLocalidades.map((u, index) => {
+                            return (
+                              <MenuItem
+                                key={index}
+                                onClick={() => setLocalidad(u)}
+                              >
+                                {u.nombre}
+                              </MenuItem>
+                            );
+                          })
+                        )}
+                        <MenuDivider />
+                        <MenuItem ref={btnRef} onClick={onOpen}>
+                          Crear nueva Localidad
+                        </MenuItem>
+                      </MenuList>
+                    </>
+                  )}
+                </Menu>
               </Flex>
             </Flex>
           </Box>
@@ -123,7 +229,12 @@ function Nueva_Solicitud_Paso_2() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Button colorScheme="teal" variant="solid" mr="4" onClick={()=>ejecutar()}>
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                mr="4"
+                onClick={() => ejecutar()}
+              >
                 Siguiente
               </Button>
               <Link href="/dashboard">
@@ -135,6 +246,34 @@ function Nueva_Solicitud_Paso_2() {
               </Link>
             </Box>
           </Flex>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Crear nueva Localidad</DrawerHeader>
+
+              <DrawerBody>
+                <Input
+                  placeholder="Nombre de la localidad"
+                  onChange={(e) => setNuevaLocalidad(e.target.value)}
+                />
+              </DrawerBody>
+
+              <DrawerFooter>
+                <Box>
+                  <Button onClick={onClose}>Cancelar</Button>
+                  <Button colorScheme="blue" onClick={() => altaLocalidad()}>
+                    Guardar
+                  </Button>
+                </Box>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </main>
       </div>
     </Scaffold>
