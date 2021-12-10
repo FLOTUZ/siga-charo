@@ -162,7 +162,7 @@ export default function Beneficiarios() {
             <DataTable
               title="Lista de Solicitudes"
               columns={columns}
-              data={apiRespuesta}
+              
               pagination
               expandableRows
             />

@@ -74,8 +74,6 @@ function NuevoBeneficiarioFisica() {
       };
 
       let respuesta = await Crear("/beneficiarios", beneficiario);
-
-      console.log(respuesta);
       
    let beneficiarioFisica = {
      beneficiarioId: respuesta.data.idBeneficiario,
@@ -85,7 +83,6 @@ function NuevoBeneficiarioFisica() {
      fechaNacimiento: new Date(fechaNacimiento).toISOString(),
      curp: curp,
    };
-    console.log(beneficiarioFisica);
 
    let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
     if (respuestaF.status === 200) {

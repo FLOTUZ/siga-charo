@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import {
   FormControl,
   FormLabel,
@@ -9,12 +10,20 @@ import {
   Input,
   Spacer,
   Switch,
+  Progress ,
 } from "@chakra-ui/react";
-import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
 
 function NuevoBeneficiarioMoralPaso2() {
+  const router = useRouter();
+  const { query } = useRouter();
+ // const toast = useToast();
+
+  let beneficiarioId = query.idBeneficiario;
+  
+  console.log(router.query);
+
   let rutas = [
     {
       url: "/nuevo_beneficiario_moral_paso_2",
