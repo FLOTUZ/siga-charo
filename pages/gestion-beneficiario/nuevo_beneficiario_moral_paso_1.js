@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Crear } from "../../services/API";
 import {
+  FormLabel,
   Text,
   Button,
   Flex,
@@ -21,11 +22,17 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  HStack,
   Progress,
   useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Skeleton,
+  Stack,
+  ChevronDownIcon,
+  MenuDivider,
 } from "@chakra-ui/react";
-
 
 function NuevoBeneficiarioMoralPaso1() {
   //--------------------Estado de la interfaz-----------------------//
@@ -40,6 +47,11 @@ function NuevoBeneficiarioMoralPaso1() {
   const [telefonoCelular, setTelefonoCelular] = useState("");
   const [correo, setCorreo] = useState("");
   const [rfc, setRfc] = useState("");
+  //-------Comunidad-----------//
+  const [cargandoComunidad, setCargandoComunidad] = useState(true);
+  const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
+  const [listaComunidades, setListaComunidades] = useState([]);
+  const [nuevaComunidad, setNuevaComunidad] = useState("");
   //------------------ Usuario Logueado  ---------------
   const [usuarioLogueado, setUsuarioLogueado] = useState({
     idUsuario: 0, // completar
@@ -48,6 +60,46 @@ function NuevoBeneficiarioMoralPaso1() {
     let usuario = sesion();
     setUsuarioLogueado(usuario);
   }, []);
+
+  const altaComunidad = async () => {
+    //--------inicia
+    let respuesta = await Crear("/comunidades", { nombre: nuevaComunidad });
+    if (respuesta.status == 200) {
+      consultarComunidad();
+      toast({
+        title: "Nueva Comunidad Agregada",
+        description: ` ${nuevaComunidad} se ha agregado`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Oops.. Algo salio mal",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+  const consultarComunidad = async () => {
+    //---- inicia
+    let respuesta = await Consultar("/comunidades");
+
+    if (respuesta.status == 200) {
+      setListaComunidades(respuesta.data);
+      setCargandoComunidad(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   const guardarBeneficiario = async () => {
     try {
@@ -75,7 +127,6 @@ function NuevoBeneficiarioMoralPaso1() {
           duration: 9000,
           isClosable: true,
         });
-        
       } else {
         toast({
           title: "Oops.. Algo salio mal",
@@ -117,53 +168,6 @@ function NuevoBeneficiarioMoralPaso1() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <HStack>
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <Spacer />
-            <>
-              <Flex margin="2rem">
-                <Button
-                  ref={btnRef}
-                  colorScheme="teal"
-                  onClick={onOpen}
-                  margin="2rem"
-                >
-                  Agregar Comunidad
-                </Button>
-              </Flex>
-
-              <Drawer
-                isOpen={isOpen}
-                placement="right"
-                onClose={onClose}
-                finalFocusRef={btnRef}
-              >
-                <DrawerOverlay />
-                <DrawerContent>
-                  <DrawerCloseButton />
-                  <DrawerHeader>Agregar Comunidad</DrawerHeader>
-
-                  <DrawerBody>
-                    <Input placeholder="Comunidad" />
-                  </DrawerBody>
-
-                  <DrawerFooter>
-                    <Button variant="outline" mr={3} onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button colorScheme="blue">Save</Button>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
-            </>
-            <Spacer />
-          </HStack>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={50} />
@@ -212,13 +216,55 @@ function NuevoBeneficiarioMoralPaso1() {
                     setDireccion(e.target.value);
                   }}
                 />
-                <Text m={1}>Comunidad</Text>
-                <Input
-                  m={1}
-                  id="Comunidad"
-                  placeholder="Comunidad"
-                  required={true}
-                />
+                <FormLabel htmlFor="comunidad">Comunidad</FormLabel>{" "}
+                {/* se ocupa para menu comunidades*/}
+                <Menu>
+                  {({ isOpen }) => (
+                    <>
+                      <MenuButton
+                        isActive={isOpen}
+                        rightIcon={<ChevronDownIcon />}
+                        onClick={() => {
+                          setCargandoComunidad(true);
+                          consultarComunidad();
+                        }}
+                      >
+                        {isOpen
+                          ? comunidad.nombre
+                          : comunidad.nombre != ""
+                          ? comunidad.nombre
+                          : "Seleccione"}
+                      </MenuButton>
+                      <MenuList>
+                        {cargandoComunidad ? (
+                          <Stack p="0.5rem">
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                          </Stack>
+                        ) : listaComunidades.length == 0 ? (
+                          <MenuItem>No comunidades agregadas</MenuItem>
+                        ) : (
+                          listaComunidades.map((com, index) => {
+                            return (
+                              <MenuItem
+                                key={index}
+                                onClick={() => setComunidad(com)}
+                              >
+                                {com.nombre}
+                              </MenuItem>
+                            );
+                          })
+                        )}
+                        <MenuDivider />
+                        <MenuItem ref={btnRef} onClick={onOpen}>
+                          Agregar Comunidad
+                        </MenuItem>
+                      </MenuList>
+                    </>
+                  )}
+                </Menu>
+                {/*  termina menu*/}
                 <Text m={1}>Telefono Celular</Text>
                 <Input
                   m={1}
@@ -284,6 +330,33 @@ function NuevoBeneficiarioMoralPaso1() {
               </Link>
             </Box>
           </Flex>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Agregar Comunidad</DrawerHeader>
+              <DrawerBody>
+                <Input
+                  placeholder="Nombre de la Comunidad"
+                  onChange={(e) => setNuevaComunidad(e.target.value)}
+                />
+              </DrawerBody>
+
+              <DrawerFooter>
+                <Box>
+                  <Button onClick={onClose}>Cancelar</Button>
+                  <Button colorScheme="blue" onClick={() => altaComunidad()}>
+                    Guardar
+                  </Button>
+                </Box>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </main>
       </div>
     </Scaffold>
