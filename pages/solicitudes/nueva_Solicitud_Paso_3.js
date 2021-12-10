@@ -73,8 +73,7 @@ function Nueva_Solicitud_Paso_3() {
       fechaRegistro: new Date(Date.now()).toISOString(),
       fechaBaja: new Date(Date.now()).toISOString(),
       usuarioCargaId: 1,
-      comunidadId: 1,
-      //localidad : query.localidad,
+      comunidadId: query.localidad,
     };
 
     let respuestaB = await Crear("/beneficiarios", beneficiario);
