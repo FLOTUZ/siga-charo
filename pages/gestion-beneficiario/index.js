@@ -159,13 +159,6 @@ export default function Beneficiarios() {
             borderRadius="lg"
             overflow="hidden"
           >
-            <DataTable
-              title="Lista de Solicitudes"
-              columns={columns}
-              data={apiRespuesta}
-              pagination
-              expandableRows
-            />
           </Box>
         </main>
       </div>

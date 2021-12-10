@@ -23,6 +23,14 @@ import {
   useDisclosure,
   HStack,
   useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Skeleton,
+  Stack,
+  ChevronDownIcon,
+  MenuDivider
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
@@ -42,10 +50,16 @@ function NuevoBeneficiarioFisica() {
   const [correo, setCorreo] = useState("");
   const [rfc, setRfc] = useState("");
 
+  //-------Comunidad-----------//
+  const [cargandoComunidad, setCargandoComunidad] = useState(true);
+  const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
+  const [listaComunidades, setListaComunidades] = useState([]);
+  const [nuevaComunidad, setNuevaComunidad] = useState("");
+
   //-------DATOS DE Beneficiario Tabla Fisica-----------//
   const [apellidoPaterno, setApellidoPaterno] = useState("");
   const [apellidoMaterno, setApellidoMaterno] = useState("");
-  const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
+  const [socioEconomico, setSocioEconomico] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
   const [curp, setCurp] = useState("");
   //------------------ Usuario Logueado  ---------------
@@ -57,7 +71,44 @@ function NuevoBeneficiarioFisica() {
     setUsuarioLogueado(usuario);
   }, []);
 
-  const [comunidad, setComunindad] = useState("");
+  const altaComunidad = async () => {                                     //--------inicia
+    let respuesta = await Crear("/comunidad", { nombre: nuevaComunidad });
+    if (respuesta.status == 200) {
+      consultarComunidad();
+      toast({
+        title: "Nueva Comunidad Agregada",
+        description: ` ${nuevaComunidad} se ha agregado`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Oops.. Algo salio mal",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+  const consultarComunidad = async () => {    //---- inicia
+    let respuesta = await Consultar("/comunidades");
+
+    if (respuesta.status == 200) {
+      setListaComunidades(respuesta.data);
+      setCargandoComunidad(false);
+    } else {
+      toast({
+        title: "Oops.. Algo sucedió",
+        description: respuesta.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
 
   const guardarBeneficiario = async () => {
     try {
@@ -70,27 +121,30 @@ function NuevoBeneficiarioFisica() {
         fechaRegistro: new Date(Date.now()).toISOString(),
         rfc: rfc,
         usuarioCargaId: 1,
-        comunidadId: 1,
+        comunidadId: comunidad.idComunidad,
       };
+      
 
+      console.log(beneficiario);
       let respuesta = await Crear("/beneficiarios", beneficiario);
 
       console.log(respuesta);
       
    let beneficiarioFisica = {
-     beneficiarioId: respuesta.data.idBeneficiario,
-     apellidoPaterno: apellidoPaterno,
-     apellidoMaterno: apellidoMaterno,
-     estadoSocioEconomico: estadoSocioEconomico,
-     fechaNacimiento: new Date(fechaNacimiento).toISOString(),
-     curp: curp,
+     idBenficiario: respuesta.idBenficiario,
+     nombreBeneficiario: nombreBeneficiario,
+     direccion: direccion,
+     telefonoLocal: telefonoLocal,
+     telefonoCelular: telefonoCelular,
+     correo: correo,
+     comunidad: comunidad,
+     fechaRegistro: new Date(Date.now()).toISOString(),
    };
-    console.log(beneficiarioFisica);
 
    let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
     if (respuestaF.status === 200) {
        toast({
-         title: "Nuevo Beneficiario Guardado",
+         title: "Nuevo Beneficiario Guardaro",
          descripcion: `El Beneficiario se ha guardado`,
          status: "success",
          duration: 9000,
@@ -211,9 +265,6 @@ function NuevoBeneficiarioFisica() {
                   id="apellidoP"
                   placeholder="Apellido Paterno"
                   required={true}
-                  onChange={(e) => {
-                    setApellidoPaterno(e.target.value);
-                  }}
                 />
                 <Text m={1}>Apellido Materno</Text>
                 <Input
@@ -221,28 +272,11 @@ function NuevoBeneficiarioFisica() {
                   id="apellidoM"
                   placeholder="Apellido Materno"
                   required={true}
-                  onChange={(e) => {
-                    setApellidoMaterno(e.target.value);
-                  }}
                 />
                 <Text m={1}>CURP</Text>
-                <Input 
-                m={1} 
-                id="curp" 
-                placeholder="curp" 
-                required={true} 
-                onChange={(e) => {
-                  setCurp(e.target.value);
-                }}/>
+                <Input m={1} id="curp" placeholder="curp" required={true} />
                 <Text m={1}>Fecha Nacimiento</Text>
-                <Input 
-                m={1} 
-                id="dateREfistro" 
-                type="date" 
-                required={true} 
-                onChange={(e) => {
-                  setFechaNacimiento(e.target.value);
-                }}/>
+                <Input m={1} id="dateREfistro" type="date" required={true} />
                 <Text m={1}>Telefono Celular</Text>
                 <Input
                   m={1}
@@ -293,22 +327,59 @@ function NuevoBeneficiarioFisica() {
                     setDireccion(e.target.value);
                   }}
                 />
-                <Text m={1}>Comunidad</Text>
-                <Input
-                  m={1}
-                  id="Comunidad"
-                  placeholder="Comunidad"
-                  required={true}
-                />
+                <FormLabel htmlFor="comunidad">
+                  Comunidad
+                </FormLabel>  {/* se ocupa para menu comunidades*/}
+                <Menu>
+                  {({ isOpen }) => (
+                    <>
+                      <MenuButton
+                        isActive={isOpen}
+                        as={Button}
+                        rightIcon={<ChevronDownIcon />}
+                        onClick={() => {
+                          setCargandoComunidad(true);
+                          consultarComunidad();
+                        }}
+                      >
+                        {isOpen
+                            ? comunidad.nombre
+                            : comunidad.nombre != ""
+                            ? comunidad.nombre
+                            : "Seleccione"}
+                      </MenuButton>
+                      <MenuList>
+                        {cargandoComunidad ? (
+                          <Stack p="0.5rem">
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                            <Skeleton height="1.5rem" />
+                          </Stack>
+                        ) : listaComunidades.length == 0 ? (
+                          <MenuItem>No comunidades agregadas</MenuItem>
+                        ) : (
+                          listaComunidades.map((u, index) => {
+                            return (
+                              <MenuItem key={index} onClick={() => setComunidad(u)}>
+                                {u.nombre}
+                              </MenuItem>
+                            );
+                          })
+                        )}
+                        <MenuDivider />
+                        <MenuItem ref={btnRef} onClick={onOpen}>
+                          Agregar Comunidad
+                        </MenuItem>
+                      </MenuList>
+                    </>
+                  )}
+                </Menu>    {/*  termina menu*/}
                 <Text m={1}>Socio Economico</Text>
                 <Input
                   m={1}
                   id="Comunidad"
                   required={true}
                   size="lg"
-                  onChange={(e) => {
-                    setEstadoSocioEconomico(e.target.value);
-                  }}
                 />
               </Flex>
             </Flex>
@@ -331,6 +402,35 @@ function NuevoBeneficiarioFisica() {
               </Button>
             </Box>
           </Flex>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay/>
+            <DrawerContent>
+              <DrawerCloseButton/>
+              <DrawerHeader>Agregar Comunidad
+              </DrawerHeader>
+                          <DrawerBody>
+                            <Input
+                              placeholder="Nombre de la Comunidad"
+                              onChange={(e) => setNuevaComunidad(e.target.value)}
+                            />
+                          </DrawerBody>
+
+                          <DrawerFooter>
+                            <Box>
+                              <Button onClick={onClose}>Cancelar
+                              </Button>
+                              <Button colorScheme="blue" onClick={() => altaComunidad()}>
+                                Guardar
+                              </Button>
+                            </Box>
+                          </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </main>
       </div>
     </Scaffold>
