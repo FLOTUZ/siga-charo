@@ -31,7 +31,6 @@ import {
   MenuDivider,
 } from "@chakra-ui/react";
 import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Crear, Consultar } from "../../services/API";
 
@@ -47,15 +46,13 @@ function NuevoBeneficiarioFisica() {
   const [telefonoCelular, setTelefonoCelular] = useState("");
   const [correo, setCorreo] = useState("");
   const [rfc, setRfc] = useState("");
-//-------DATOS DE Beneficiario Tabla fisica-----------//
-const [apellidoPaterno, setApellidoPaterno] =
-  useState("");
-const [apellidoMaterno, setApellidoMaterno] =
-  useState("");
-const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
-const [fechaNacimiento, setFechaNacimiento] = useState("");
-const [curp, setCurp] = useState("");
-const [beneficiarioId, setBEneficiarioId] = useState("");
+  //-------DATOS DE Beneficiario Tabla fisica-----------//
+  const [apellidoPaterno, setApellidoPaterno] = useState("");
+  const [apellidoMaterno, setApellidoMaterno] = useState("");
+  const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [curp, setCurp] = useState("");
+  const [beneficiarioId, setBEneficiarioId] = useState("");
   //-------Comunidad-----------//
   const [cargandoComunidad, setCargandoComunidad] = useState(true);
   const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
@@ -115,11 +112,11 @@ const [beneficiarioId, setBEneficiarioId] = useState("");
       let beneficiario = {
         nombre: nombreBeneficiario,
         direccion: direccion,
+        rfc: rfc,
         telefonoLocal: telefonoLocal,
         telefonoCelular: telefonoCelular,
         correo: correo,
-        fechaRegistro: new Date(Date.now()).toISOString(),
-        rfc: rfc,
+        fechaRegistro:  new Date(Date.now()).toISOString(),
         usuarioCargaId: 1,
         comunidadId: comunidad.idComunidad,
       };
@@ -211,7 +208,8 @@ const [beneficiarioId, setBEneficiarioId] = useState("");
                 m={1}
                 id="apellidoP"
                 placeholder="Apellido Paterno"
-                required={true}onChange={(e) => {
+                required={true}
+                onChange={(e) => {
                   setApellidoPaterno(e.target.value);
                 }}
               />
@@ -220,18 +218,31 @@ const [beneficiarioId, setBEneficiarioId] = useState("");
                 m={1}
                 id="apellidoM"
                 placeholder="Apellido Materno"
-                required={true}onChange={(e) => {
+                required={true}
+                onChange={(e) => {
                   setApellidoMaterno(e.target.value);
                 }}
               />
               <Text m={1}>CURP</Text>
-              <Input m={1} id="curp" placeholder="curp" required={true} onChange={(e) => {
+              <Input
+                m={1}
+                id="curp"
+                placeholder="curp"
+                required={true}
+                onChange={(e) => {
                   setCurp(e.target.value);
-                }} />
+                }}
+              />
               <Text m={1}>Fecha Nacimiento</Text>
-              <Input m={1} id="dateREfistro" type="date" required={true} onChange={(e) => {
+              <Input
+                m={1}
+                id="dateREfistro"
+                type="date"
+                required={true}
+                onChange={(e) => {
                   setFechaNacimiento(e.target.value);
-                }}/>
+                }}
+              />
               <Text m={1}>Telefono Celular</Text>
               <InputGroup>
                 <InputLeftElement
@@ -347,9 +358,15 @@ const [beneficiarioId, setBEneficiarioId] = useState("");
               </Menu>
               {/*  termina menu*/}
               <Text m={1}>Socio Economico</Text>
-              <Input m={1} id="Comunidad" required={true} size="lg" onChange={(e) => {
+              <Input
+                m={1}
+                id="Comunidad"
+                required={true}
+                size="lg"
+                onChange={(e) => {
                   setEstadoSocioEconomico(e.target.value);
-                }}/>
+                }}
+              />
             </Flex>
 
             <Flex w="170vh" alignItems="center" justifyContent="center">
