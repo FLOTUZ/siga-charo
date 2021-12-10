@@ -109,6 +109,11 @@ const NavLateral = () => {
             </Link>
           );
         })}
+        <Spacer paddingY="0.8rem" />
+        <Center width="90px">
+          <Divider color="white" orientation="horizontal" />
+        </Center>
+        <Spacer paddingY="0.8rem" />
         <a>
           <Tooltip hasArrow label="Actividad" bg="transparent">
             <Container
@@ -129,12 +134,7 @@ const NavLateral = () => {
               </Center>
             </Container>
           </Tooltip>
-          <Spacer paddingY="0.8rem" />
         </a>
-        <Center width="90px">
-          <Divider color="white" orientation="horizontal" />
-        </Center>
-        <Spacer paddingY="0.8rem" />
         <Link href="/">
           <a>
             <Tooltip hasArrow label="Salir" bg="transparent">
@@ -152,6 +152,7 @@ const NavLateral = () => {
             </Tooltip>
           </a>
         </Link>
+
         <Stack direction="row" h="100px">
           <Drawer
             isOpen={isOpen}
