@@ -22,7 +22,7 @@ import {
 import { useRouter } from "next/router";
 import Scaffold from "../../components/layout/Scaffold";
 import { Consultar } from "../../services/API";
-
+import {FaRegEye } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 function Editar_usuario() {
