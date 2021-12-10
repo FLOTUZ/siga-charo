@@ -8,11 +8,10 @@ import { Consultar, Eliminar, Actualizar } from "../../services/API";
 import { Button, Skeleton, Flex, Box, Spacer } from "@chakra-ui/react";
 import GenerateHash from "random-hash";
 
- export default function Beneficiarios() {
+export default function Beneficiarios() {
   //TODO: Poner el drawer en un componente
   const [cargandoTabla, setCargandoTabla] = useState(false);
   const [beneficiario, setBeneficiarios] = useState([]);
-
 
   const router = useRouter();
   let rutas = [
@@ -32,10 +31,24 @@ import GenerateHash from "random-hash";
           direccion: true,
           telefonoLocal: true,
           telefonoCelular: true,
-          email: true,
-          comunidad: true,
+          correo: true,
+          comunidadId: true,
         },
       });
+
+      console.log(respuesta);
+      /* let respuestaC = await Consultar("/comunidades/", {
+        fields: {
+          idBeneficiario: true,
+          nombre: true,
+          direccion: true,
+          telefonoLocal: true,
+          telefonoCelular: true,
+          correo: true,
+          comunidadId: true,
+        },
+      });
+      */
       if (respuesta.status === 200) {
         setBeneficiarios(respuesta.data);
         setCargandoTabla(true);

@@ -5,7 +5,7 @@ import React from "react";
 import { sesion } from "../../utils/Utils";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { Crear } from "../../services/API";
+import { Crear, Consultar } from "../../services/API";
 import {
   FormLabel,
   Text,
@@ -343,6 +343,7 @@ function NuevoBeneficiarioMoralPaso1() {
               <DrawerBody>
                 <Input
                   placeholder="Nombre de la Comunidad"
+                  value={nuevaComunidad.toUpperCase()}
                   onChange={(e) => setNuevaComunidad(e.target.value)}
                 />
               </DrawerBody>

@@ -9,6 +9,8 @@ import {
   Flex,
   Box,
   Input,
+  InputGroup,
+  InputLeftElement,
   Spacer,
   Drawer,
   DrawerBody,
@@ -28,6 +30,7 @@ import {
   ChevronDownIcon,
   MenuDivider,
 } from "@chakra-ui/react";
+import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Crear, Consultar } from "../../services/API";
@@ -216,35 +219,50 @@ function NuevoBeneficiarioFisica() {
               <Text m={1}>Fecha Nacimiento</Text>
               <Input m={1} id="dateREfistro" type="date" required={true} />
               <Text m={1}>Telefono Celular</Text>
-              <Input
-                m={1}
-                id="celular"
-                placeholder="Celular"
-                required={true}
-                onChange={(e) => {
-                  setTelefonoCelular(e.target.value);
-                }}
-              />
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<PhoneIcon color="gray.300" />}
+                />
+                <Input
+                  id="celular"
+                  placeholder="Celular"
+                  required={true}
+                  onChange={(e) => {
+                    setTelefonoCelular(e.target.value);
+                  }}
+                />
+              </InputGroup>
               <Text m={1}>Telefono</Text>
-              <Input
-                m={1}
-                id="telefono"
-                placeholder="Telefono"
-                required={true}
-                onChange={(e) => {
-                  setTelefonoLocal(e.target.value);
-                }}
-              />
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<PhoneIcon color="gray.300" />}
+                />
+                <Input
+                  id="telefono"
+                  placeholder="Telefono"
+                  required={true}
+                  onChange={(e) => {
+                    setTelefonoLocal(e.target.value);
+                  }}
+                />
+              </InputGroup>
               <Text m={1}>correo</Text>
-              <Input
-                m={1}
-                id="correo"
-                placeholder="correo"
-                required={true}
-                onChange={(e) => {
-                  setCorreo(e.target.value);
-                }}
-              />
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<EmailIcon color="gray.300" />}
+                />
+                <Input
+                  id="correo"
+                  placeholder="correo"
+                  required={true}
+                  onChange={(e) => {
+                    setCorreo(e.target.value);
+                  }}
+                />
+              </InputGroup>
               <Text m={1}>RFC</Text>
               <Input
                 m={1}

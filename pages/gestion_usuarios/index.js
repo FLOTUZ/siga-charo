@@ -3,7 +3,6 @@ import IBMDataTable from "../../components/Tabla/IBMDataTable";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useEffect, useState } from "react";
-import GenerateHash from "random-hash";
 import { BiArchive, BiUserPlus } from "react-icons/bi";
 import {
   Drawer,
@@ -15,8 +14,6 @@ import {
   useDisclosure,
   Button,
   Skeleton,
-  DataTable,
-  TableContainer,
 } from "@chakra-ui/react";
 
 import { Consultar } from "../../services/API";
