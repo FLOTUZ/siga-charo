@@ -2,12 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../assets/img/logo-ayuntamiento.svg";
 
-import { VStack, Center, Button, Spacer, Tooltip, Container } from "@chakra-ui/react";
+import {
+  VStack,
+  Center,
+  Button,
+  Spacer,
+  Tooltip,
+  Container,
+} from "@chakra-ui/react";
 
 import { AiFillDashboard } from "react-icons/ai";
 import { FiFilePlus } from "react-icons/fi";
 import { FaRegChartBar, FaUserFriends } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
+import { MdWork } from "react-icons/md";
 import { FiGrid } from "react-icons/fi";
 const NavLateral = () => {
   const paginas = [
@@ -23,34 +31,39 @@ const NavLateral = () => {
       url: "/solicitudes/catalogo",
 
       icono: <FiFilePlus size="2rem" />,
-
     },
     {
       id: 3,
       nombre: "Apoyos",
       url: "/apoyos",
-      icono: <FiGrid size="2rem"/>,
+      icono: <FiGrid size="2rem" />,
     },
     {
       id: 4,
       nombre: "Reportes",
       url: "/reportes",
 
-      icono: <FaRegChartBar  size="2rem" />,
+      icono: <FaRegChartBar size="2rem" />,
     },
     {
       id: 5,
       nombre: "Usuarios",
       url: "/gestion_usuarios",
 
+      icono: <MdWork size="2rem" />,
+    },
+    {
+      id: 6,
+      nombre: "Beneficiarios",
+      url: "/gestion-beneficiario",
+
       icono: <FaUserFriends size="2rem" />,
     },
-
   ];
 
   return (
     <Center h="100vh">
-      <VStack spacing={1} w="full"  >
+      <VStack spacing={1} w="full">
         <Image
           height={100}
           width={100}
@@ -72,8 +85,7 @@ const NavLateral = () => {
                     h="4rem"
                     w="full"
                     color="core.800"
-                    bg='#242B42'
-                    
+                    bg="#242B42"
                     _hover={{ bg: "core.800" }}
                   >
                     <Center h="4rem">{pagina.icono}</Center>
