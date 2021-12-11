@@ -102,7 +102,7 @@ function IBMDataTable({
               </TableBatchActions>
               <TableToolbarContent>
                 <TableToolbarSearch
-                  persistent="true"
+                  persistent={true}
                   tabIndex={
                     getBatchActionProps().shouldShowBatchActions ? -1 : 0
                   }
