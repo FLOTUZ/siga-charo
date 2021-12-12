@@ -118,10 +118,11 @@ function NuevoBeneficiarioMoralPaso1() {
         comunidadId: comunidad.idComunidad,
       };
       let respuesta = await Crear("/beneficiarios", beneficiario);
-      if (respuesta.status === 200) {
+
+      if (respuesta.status == 200) {
         router.push({
           pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
-          query: { idBeneficiario: respuesta.data.idBeneficiario },
+          query: { beneficiario: JSON.stringify(respuesta.data) },
         });
         toast({
           title: "Nueva Institucion",
@@ -269,9 +270,8 @@ function NuevoBeneficiarioMoralPaso1() {
                 {/*  termina menu*/}
                 <Text m={1}>Telefono Celular</Text>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none">
-                      <PhoneIcon color="gray.300" />
+                  <InputLeftElement pointerEvents="none">
+                    <PhoneIcon color="gray.300" />
                   </InputLeftElement>
                   <Input
                     id="celular"
@@ -284,9 +284,8 @@ function NuevoBeneficiarioMoralPaso1() {
                 </InputGroup>
                 <Text m={1}>Telefono</Text>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none">
-                      <PhoneIcon color="gray.300" />
+                  <InputLeftElement pointerEvents="none">
+                    <PhoneIcon color="gray.300" />
                   </InputLeftElement>
                   <Input
                     id="telefono"
@@ -299,10 +298,9 @@ function NuevoBeneficiarioMoralPaso1() {
                 </InputGroup>
                 <Text m={1}>correo</Text>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none">
-                      <EmailIcon color="gray.300" />
-                    </InputLeftElement>
+                  <InputLeftElement pointerEvents="none">
+                    <EmailIcon color="gray.300" />
+                  </InputLeftElement>
                   <Input
                     id="correo"
                     placeholder="correo"

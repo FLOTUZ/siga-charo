@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Crear } from "../../services/API";
 import Scaffold from "../../components/layout/Scaffold";
 import { useState } from "react";
@@ -33,7 +33,8 @@ function NuevoBeneficiarioMoralPaso2() {
   const [telefonoLocalRep, setTelefonoLocalRep] = useState("");
   const [correoRep, setCorreoRep] = useState("");
   //---------------------------------guarda el id entrante------------//
-  let { idBeneficiario } = router.query;
+  let { beneficiario } = router.query;
+  beneficiario = JSON.parse(beneficiario);
 
   const guardarBeneficiarioMoral = async () => {
     try {
@@ -44,7 +45,7 @@ function NuevoBeneficiarioMoralPaso2() {
         telefonoLocalRep: telefonoLocalRep,
         telefonoCelularRep: telefonoCelularRep,
         correoRep: correoRep,
-        beneficiarioId: Number(idBeneficiario),
+        beneficiarioId: Number(beneficiario.idBeneficiario),
       };
 
       console.log(personaMoral);
@@ -229,13 +230,6 @@ function NuevoBeneficiarioMoralPaso2() {
                     colorScheme="teal"
                     variant="outline"
                     onClick={() => {
-                      setNombreRep(idBeneficiario);
-                      setApellidoPaternoRep(idBeneficiario);
-                      setApellidoMaternoRep(idBeneficiario);
-                      setTelefonoLocalRep(idBeneficiario);
-                      setTelefonoCelularRep(idBeneficiario);
-                      setCorreoRep(idBeneficiario);
-
                       guardarBeneficiarioMoral();
                       toast({
                         title: "Guardado",
