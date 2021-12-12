@@ -163,9 +163,8 @@ function NuevoBeneficiarioMoralPaso2() {
                 />
                 <Text m={1}>Telefono Local</Text>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none">
-                      <PhoneIcon color="gray.300" />
+                  <InputLeftElement pointerEvents="none">
+                    <PhoneIcon color="gray.300" />
                   </InputLeftElement>
                   <Input
                     id="telefono"
@@ -178,9 +177,8 @@ function NuevoBeneficiarioMoralPaso2() {
                 </InputGroup>
                 <Text m={1}>Telefono Celular</Text>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                  ><PhoneIcon color="gray.300" />
+                  <InputLeftElement pointerEvents="none">
+                    <PhoneIcon color="gray.300" />
                   </InputLeftElement>
                   <Input
                     id="telefono"
@@ -193,9 +191,8 @@ function NuevoBeneficiarioMoralPaso2() {
                 </InputGroup>
                 <Text m={1}>correo</Text>
                 <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none">
-                      <EmailIcon color="gray.300" />
+                  <InputLeftElement pointerEvents="none">
+                    <EmailIcon color="gray.300" />
                   </InputLeftElement>
                   <Input
                     id="correo"
@@ -214,21 +211,35 @@ function NuevoBeneficiarioMoralPaso2() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              {/* <Link href="/gestion-beneficiario"> 
-                <a>*/}
-              <Button
-                colorScheme="teal"
-                variant="solid"
-                mr="4"
-                onClick={() => guardarBeneficiarioMoral()}
-              >
-                Guardar
-              </Button>
-              {/*   </a>
-               </Link> */}
+              <Link href="/gestion-beneficiario">
+                <a>
+                  <Button
+                    colorScheme="teal"
+                    variant="solid"
+                    mr="4"
+                    onClick={() => guardarBeneficiarioMoral()}
+                  >
+                    Guardar
+                  </Button>
+                </a>
+              </Link>
               <Link href="/dashboard">
                 <a>
-                  <Button colorScheme="teal" variant="outline">
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    onClick={() => {
+                      
+                      guardarBeneficiarioMoral();
+                      toast({
+                        title: "Guardado",
+                        description: "REGISTRO iNCOMPLETO",
+                        status: "warning",
+                        duration: 9000,
+                        isClosable: true,
+                      });
+                    }}
+                  >
                     Descartar
                   </Button>
                 </a>
