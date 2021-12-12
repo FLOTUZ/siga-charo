@@ -99,7 +99,7 @@ function Nueva_Solicitud_Paso_2() {
     let celular = query.celular;
     let telefono = query.telefono;
     let correo = query.correo;
-    let localidadS = localidadSelecionada;
+    let localidadS = localidad.idComunidad;
 
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_3",
