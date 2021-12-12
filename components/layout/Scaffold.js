@@ -1,10 +1,16 @@
-import { Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 import NavLateral from "./NavLateral";
 import Rutero from "./Rutero";
+import Head from "next/head";
+
+import { Grid, GridItem, Heading, Text, Box } from "@chakra-ui/react";
 
 function Scaffold({ titulo = "", descripcion = "", rutas = [], children }) {
   return (
     <>
+      <Head>
+        <title>{titulo}</title>
+      </Head>
+
       <Grid
         h="100vh"
         gridGap="0px"
@@ -31,7 +37,9 @@ function Scaffold({ titulo = "", descripcion = "", rutas = [], children }) {
           <Text paddingStart={2} fontSize="2xl" color="gray.500" isTruncated>
             {descripcion}
           </Text>
-          {children}
+          <Box w="100%" p={2} mb={5} mt={2}>
+            {children}
+          </Box>
         </GridItem>
       </Grid>
     </>

@@ -1,28 +1,99 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import {
   Button,
   Input,
-  Flex,
   Box,
-  Heading,
   Text,
   Spacer,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
+  HStack,
+  Badge,
+  Stack,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
+import { BsCheckCircle } from "react-icons/bs";
+import { ImCancelCircle } from "react-icons/im";
 import Scaffold from "../../components/layout/Scaffold";
 import { Consultar, Actualizar } from "../../services/API";
 import { useEffect, useState } from "react";
 
 function Ver_solicitud() {
-  const [solicitud, setSolicitud] = useState({});
+  const { isOpen, onOpen, onClose } = useDisclosure();
   let router = useRouter();
-  let { idSolicitud } = router.query;
-  console.log(idSolicitud);
+
+  const [solicitud, setSolicitud] = useState({
+    fechaSolicitud: "",
+    fechaAutorizacion: "",
+    estatus: "",
+    cantidad: 0,
+    descuento: 0,
+    costoTotal: 0,
+    motivoRechazo: "",
+    fechaEntrega: "",
+    notas: "",
+    usuarioAutorizadorId: 0,
+    usuarioEntregaId: 0,
+    programaId: 0,
+    beneficiarioId: 0,
+  });
+  const [beneficiario, setBeneficiario] = useState({
+    idBeneficiario: 0,
+    nombre: "",
+    direccion: "",
+    rfc: "",
+    telefonoLocal: "",
+    telefonoCelular: "",
+    correo: "",
+    fechaRegistro: "",
+    fechaBaja: "",
+    usuarioCargaId: 0,
+    comunidadId: 0,
+    solicitudes: [],
+  });
+
+  const [personaFisica, setpersonaFisica] = useState({
+    idPersonaFisica: 0,
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    estadoSocioEconomico: "",
+    fechaNacimiento: "",
+    curp: "",
+    beneficiarioId: 0,
+  });
+  const [personaMoral, setPersonaMoral] = useState({
+    idPersonaMoral: 0,
+    nombreRepresentante: "",
+    apellidoPaternoRepresentante: "",
+    apellidoMaternoRepresentante: "",
+    telefonoLocalRep: "",
+    telefonoCelularRep: "",
+    correoRep: "",
+    beneficiarioId: 0,
+  });
+  //------------------- -------------------------------
+
+  let rutas = [
+    {
+      url: "/solicitudes",
+      nombre: "Solicitudes",
+      isCurrentPage: true,
+    },
+    {
+      url: "/ver_solicitud",
+      nombre: ` Solicitud #${router.query.idSolicitud}`,
+      isCurrentPage: true,
+    },
+  ];
+
+  let idSolicitud = 13;
   useEffect(() => {
     const consultarSolicitud = async () => {
       let respuesta = await Consultar(`/solicitudes/${idSolicitud}`);
@@ -31,207 +102,256 @@ function Ver_solicitud() {
       }
     };
     consultarSolicitud();
+    console.log({ solicitud: solicitud });
   }, []);
 
-  let rutas = [
-    {
-      url: "/ver_solicitud",
-      nombre: "ver Solicitud",
-      isCurrentPage: true,
-    },
-  ];
+  useEffect(() => {
+    const consultarBeneficiario = async () => {
+      let respuesta = await Consultar(
+        `/beneficiarios/${solicitud.beneficiarioId}`
+      );
+      if (respuesta.status === 200) {
+        setBeneficiario(respuesta.data);
+      }
+    };
+    consultarBeneficiario();
+    console.log({ beneficiario: beneficiario });
+  }, [solicitud]);
 
+  useEffect(() => {
+    /**
+     * SE CONSULTA LA PERSONA FISICA CON EL ID DEL BENEFICIARIO
+     * Si retorna un arreglo vacio, significa que deberia ser
+     * una persona Fisica
+     */
+    const consultarPersonaFisica = async () => {
+      let respuesta = await Consultar(`/personas-fisicas`, {
+        where: {
+          beneficiarioId: beneficiario.idBeneficiario, //Id del beneficiario
+        },
+        fields: {
+          idPersonaFisica: true,
+          apellidoPaterno: true,
+          apellidoMaterno: true,
+          estadoSocioEconomico: true,
+          fechaNacimiento: true,
+          curp: true,
+          beneficiarioId: true,
+        },
+      });
+      if (respuesta.status === 200) {
+        setpersonaFisica(respuesta.data[0]);
+      }
+    };
+
+    consultarPersonaFisica();
+    console.log({ personaFISICA: personaFisica });
+  }, [beneficiario]);
+
+  useEffect(() => {
+    /**
+     * SE CONSULTA LA PERSONA MORAL CON EL ID DEL BENEFICIARIO
+     * Si retorna un arreglo vacio, significa que deberia ser
+     * una persona Fisica
+     */
+    const consultarPersonaMoral = async () => {
+      let respuesta = await Consultar(`/personas-morales`, {
+        where: {
+          beneficiarioId: beneficiario.idBeneficiario, //Id del beneficiario
+        },
+        fields: {
+          idPersonaMoral: true,
+          nombreRepresentante: true,
+          apellidoPaternoRepresentante: true,
+          apellidoMaternoRepresentante: true,
+          telefonoLocalRep: true,
+          telefonoCelularRep: true,
+          correoRep: true,
+          beneficiarioId: true,
+        },
+      });
+      if (respuesta.status === 200) {
+        setPersonaMoral(respuesta.data[0]);
+      }
+    };
+    consultarPersonaMoral();
+    console.log({ personaMoral: personaMoral });
+  }, [beneficiario]);
+
+  const rechazar = () => {
+    console.log("Rechazada");
+  };
   return (
     <Scaffold
       rutas={rutas}
       titulo="Datos de Solicitud"
-      descripcion="Folio xxxx"
+      descripcion={`FOLIO --- ${solicitud.idSolicitud}`}
     >
-      <div>
-        <Head>
-          <title>Datos de Solicitud</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <main>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Box m={5}>
-            <Flex m="2">
-              <Flex direction="column" m={5}>
-                <Flex
-                  borderStyle="solid"
-                  borderColor="gray.200"
-                  borderWidth="2px"
-                  direction="column"
-                  w="120vh"
-                  p={10}
-                  rounded={6}
-                >
-                  <Heading color="gray" as="h3" fontSize="2xl">
-                    Detalles Solicitante
-                  </Heading>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Fecha de Solicitud:{" "}
-                    </Text>
-                    <Text m={5}>18 Noviembre 2021</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Nombre del Beneficiario:{" "}
-                    </Text>
-                    <Text m={5}>Escuela Primaria Benito Juarez</Text>
-                  </Flex>
-                  <Flex m="5">
-                    <Text m={5} as="em">
-                      Representante:{" "}
-                    </Text>
-                    <Text m={5}>Isabela Arias Belmonte</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Comunidad:{" "}
-                    </Text>
-                    <Text m={5}>Charo</Text>
-                  </Flex>
-                </Flex>
-                <Flex
-                  borderStyle="solid"
-                  borderColor="gray.200"
-                  borderWidth="2px"
-                  direction="column"
-                  w="100%"
-                  p={10}
-                  rounded={6}
-                >
-                  <Heading color="gray" as="h3" fontSize="2xl">
-                    Apoyo Solicitado
-                  </Heading>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Apoyo:{" "}
-                    </Text>
-                    <Text m={5}>Calentador Solar</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Cantidad Solicitada:{" "}
-                    </Text>
-                    <Text m={5}>2.00</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Costo del Apoyo:{" "}
-                    </Text>
-                    <Text m={5}>$2,000</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Descuento:{" "}
-                    </Text>
-                    <Text m={5}>N/A</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Total:{" "}
-                    </Text>
-                    <Text m={5}>$4,000</Text>
-                  </Flex>
-                  <Flex m={5}>
-                    <Text m={5} as="em">
-                      Estatus:{" "}
-                    </Text>
-                    <Box background="yellow" m={5} rounded={6}>
-                      Pendiente
-                    </Box>
-                  </Flex>
-                  <Flex w="100%" alignItems="center" justifyContent="center">
-                    <Box p="2"></Box>
-                    <Spacer />
-                    <Box>
-                      <Button colorScheme="teal" variant="solid" mr="4">
-                        Aprobar
-                      </Button>
-                      <Button colorScheme="teal" variant="outline">
-                        Rechazar
-                      </Button>
-                    </Box>
-                  </Flex>
-                </Flex>
-                <Flex
-                  borderStyle="solid"
-                  borderColor="gray.200"
-                  borderWidth="2px"
-                  direction="column"
-                  w="100%"
-                  p={10}
-                  rounded={6}
-                >
-                  <Heading color="gray" as="h3" fontSize="2xl">
-                    Seguimiento
-                  </Heading>
-                  <Flex m={5}>
-                    <Box>
-                      <Text m={5} as="em">
-                        Cantidad a Autorizar:{" "}
-                      </Text>
-                      <NumberInput defaultValue={0} min={100} max={2000}>
-                        <NumberInputField />
-                        <NumberInputStepper>
-                          <NumberIncrementStepper />
-                          <NumberDecrementStepper />
-                        </NumberInputStepper>
-                      </NumberInput>
-                    </Box>
-                    <Spacer />
-                    <Box>
-                      <Text m={5} as="em">
-                        Total Autorizado:{" "}
-                      </Text>
-                      <Text m={5} color="green">
-                        $4,000
-                      </Text>
-                    </Box>
-                  </Flex>
-                  <Flex m={5} alignItems="center" justifyContent="center">
-                    <Text m={5} as="em">
-                      Fecha:{" "}
-                    </Text>
-                    <Input type="date" />
-                    <Box></Box>
-                  </Flex>
-                  <Flex m={5} alignItems="center" justifyContent="center">
-                    <Text m={5} as="em">
-                      Motivo de Rechazo:{" "}
-                    </Text>
-                    <Input type="textBox" />
-                  </Flex>
-                </Flex>
-              </Flex>
+      <Box
+        p={5}
+        borderWidth="1px"
+        _hover={{
+          shadow: "xl",
+          border: "0.5px",
+          borderColor: "gray.300",
+          borderRadius: "1rem",
+        }}
+      >
+        <Text fontSize="3xl" my="1rem">
+          Detalles solicitante
+        </Text>
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Fecha Solicitud:</Text>
+          <Text as="mark" fontWeight="bold">
+            DD MM AAAA
+          </Text>
+        </HStack>
 
-              <Flex
-                borderStyle="solid"
-                borderColor="gray.200"
-                borderWidth="2px"
-                background="gray.150"
-                direction="column"
-                w="25%"
-                p={2}
-                rounded={6}
-              >
-                <Heading
-                  m={2}
-                  justifyContent="Left"
-                  color="gray"
-                  as="h3"
-                  fontSize="2xl"
-                >
-                  Actividad
-                </Heading>
-              </Flex>
-            </Flex>
-          </Box>
-        </main>
-      </div>
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Beneficiario:</Text>
+          <Text as="mark" fontWeight="bold">
+            Escuela Primaria Benito Juarez
+          </Text>
+        </HStack>
+        <Spacer />
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Representante:</Text>
+          <Text as="mark" fontWeight="bold">
+            Pepito Perez
+          </Text>
+        </HStack>
+
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Comunidad:</Text>
+          <Text as="mark" fontWeight="bold">
+            Charo
+          </Text>
+        </HStack>
+      </Box>
+
+      <Box
+        p={5}
+        borderWidth="1px"
+        _hover={{
+          shadow: "xl",
+          border: "0.5px",
+          borderColor: "gray.300",
+          borderRadius: "1rem",
+        }}
+      >
+        <Text fontSize="3xl" my="1rem">
+          Apoyo Solicitado
+        </Text>
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Apoyo:</Text>
+          <Text as="mark" fontWeight="bold">
+            Calentador Solar
+          </Text>
+        </HStack>
+
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Cantidad solicitada:</Text>
+          <Text as="mark" fontWeight="bold">
+            2 piezas
+          </Text>
+        </HStack>
+        <Spacer />
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Costo del apoyo:</Text>
+          <Text as="mark" fontWeight="bold">
+            $ 2, 000
+          </Text>
+        </HStack>
+
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Comunidad:</Text>
+          <Text as="mark" fontWeight="bold">
+            Charo
+          </Text>
+        </HStack>
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Status:</Text>
+          <Badge variant="solid" colorScheme="yellow">
+            Pendiente
+          </Badge>
+        </HStack>
+      </Box>
+
+      <Box
+        p={5}
+        borderWidth="1px"
+        _hover={{
+          shadow: "xl",
+          border: "0.5px",
+          borderColor: "gray.300",
+          borderRadius: "1rem",
+        }}
+      >
+        <Text fontSize="3xl" my="1rem">
+          Seguimiento
+        </Text>
+
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm" width="sm">
+            Cantidad a autorizar [UNIDAD]
+          </Text>
+          <Input type="number" variant="filled" />
+        </HStack>
+
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm" width="sm">
+            Fecha prevista
+          </Text>
+          <Input type="date" variant="filled" />
+        </HStack>
+        <Spacer />
+        <HStack spacing="1rem" my="2rem">
+          <Text fontSize="sm">Total Autorizado</Text>
+          <Text fontSize="2xl" variant="filled" color="green" fontWeight="bold">
+            $1 200
+          </Text>
+        </HStack>
+        <Stack direction="row" spacing={4} justifyContent="center">
+          <Button
+            leftIcon={<BsCheckCircle />}
+            colorScheme="green"
+            variant="solid"
+            size="lg"
+          >
+            Aprobar
+          </Button>
+          <Button
+            leftIcon={<ImCancelCircle />}
+            colorScheme="red"
+            variant="solid"
+            size="lg"
+            onClick={onOpen}
+          >
+            Reachazar
+          </Button>
+        </Stack>
+      </Box>
+
+      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Razon:</FormLabel>
+              <Input isRequired={true} placeholder="First name" />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Scaffold>
   );
 }
