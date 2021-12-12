@@ -27,6 +27,7 @@ import {
   MenuItem,
   Skeleton,
   Stack,
+  InputLeftAddon,
   ChevronDownIcon,
   MenuDivider,
 } from "@chakra-ui/react";
@@ -116,22 +117,23 @@ function NuevoBeneficiarioFisica() {
         telefonoLocal: telefonoLocal,
         telefonoCelular: telefonoCelular,
         correo: correo,
-        fechaRegistro:  new Date(Date.now()).toISOString(),
+        fechaRegistro: new Date(Date.now()).toISOString(),
         usuarioCargaId: 1,
         comunidadId: comunidad.idComunidad,
       };
 
-      console.log(beneficiario);
       let respuesta = await Crear("/beneficiarios", beneficiario);
 
       let beneficiarioFisica = {
-        benficiarioId: respuesta.idBenficiario,
         apellidoPaterno: apellidoPaterno,
         apellidoMaterno: apellidoMaterno,
         estadoSocioEconomico: estadoSocioEconomico,
-        fechaNacimiento: fechaNacimiento,
+        fechaNacimiento: new Date(fechaNacimiento).toISOString(),
         curp: curp,
+        beneficiarioId: respuesta.data.idBeneficiario,
       };
+
+      console.log(beneficiarioFisica);
 
       let respuestaF = await Crear("/personas-fisicas", beneficiarioFisica);
       if (respuestaF.status === 200) {
@@ -245,10 +247,9 @@ function NuevoBeneficiarioFisica() {
               />
               <Text m={1}>Telefono Celular</Text>
               <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<PhoneIcon color="gray.300" />}
-                />
+                <InputLeftElement pointerEvents="none">
+                  <PhoneIcon color="gray.300" />
+                </InputLeftElement>
                 <Input
                   id="celular"
                   placeholder="Celular"
@@ -260,10 +261,10 @@ function NuevoBeneficiarioFisica() {
               </InputGroup>
               <Text m={1}>Telefono</Text>
               <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<PhoneIcon color="gray.300" />}
-                />
+                <InputLeftElement pointerEvents="none">
+                  <PhoneIcon color="gray.300" />
+                </InputLeftElement>
+                
                 <Input
                   id="telefono"
                   placeholder="Telefono"
@@ -275,10 +276,9 @@ function NuevoBeneficiarioFisica() {
               </InputGroup>
               <Text m={1}>correo</Text>
               <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<EmailIcon color="gray.300" />}
-                />
+                <InputLeftElement pointerEvents="none">
+                  <EmailIcon color="gray.300" />
+                </InputLeftElement>
                 <Input
                   id="correo"
                   placeholder="correo"
@@ -315,7 +315,6 @@ function NuevoBeneficiarioFisica() {
                   <>
                     <MenuButton
                       isActive={isOpen}
-                      rightIcon={<ChevronDownIcon />}
                       onClick={() => {
                         setCargandoComunidad(true);
                         consultarComunidad();
@@ -369,8 +368,7 @@ function NuevoBeneficiarioFisica() {
               />
             </Flex>
 
-            <Flex w="170vh" alignItems="center" justifyContent="center">
-              <Spacer />
+            <Flex alignItems="center" justifyContent="center">
               <Box>
                 <Button
                   colorScheme="teal"
