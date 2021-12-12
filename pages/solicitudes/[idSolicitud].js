@@ -18,6 +18,7 @@ import {
   ModalFooter,
   FormControl,
   FormLabel,
+  useToast,
 } from "@chakra-ui/react";
 import { BsCheckCircle } from "react-icons/bs";
 import { ImCancelCircle } from "react-icons/im";
@@ -27,6 +28,8 @@ import { useEffect, useState } from "react";
 
 function Ver_solicitud() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
   let router = useRouter();
 
   const [solicitud, setSolicitud] = useState({
@@ -78,6 +81,11 @@ function Ver_solicitud() {
     correoRep: "",
     beneficiarioId: 0,
   });
+
+  const [comunidad, setComunidad] = useState({
+    idComunidad: 0,
+    nombre: "",
+  });
   //------------------- -------------------------------
 
   let rutas = [
@@ -93,12 +101,19 @@ function Ver_solicitud() {
     },
   ];
 
-  let idSolicitud = 13;
   useEffect(() => {
     const consultarSolicitud = async () => {
-      let respuesta = await Consultar(`/solicitudes/${idSolicitud}`);
+      let respuesta = await Consultar(`/solicitudes/${13}`);
       if (respuesta.status === 200) {
         setSolicitud(respuesta.data);
+      } else {
+        toast({
+          title: "Error: no se pudo recuperar solicitud",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     };
     consultarSolicitud();
@@ -112,6 +127,14 @@ function Ver_solicitud() {
       );
       if (respuesta.status === 200) {
         setBeneficiario(respuesta.data);
+      } else {
+        toast({
+          title: "Error: no se pudo recuperar beneficiario",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     };
     consultarBeneficiario();
@@ -141,6 +164,14 @@ function Ver_solicitud() {
       });
       if (respuesta.status === 200) {
         setpersonaFisica(respuesta.data[0]);
+      } else {
+        toast({
+          title: "Error: no se pudo recuperar persona fisica",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     };
 
@@ -172,10 +203,39 @@ function Ver_solicitud() {
       });
       if (respuesta.status === 200) {
         setPersonaMoral(respuesta.data[0]);
+      } else {
+        toast({
+          title: "Error: no se pudo recuperar persona moral",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     };
     consultarPersonaMoral();
     console.log({ personaMoral: personaMoral });
+  }, [beneficiario]);
+
+  useEffect(() => {
+    const consultarComunidad = async () => {
+      let respuesta = await Consultar(
+        `/comunidades/${beneficiario.comunidadId}`
+      );
+      if (respuesta.status === 200) {
+        setComunidad(respuesta.data);
+      } else {
+        toast({
+          title: "Error: no se pudo recuperar comunidad",
+          description: `${respuesta.message}`,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    };
+    consultarComunidad();
+    console.log({ comunidad: comunidad });
   }, [beneficiario]);
 
   const rechazar = () => {
@@ -203,28 +263,30 @@ function Ver_solicitud() {
         <HStack spacing="1rem" my="2rem">
           <Text fontSize="sm">Fecha Solicitud:</Text>
           <Text as="mark" fontWeight="bold">
-            DD MM AAAA
+            {solicitud.fechaSolicitud}
           </Text>
         </HStack>
 
         <HStack spacing="1rem" my="2rem">
           <Text fontSize="sm">Beneficiario:</Text>
           <Text as="mark" fontWeight="bold">
-            Escuela Primaria Benito Juarez
+            {beneficiario.nombre}
           </Text>
         </HStack>
         <Spacer />
         <HStack spacing="1rem" my="2rem">
           <Text fontSize="sm">Representante:</Text>
           <Text as="mark" fontWeight="bold">
-            Pepito Perez
+            {personaMoral.nombreRepresentante === undefined
+              ? ""
+              : personaMoral.nombreRepresentante}
           </Text>
         </HStack>
 
         <HStack spacing="1rem" my="2rem">
           <Text fontSize="sm">Comunidad:</Text>
           <Text as="mark" fontWeight="bold">
-            Charo
+            {comunidad.nombre}
           </Text>
         </HStack>
       </Box>
@@ -245,7 +307,7 @@ function Ver_solicitud() {
         <HStack spacing="1rem" my="2rem">
           <Text fontSize="sm">Apoyo:</Text>
           <Text as="mark" fontWeight="bold">
-            Calentador Solar
+            {}
           </Text>
         </HStack>
 
