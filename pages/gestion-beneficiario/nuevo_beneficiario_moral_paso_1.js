@@ -115,7 +115,7 @@ function NuevoBeneficiarioMoralPaso1() {
         fechaRegistro: new Date(Date.now()).toISOString(),
         rfc: rfc,
         usuarioCargaId: 1,
-        comunidadId: 1,
+        comunidadId: comunidad.idComunidad,
       };
       let respuesta = await Crear("/beneficiarios", beneficiario);
       if (respuesta.status === 200) {

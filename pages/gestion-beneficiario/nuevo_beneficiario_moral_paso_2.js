@@ -229,7 +229,13 @@ function NuevoBeneficiarioMoralPaso2() {
                     colorScheme="teal"
                     variant="outline"
                     onClick={() => {
-                      
+                      setNombreRep(idBeneficiario);
+                      setApellidoPaternoRep(idBeneficiario);
+                      setApellidoMaternoRep(idBeneficiario);
+                      setTelefonoLocalRep(idBeneficiario);
+                      setTelefonoCelularRep(idBeneficiario);
+                      setCorreoRep(idBeneficiario);
+
                       guardarBeneficiarioMoral();
                       toast({
                         title: "Guardado",
