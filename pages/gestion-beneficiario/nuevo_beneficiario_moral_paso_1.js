@@ -226,7 +226,6 @@ function NuevoBeneficiarioMoralPaso1() {
                     <>
                       <MenuButton
                         isActive={isOpen}
-                        rightIcon={<ChevronDownIcon />}
                         onClick={() => {
                           setCargandoComunidad(true);
                           consultarComunidad();
@@ -271,9 +270,9 @@ function NuevoBeneficiarioMoralPaso1() {
                 <Text m={1}>Telefono Celular</Text>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
-                    children={<PhoneIcon color="gray.300" />}
-                  />
+                    pointerEvents="none">
+                      <PhoneIcon color="gray.300" />
+                  </InputLeftElement>
                   <Input
                     id="celular"
                     placeholder="Celular"
@@ -286,9 +285,9 @@ function NuevoBeneficiarioMoralPaso1() {
                 <Text m={1}>Telefono</Text>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
-                    children={<PhoneIcon color="gray.300" />}
-                  />
+                    pointerEvents="none">
+                      <PhoneIcon color="gray.300" />
+                  </InputLeftElement>
                   <Input
                     id="telefono"
                     placeholder="Telefono"
@@ -301,9 +300,9 @@ function NuevoBeneficiarioMoralPaso1() {
                 <Text m={1}>correo</Text>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
-                    children={<EmailIcon color="gray.300" />}
-                  />
+                    pointerEvents="none">
+                      <EmailIcon color="gray.300" />
+                    </InputLeftElement>
                   <Input
                     id="correo"
                     placeholder="correo"

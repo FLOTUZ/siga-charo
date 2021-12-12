@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Crear } from "../../services/API";
 import Scaffold from "../../components/layout/Scaffold";
-import { useState,} from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 import {
@@ -27,17 +27,13 @@ function NuevoBeneficiarioMoralPaso2() {
   const toast = useToast();
   //-------DATOS DE Beneficiario Tabla Beneficiario-----------//
   const [nombreRep, setNombreRep] = useState("");
-  const [apellidoPaternoRep, setApellidoPaternoRep] =
-    useState("");
-  const [apellidoMaternoRep, setApellidoMaternoRep] =
-    useState("");
+  const [apellidoPaternoRep, setApellidoPaternoRep] = useState("");
+  const [apellidoMaternoRep, setApellidoMaternoRep] = useState("");
   const [telefonoCelularRep, setTelefonoCelularRep] = useState("");
   const [telefonoLocalRep, setTelefonoLocalRep] = useState("");
   const [correoRep, setCorreoRep] = useState("");
-  const [beneficiarioId, setBEneficiarioId] = useState("");
   //---------------------------------guarda el id entrante------------//
   let { idBeneficiario } = router.query;
-
 
   const guardarBeneficiarioMoral = async () => {
     try {
@@ -48,9 +44,11 @@ function NuevoBeneficiarioMoralPaso2() {
         telefonoLocalRep: telefonoLocalRep,
         telefonoCelularRep: telefonoCelularRep,
         correoRep: correoRep,
-        beneficiarioId: idBeneficiario,
+        beneficiarioId: Number(idBeneficiario),
       };
+
       console.log(personaMoral);
+
       let respuesta = await Crear("/personas-morales", personaMoral);
       if (respuesta.status === 200) {
         router.push({
@@ -166,48 +164,48 @@ function NuevoBeneficiarioMoralPaso2() {
                 <Text m={1}>Telefono Local</Text>
                 <InputGroup>
                   <InputLeftElement
-                    pointerEvents="none"
-                    children={<PhoneIcon color="gray.300" />}
+                    pointerEvents="none">
+                      <PhoneIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    id="telefono"
+                    placeholder="Telefono Local"
+                    required={true}
+                    onChange={(e) => {
+                      setTelefonoLocalRep(e.target.value);
+                    }}
                   />
-                <Input
-                  id="telefono"
-                  placeholder="Telefono Local"
-                  required={true}
-                  onChange={(e) => {
-                    setTelefonoLocalRep(e.target.value);
-                  }}
-                />
                 </InputGroup>
                 <Text m={1}>Telefono Celular</Text>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<PhoneIcon color="gray.300" />}
+                  ><PhoneIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    id="telefono"
+                    placeholder="Telefono Celular"
+                    required={true}
+                    onChange={(e) => {
+                      setTelefonoCelularRep(e.target.value);
+                    }}
                   />
-                <Input
-                  id="telefono"
-                  placeholder="Telefono Celular"
-                  required={true}
-                  onChange={(e) => {
-                    setTelefonoCelularRep(e.target.value);
-                  }}
-                />
                 </InputGroup>
                 <Text m={1}>correo</Text>
                 <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<EmailIcon color="gray.300" />}
-                />
-                <Input
-                  id="correo"
-                  placeholder="correo"
-                  required={true}
-                  onChange={(e) => {
-                    setCorreo(e.target.value);
-                  }}
-                />
-              </InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none">
+                      <EmailIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input
+                    id="correo"
+                    placeholder="correo"
+                    required={true}
+                    onChange={(e) => {
+                      setCorreoRep(e.target.value);
+                    }}
+                  />
+                </InputGroup>
               </Flex>
             </Flex>
           </Box>
@@ -216,18 +214,18 @@ function NuevoBeneficiarioMoralPaso2() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Link href="/gestion-beneficiario">
-                <a>
-                  <Button 
-                  colorScheme="teal"
-                   variant="solid" 
-                   mr="4"
-                   onClick={() => guardarBeneficiarioMoral()}
-                   >
-                    Guardar
-                  </Button>
-                </a>
-              </Link>
+              {/* <Link href="/gestion-beneficiario"> 
+                <a>*/}
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                mr="4"
+                onClick={() => guardarBeneficiarioMoral()}
+              >
+                Guardar
+              </Button>
+              {/*   </a>
+               </Link> */}
               <Link href="/dashboard">
                 <a>
                   <Button colorScheme="teal" variant="outline">
