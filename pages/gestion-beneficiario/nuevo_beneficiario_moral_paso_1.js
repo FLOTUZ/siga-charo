@@ -106,40 +106,10 @@ function NuevoBeneficiarioMoralPaso1() {
 
   const guardarBeneficiario = async () => {
     try {
-      let beneficiario = {
-        nombre: nombreBeneficiario,
-        direccion: direccion,
-        telefonoLocal: telefonoLocal,
-        telefonoCelular: telefonoCelular,
-        correo: correo,
-        fechaRegistro: new Date(Date.now()).toISOString(),
-        rfc: rfc,
-        usuarioCargaId: 1,
-        comunidadId: comunidad.idComunidad,
-      };
-      let respuesta = await Crear("/beneficiarios", beneficiario);
-
-      if (respuesta.status == 200) {
-        router.push({
-          pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
-          query: { beneficiario: JSON.stringify(respuesta.data) },
-        });
-        toast({
-          title: "Nueva Institucion",
-          descripcion: `La Institución se ha guardado`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: "Oops.. Algo salio mal",
-          descripcion: respuesta.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
+      router.push({
+        pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
+        query: { beneficiarioString: JSON.stringify(respuesta.data) },
+      });
     } catch (e) {
       toast({
         title: "Verifica los datos",

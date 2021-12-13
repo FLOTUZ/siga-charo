@@ -32,45 +32,68 @@ function NuevoBeneficiarioMoralPaso2() {
   const [telefonoCelularRep, setTelefonoCelularRep] = useState("");
   const [telefonoLocalRep, setTelefonoLocalRep] = useState("");
   const [correoRep, setCorreoRep] = useState("");
+
+  const [beneficiario, setBeneficiario] = useState({
+    idBeneficiario: 0,
+    nombre: "",
+    direccion: "",
+    rfc: "",
+    telefonoLocal: "",
+    telefonoCelular: "",
+    correo: "",
+    fechaRegistro: "",
+    fechaBaja: "",
+    usuarioCargaId: 0,
+    comunidadId: 0,
+  });
   //---------------------------------guarda el id entrante------------//
-  let { beneficiario } = router.query;
-  beneficiario = JSON.parse(beneficiario);
+  let { beneficiarioString } = router.query;
+  setBeneficiario(JSON.parse(beneficiarioString));
 
   const guardarBeneficiarioMoral = async () => {
     try {
-      let personaMoral = {
-        nombreRepresentante: nombreRep,
-        apellidoPaternoRepresentante: apellidoPaternoRep,
-        apellidoMaternoRepresentante: apellidoMaternoRep,
-        telefonoLocalRep: telefonoLocalRep,
-        telefonoCelularRep: telefonoCelularRep,
-        correoRep: correoRep,
-        beneficiarioId: Number(beneficiario.idBeneficiario),
+      let beneficiario = {
+        nombre: beneficiario.nombre,
+        direccion: beneficiario.direccion,
+        telefonoLocal: beneficiario.telefonoLocal,
+        telefonoCelular: beneficiario.telefonoCelular,
+        correo: beneficiario.correo,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+        rfc: beneficiario.rfc,
+        usuarioCargaId: 1,
+        comunidadId: comunidad.idComunidad,
       };
+      let respuestaBenef = await Crear("/beneficiarios", beneficiario);
+      if (respuestaBenef.status == 200) {
+        let personaMoral = {
+          nombreRepresentante: nombreRep,
+          apellidoPaternoRepresentante: apellidoPaternoRep,
+          apellidoMaternoRepresentante: apellidoMaternoRep,
+          telefonoLocalRep: telefonoLocalRep,
+          telefonoCelularRep: telefonoCelularRep,
+          correoRep: correoRep,
+          beneficiarioId: Number(beneficiario.idBeneficiario),
+        };
 
-      console.log(personaMoral);
-
-      let respuesta = await Crear("/personas-morales", personaMoral);
-      if (respuesta.status === 200) {
-        router.push({
-          pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
-          query: { idBeneficiario: respuesta.data.idBeneficiario },
-        });
-        toast({
-          title: "Nuevo Represante",
-          descripcion: `La Institución se ha guardado`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: "Oops.. Algo salio mal",
-          descripcion: respuesta.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
+        let respuesta = await Crear("/personas-morales", personaMoral);
+        if (respuesta.status === 200) {
+          toast({
+            title: "Nueva persona moral creada",
+            descripcion: `La Institución se ha guardado`,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          router.push("/gestion-beneficiario");
+        } else {
+          toast({
+            title: "Oops.. Algo salio mal",
+            descripcion: respuesta.message,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
       }
     } catch (e) {
       toast({
