@@ -28,7 +28,6 @@ import { useEffect, useState } from "react";
 function Editar_usuario() {
   const [usuario, setUsuario] = useState({});
   const [cargando, setCargando] = useState(true);
-  const router = useRouter();
 
   //----------Estado de la interfaz--------//
   const router = useRouter();
