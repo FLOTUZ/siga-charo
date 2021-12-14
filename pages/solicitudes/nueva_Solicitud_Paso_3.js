@@ -83,8 +83,8 @@ function Nueva_Solicitud_Paso_3() {
       apellidoMaterno: query.apellidoM,
       estadoSocioEconomico: "NA",
       fechaNacimiento: new Date(query.nacimiento).toISOString(),
-      curp: new Date(Date.now()).toISOString(),
-      beneficiarioId: 1,
+      curp: query.curp,
+      beneficiarioId: respuestaB.data.idBeneficiario,
     };
 
     let respuestaP = await Crear("/personas-fisicas", personaFisica);
@@ -102,7 +102,7 @@ function Nueva_Solicitud_Paso_3() {
       usuarioAutorizadorId: 1,
       usuarioEntregaId: 1,
       programaId: Apoyo.idPrograma,
-      beneficiarioId: 1,
+      beneficiarioId: respuestaB.data.idBeneficiario,
     };
 
     let respuestaS = await Crear("/solicitudes", solicitud);
