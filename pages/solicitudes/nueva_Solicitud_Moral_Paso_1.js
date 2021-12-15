@@ -11,6 +11,7 @@ import {
   Input,
   Spacer,
   Switch,
+  HStack,
 } from "@chakra-ui/react";
 import { Progress } from "@chakra-ui/react";
 import Scaffold from "../../components/layout/Scaffold";
@@ -91,7 +92,7 @@ function Nueva_Solicitud_Moral_Paso_1() {
     <Scaffold
       rutas={rutas}
       titulo="Nueva Solicitud"
-      descripcion="Informacion del Solicitante"
+      descripcion="Informacion de la empresa, escuela o institución"
     >
       <div>
         <Head>
@@ -99,10 +100,9 @@ function Nueva_Solicitud_Moral_Paso_1() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={30} />
-            <Flex w="170vh" alignItems="center" justifyContent="center">
+            <Flex alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
                 <Box p="4" bg="green.400" rounded={40}>
                   1
@@ -123,183 +123,174 @@ function Nueva_Solicitud_Moral_Paso_1() {
               </Flex>
             </Flex>
           </Box>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Box>
-            <Flex w="170vh" justifyContent="center">
-              <Flex height="80vh" w="170vh" justifyContent="center">
-                <Flex
-                  direction="column"
-                  w="110vh"
-                  borderStyle="solid"
-                  borderColor="gray.200"
-                  borderWidth="2px"
-                  p={2}
-                  rounded={6}
-                >
-                  <Text m={1}>Nombre Institucion</Text>
-                  <Input
-                    m={1}
-                    id="nameI"
-                    value={nameI}
-                    onChange={(e) => {
-                      setNameI(e.currentTarget.value);
-                    }}
-                    placeholder="Nombre Institucion"
-                    required={true}
-                  />
-                  <Text m={1}>Direccion</Text>
-                  <Input
-                    m={1}
-                    id="direccion"
-                    value={direccion}
-                    onChange={(e) => {
-                      setDireccion(e.currentTarget.value);
-                    }}
-                    placeholder="Direccion"
-                    required={true}
-                  />
-                  <Text m={1}>RFC</Text>
-                  <Input
-                    m={1}
-                    id="rfc"
-                    value={rfc}
-                    onChange={(e) => {
-                      setRfc(e.currentTarget.value);
-                    }}
-                    placeholder="RFC"
-                    required={true}
-                  />
-                  <Text m={1}>Telefono Celular</Text>
-                  <Input
-                    m={1}
-                    id="celularI"
-                    value={celularI}
-                    onChange={(e) => {
-                      setCelularI(e.currentTarget.value);
-                    }}
-                    type="tel"
-                    placeholder="Celular"
-                    required={true}
-                  />
-                  <Text m={1}>Telefono</Text>
-                  <Input
-                    m={1}
-                    id="telefonoI"
-                    value={telefonoI}
-                    onChange={(e) => {
-                      setTelefonoI(e.currentTarget.value);
-                    }}
-                    type="tel"
-                    placeholder="Telefono"
-                    required={true}
-                  />
-                  <Text m={1}>Correo</Text>
-                  <Input
-                    m={1}
-                    id="correoI"
-                    value={correoI}
-                    onChange={(e) => {
-                      setCorreoI(e.currentTarget.value);
-                    }}
-                    type="email"
-                    placeholder="Correo"
-                    required={true}
-                  />
-                </Flex>
-              </Flex>
-            </Flex>
-            <Flex height="80vh" w="170vh" justifyContent="center">
-              <Flex
-                direction="column"
-                w="110vh"
-                borderStyle="solid"
-                borderColor="gray.200"
-                borderWidth="2px"
-                p={2}
-                rounded={6}
-              >
-                <Text m={1}>Nombre(s)</Text>
-                <Input
-                  m={1}
-                  id="name"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.currentTarget.value);
-                  }}
-                  placeholder="Nombre(s)"
-                  required={true}
-                />
-                <Text m={1}>Apellido Paterno</Text>
-                <Input
-                  m={1}
-                  id="apellidoP"
-                  value={apellidoP}
-                  onChange={(e) => {
-                    setApellidoP(e.currentTarget.value);
-                  }}
-                  placeholder="Apellido"
-                  required={true}
-                />
-                <Text m={1}>Apellido Materno</Text>
-                <Input
-                  m={1}
-                  id="apellidoM"
-                  value={apellidoM}
-                  onChange={(e) => {
-                    setApellidoM(e.currentTarget.value);
-                  }}
-                  placeholder="Apellido Materno"
-                  required={true}
-                />
-                <Text m={1}>Telefono Celular</Text>
-                <Input
-                  m={1}
-                  id="celular"
-                  value={celular}
-                  onChange={(e) => {
-                    setCelular(e.currentTarget.value);
-                  }}
-                  type="tel"
-                  placeholder="Celular"
-                  required={true}
-                />
-                <Text m={1}>Telefono</Text>
-                <Input
-                  m={1}
-                  id="telefono"
-                  value={telefono}
-                  onChange={(e) => {
-                    setTelefono(e.currentTarget.value);
-                  }}
-                  type="tel"
-                  placeholder="Telefono"
-                  required={true}
-                />
-                <Text m={1}>Correo</Text>
-                <Input
-                  m={1}
-                  id="correo"
-                  value={correo}
-                  onChange={(e) => {
-                    setCorreo(e.currentTarget.value);
-                  }}
-                  type="email"
-                  placeholder="Correo"
-                  required={true}
-                />
-              </Flex>
-            </Flex>
-          </Box>
 
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Flex w="170vh" alignItems="center" justifyContent="center">
-            <Box p="2"></Box>
-            <Spacer />
-            <Box>
+          <Flex
+            direction="column"
+            borderStyle="solid"
+            borderColor="gray.200"
+            borderWidth="2px"
+            p={2}
+            m={5}
+            rounded={6}
+          >
+            <Text m={1}>Nombre de la Institucion</Text>
+            <Input
+              m={1}
+              id="nameI"
+              value={nameI}
+              onChange={(e) => {
+                setNameI(e.currentTarget.value);
+              }}
+              placeholder="Nombre Institucion"
+              required={true}
+            />
+            <Text m={1}>Direccion Fiscal</Text>
+            <Input
+              m={1}
+              id="direccion"
+              value={direccion}
+              onChange={(e) => {
+                setDireccion(e.currentTarget.value);
+              }}
+              placeholder="Direccion"
+              required={true}
+            />
+            <Text m={1}>RFC</Text>
+            <Input
+              m={1}
+              id="rfc"
+              value={rfc}
+              onChange={(e) => {
+                setRfc(e.currentTarget.value);
+              }}
+              placeholder="RFC"
+              required={true}
+            />
+            <Text m={1}>Telefono Celular</Text>
+            <Input
+              m={1}
+              id="celularI"
+              value={celularI}
+              onChange={(e) => {
+                setCelularI(e.currentTarget.value);
+              }}
+              type="tel"
+              placeholder="Celular"
+              required={true}
+            />
+            <Text m={1}>Telefono</Text>
+            <Input
+              m={1}
+              id="telefonoI"
+              value={telefonoI}
+              onChange={(e) => {
+                setTelefonoI(e.currentTarget.value);
+              }}
+              type="tel"
+              placeholder="Telefono"
+              required={true}
+            />
+            <Text m={1}>Correo</Text>
+            <Input
+              m={1}
+              id="correoI"
+              value={correoI}
+              onChange={(e) => {
+                setCorreoI(e.currentTarget.value);
+              }}
+              type="email"
+              placeholder="Correo"
+              required={true}
+            />
+          </Flex>
+
+          <Flex height="80vh" justifyContent="center" m={5}>
+            <Flex
+              direction="column"
+              w="100vw"
+              borderStyle="solid"
+              borderColor="gray.200"
+              borderWidth="2px"
+              p={2}
+              rounded={6}
+            >
+              <Text m={1}>Nombre(s)</Text>
+              <Input
+                m={1}
+                id="name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.currentTarget.value);
+                }}
+                placeholder="Nombre(s)"
+                required={true}
+              />
+              <Text m={1}>Apellido Paterno</Text>
+              <Input
+                m={1}
+                id="apellidoP"
+                value={apellidoP}
+                onChange={(e) => {
+                  setApellidoP(e.currentTarget.value);
+                }}
+                placeholder="Apellido"
+                required={true}
+              />
+              <Text m={1}>Apellido Materno</Text>
+              <Input
+                m={1}
+                id="apellidoM"
+                value={apellidoM}
+                onChange={(e) => {
+                  setApellidoM(e.currentTarget.value);
+                }}
+                placeholder="Apellido Materno"
+                required={true}
+              />
+              <Text m={1}>Telefono Celular</Text>
+              <Input
+                m={1}
+                id="celular"
+                value={celular}
+                onChange={(e) => {
+                  setCelular(e.currentTarget.value);
+                }}
+                type="tel"
+                placeholder="Celular"
+                required={true}
+              />
+              <Text m={1}>Telefono</Text>
+              <Input
+                m={1}
+                id="telefono"
+                value={telefono}
+                onChange={(e) => {
+                  setTelefono(e.currentTarget.value);
+                }}
+                type="tel"
+                placeholder="Telefono"
+                required={true}
+              />
+              <Text m={1}>Correo</Text>
+              <Input
+                m={1}
+                id="correo"
+                value={correo}
+                onChange={(e) => {
+                  setCorreo(e.currentTarget.value);
+                }}
+                type="email"
+                placeholder="Correo"
+                required={true}
+              />
+            </Flex>
+          </Flex>
+
+          <Flex justifyContent="flex-end" m={10}>
+            <HStack>
               <Button
                 colorScheme="teal"
                 variant="solid"
-                mr="4"
                 onClick={() => ejecutar()}
               >
                 Siguiente
@@ -312,7 +303,7 @@ function Nueva_Solicitud_Moral_Paso_1() {
                   </Button>
                 </a>
               </Link>
-            </Box>
+            </HStack>
           </Flex>
         </main>
       </div>
