@@ -203,7 +203,7 @@ function Nueva_Solicitud_Paso_2() {
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={50} />
-            <Flex w="170vh" alignItems="center" justifyContent="center">
+            <Flex  alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
                 <Box p="4" bg="green.400" rounded={40}>
                   1
@@ -225,7 +225,7 @@ function Nueva_Solicitud_Paso_2() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex w="170vh" justifyContent="center">
+            <Flex justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -287,8 +287,8 @@ function Nueva_Solicitud_Paso_2() {
               </Flex>
             </Flex>
           </Box>
-          <Box m={20} bg="white" w="100%" p={5} color="white"></Box>
-          <Flex w="170vh" alignItems="center" justifyContent="center">
+          
+          <Flex alignItems="center" justifyContent="center" pt={10}>
             <Box p="2"></Box>
             <Spacer />
             <Box>
