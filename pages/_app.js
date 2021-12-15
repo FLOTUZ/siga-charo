@@ -9,6 +9,7 @@ const colors = {
     850: "#2E3650", //Dark secondary
     800: "#808FBE", //Light Secondary
     700: "#2E3650", //BNT Dark
+    600: "#2B2056", //BNT DEEP
   },
 };
 

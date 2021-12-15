@@ -1,7 +1,7 @@
+import Scaffold from "../../components/layout/Scaffold";
 import Head from "next/head";
 import Link from "next/link";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
-import { useRouter } from "next/router";
 import {
   Button,
   Flex,
@@ -9,9 +9,14 @@ import {
   Spacer,
   useToast,
   Skeleton,
+  Container,
+  Text,
+  HStack,
 } from "@chakra-ui/react";
-import Scaffold from "../../components/layout/Scaffold";
+import { useRouter } from "next/router";
 import { Consultar } from "../../services/API";
+import { AiFillFileAdd } from "react-icons/ai";
+import { BsBuilding } from "react-icons/bs";
 import { useEffect, useState } from "react";
 
 let rutas = [
@@ -66,23 +71,45 @@ export default function Catalogo() {
           <title>Catalogo de Solicitudes</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Flex>
-          <Box p="2"></Box>
-          <Spacer />
-          <Flex direction="column" alignItems="center" justifyContent="center">
-            <Link href="/solicitudes/nueva_Solicitud_Paso_1">
-              <a>
-                <Button colorScheme="teal">Nueva Solicitud Persona Fisica</Button>
-              </a>
-            </Link>
-          </Flex>
-          <Flex margin="2rem">
-            <Link href="/solicitudes/nueva_Solicitud_Moral_Paso_1">
-              <a>
-                <Button colorScheme="teal">Nueva Solicitud Persona Moral</Button>
-              </a>
-            </Link>
-          </Flex>
+
+        <Flex
+          textAlign="center"
+          m={5}
+          direction={{ base: "column-reverse", md: "row" }}
+        >
+          <Link href="/solicitudes/nueva_Solicitud_Paso_1">
+            <a>
+              <Container
+                w="auto"
+                color="white"
+                bgColor="core.600"
+                m={2}
+                rounded={5}
+              >
+                <HStack p={1}>
+                  <AiFillFileAdd size="4rem" />
+                  <Text fontSize="md">Nueva Solicitud Persona Fisica</Text>
+                </HStack>
+              </Container>
+            </a>
+          </Link>
+
+          <Link href="/solicitudes/nueva_Solicitud_Moral_Paso_1">
+            <a>
+              <Container
+                w="auto"
+                color="white"
+                bgColor="core.600"
+                m={2}
+                rounded={5}
+              >
+                <HStack p={1}>
+                  <BsBuilding size="4rem" />
+                  <Text fontSize="md">Nueva Solicitud Persona Moral</Text>
+                </HStack>
+              </Container>
+            </a>
+          </Link>
         </Flex>
 
         <main>
