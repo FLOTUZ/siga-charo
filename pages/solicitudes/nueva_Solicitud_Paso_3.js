@@ -21,6 +21,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import Scaffold from "../../components/layout/Scaffold";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { sesion } from "../../utils/Utils";
 import { Crear, Consultar } from "../../services/API";
 
 function Nueva_Solicitud_Paso_3() {
@@ -36,8 +37,26 @@ function Nueva_Solicitud_Paso_3() {
   const [descuento, setdescuento] = useState("");
   const [total, setTotal] = useState("");
 
+  //------------------ Usuario Logueado  ---------------
+  const [usuarioLogueado, setUsuarioLogueado] = useState({
+    idUsuario: 0,
+    nombreUsuario: "",
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    email: "",
+    puesto: "",
+    haceSolicitudes: false,
+    altaDeApoyos: false,
+    autorizaApoyos: false,
+    haceReportes: false,
+    administraSistema: false,
+    activo: false,
+  });
+
   useEffect(() => {
-    console.log(router.query);
+    let usuario = sesion();
+    setUsuarioLogueado(usuario);
   }, []);
 
   const consultarApoyos = async () => {
@@ -63,6 +82,7 @@ function Nueva_Solicitud_Paso_3() {
   };
 
   const ejecutar = async () => {
+
     let beneficiario = {
       nombre: query.name,
       direccion: query.direccion,
@@ -72,7 +92,7 @@ function Nueva_Solicitud_Paso_3() {
       correo: query.correo,
       fechaRegistro: new Date(Date.now()).toISOString(),
       fechaBaja: new Date(Date.now()).toISOString(),
-      usuarioCargaId: 1,
+      usuarioCargaId: usuarioLogueado.idUsuario,
       comunidadId: Number(query.localidadS),
     };
 
@@ -100,7 +120,7 @@ function Nueva_Solicitud_Paso_3() {
       fechaEntrega: new Date(Date.now()).toISOString(),
       notas: "NA",
       usuarioAutorizadorId: 1,
-      usuarioEntregaId: 1,
+      usuarioEntregaId: usuarioLogueado.idUsuario,
       programaId: Apoyo.idPrograma,
       beneficiarioId: respuestaB.data.idBeneficiario,
     };
