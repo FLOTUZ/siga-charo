@@ -19,16 +19,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { sesion } from "../../utils/Utils";
 
-function Nueva_Solicitud_Paso_1() {
+function Nueva_Solicitud_Moral_Paso_1() {
   const router = useRouter();
 
+  const [nameI, setNameI] = useState("");
+  const [celularI, setCelularI] = useState("");
+  const [telefonoI, setTelefonoI] = useState("");
+  const [correoI, setCorreoI] = useState("");
   const [name, setName] = useState("");
   const [apellidoP, setApellidoP] = useState("");
   const [apellidoM, setApellidoM] = useState("");
   const [direccion, setDireccion] = useState("");
   const [rfc, setRfc] = useState("");
-  const [nacimiento, setNacimiento] = useState("");
-  const [curp, setCurp] = useState("");
   const [celular, setCelular] = useState("");
   const [telefono, setTelefono] = useState("");
   const [correo, setCorreo] = useState("");
@@ -56,18 +58,20 @@ function Nueva_Solicitud_Paso_1() {
   }, []);
 
   const ejecutar = async () => {
-    let tipo = "fisica";
+    let tipo = "moral";
     router.push({
       pathname: "/solicitudes/nueva_Solicitud_Paso_2",
       query: {
         tipo,
+        nameI,
+        celularI,
+        telefonoI,
+        correoI,
         name,
         apellidoP,
         apellidoM,
         direccion,
         rfc,
-        nacimiento,
-        curp,
         celular,
         telefono,
         correo,
@@ -77,7 +81,7 @@ function Nueva_Solicitud_Paso_1() {
 
   let rutas = [
     {
-      url: "/nueva_solicitud_paso_1",
+      url: "/nueva_solicitud_moral_paso_1",
       nombre: "Nueva Solicitud",
       isCurrentPage: true,
     },
@@ -121,7 +125,90 @@ function Nueva_Solicitud_Paso_1() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex height="100vh" w="170vh" justifyContent="center">
+            <Flex w="170vh" justifyContent="center">
+              <Flex height="80vh" w="170vh" justifyContent="center">
+                <Flex
+                  direction="column"
+                  w="110vh"
+                  borderStyle="solid"
+                  borderColor="gray.200"
+                  borderWidth="2px"
+                  p={2}
+                  rounded={6}
+                >
+                  <Text m={1}>Nombre Institucion</Text>
+                  <Input
+                    m={1}
+                    id="nameI"
+                    value={nameI}
+                    onChange={(e) => {
+                      setNameI(e.currentTarget.value);
+                    }}
+                    placeholder="Nombre Institucion"
+                    required={true}
+                  />
+                  <Text m={1}>Direccion</Text>
+                  <Input
+                    m={1}
+                    id="direccion"
+                    value={direccion}
+                    onChange={(e) => {
+                      setDireccion(e.currentTarget.value);
+                    }}
+                    placeholder="Direccion"
+                    required={true}
+                  />
+                  <Text m={1}>RFC</Text>
+                  <Input
+                    m={1}
+                    id="rfc"
+                    value={rfc}
+                    onChange={(e) => {
+                      setRfc(e.currentTarget.value);
+                    }}
+                    placeholder="RFC"
+                    required={true}
+                  />
+                  <Text m={1}>Telefono Celular</Text>
+                  <Input
+                    m={1}
+                    id="celularI"
+                    value={celularI}
+                    onChange={(e) => {
+                      setCelularI(e.currentTarget.value);
+                    }}
+                    type="tel"
+                    placeholder="Celular"
+                    required={true}
+                  />
+                  <Text m={1}>Telefono</Text>
+                  <Input
+                    m={1}
+                    id="telefonoI"
+                    value={telefonoI}
+                    onChange={(e) => {
+                      setTelefonoI(e.currentTarget.value);
+                    }}
+                    type="tel"
+                    placeholder="Telefono"
+                    required={true}
+                  />
+                  <Text m={1}>Correo</Text>
+                  <Input
+                    m={1}
+                    id="correoI"
+                    value={correoI}
+                    onChange={(e) => {
+                      setCorreoI(e.currentTarget.value);
+                    }}
+                    type="email"
+                    placeholder="Correo"
+                    required={true}
+                  />
+                </Flex>
+              </Flex>
+            </Flex>
+            <Flex height="80vh" w="170vh" justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -162,51 +249,6 @@ function Nueva_Solicitud_Paso_1() {
                     setApellidoM(e.currentTarget.value);
                   }}
                   placeholder="Apellido Materno"
-                  required={true}
-                />
-                <Text m={1}>Direccion</Text>
-                <Input
-                  m={1}
-                  id="direccion"
-                  value={direccion}
-                  onChange={(e) => {
-                    setDireccion(e.currentTarget.value);
-                  }}
-                  placeholder="Direccion"
-                  required={true}
-                />
-                <Text m={1}>RFC</Text>
-                <Input
-                  m={1}
-                  id="rfc"
-                  value={rfc}
-                  onChange={(e) => {
-                    setRfc(e.currentTarget.value);
-                  }}
-                  placeholder="RFC"
-                  required={true}
-                />
-                <Text m={1}>Fecha de Nacimiento</Text>
-                <Input
-                  m={1}
-                  id="nacimiento"
-                  value={nacimiento}
-                  onChange={(e) => {
-                    setNacimiento(e.currentTarget.value);
-                  }}
-                  type="date"
-                  placeholder="DD/MM/AAA"
-                  required={true}
-                />
-                <Text m={1}>CURP</Text>
-                <Input
-                  m={1}
-                  id="curp"
-                  value={curp}
-                  onChange={(e) => {
-                    setCurp(e.currentTarget.value);
-                  }}
-                  placeholder="CURP"
                   required={true}
                 />
                 <Text m={1}>Telefono Celular</Text>
@@ -278,4 +320,4 @@ function Nueva_Solicitud_Paso_1() {
   );
 }
 
-export default Nueva_Solicitud_Paso_1;
+export default Nueva_Solicitud_Moral_Paso_1;

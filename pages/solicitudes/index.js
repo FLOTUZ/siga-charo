@@ -72,7 +72,14 @@ export default function Catalogo() {
           <Flex direction="column" alignItems="center" justifyContent="center">
             <Link href="/solicitudes/nueva_Solicitud_Paso_1">
               <a>
-                <Button colorScheme="teal">Nueva Solicitud</Button>
+                <Button colorScheme="teal">Nueva Solicitud Persona Fisica</Button>
+              </a>
+            </Link>
+          </Flex>
+          <Flex margin="2rem">
+            <Link href="/solicitudes/nueva_Solicitud_Moral_Paso_1">
+              <a>
+                <Button colorScheme="teal">Nueva Solicitud Persona Moral</Button>
               </a>
             </Link>
           </Flex>

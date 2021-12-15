@@ -30,6 +30,7 @@ import Scaffold from "../../components/layout/Scaffold";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
+import { sesion } from "../../utils/Utils";
 
 function Nueva_Solicitud_Paso_2() {
   const { query } = useRouter();
@@ -45,8 +46,27 @@ function Nueva_Solicitud_Paso_2() {
   const [listaDeLocalidades, setListaDeLocalidades] = useState([]);
   const [nuevaLocalidad, setNuevaLocalidad] = useState("");
 
+  //------------------ Usuario Logueado  ---------------
+  const [usuarioLogueado, setUsuarioLogueado] = useState({
+    idUsuario: 0,
+    nombreUsuario: "",
+    nombre: "",
+    apellidoPaterno: "",
+    apellidoMaterno: "",
+    email: "",
+    puesto: "",
+    haceSolicitudes: false,
+    altaDeApoyos: false,
+    autorizaApoyos: false,
+    haceReportes: false,
+    administraSistema: false,
+    activo: false,
+  });
+
   useEffect(() => {
-    console.log(router.query);
+    let usuario = sesion();
+    setUsuarioLogueado(usuario);
+    let tipo = query.tipo;
   }, []);
 
   const altaLocalidad = async () => {                                     
@@ -89,34 +109,75 @@ function Nueva_Solicitud_Paso_2() {
   };
 
   const ejecutar = async () => {
-    let name = query.name;
-    let apellidoP = query.apellidoP;
-    let apellidoM = query.apellidoM;
-    let direccion = query.direccion;
-    let rfc = query.rfc;
-    let nacimiento = query.nacimiento;
-    let curp = query.curp;
-    let celular = query.celular;
-    let telefono = query.telefono;
-    let correo = query.correo;
-    let localidadS = localidad.idComunidad;
+    let tipo = query.tipo;
 
-    router.push({
-      pathname: "/solicitudes/nueva_Solicitud_Paso_3",
-      query: {
-        name,
-        apellidoP,
-        apellidoM,
-        direccion,
-        rfc,
-        nacimiento,
-        curp,
-        celular,
-        telefono,
-        correo,
-        localidadS,
-      },
-    });
+    if(tipo == "fisica"){
+      let tipo = query.tipo;
+      let name = query.name;
+      let apellidoP = query.apellidoP;
+      let apellidoM = query.apellidoM;
+      let direccion = query.direccion;
+      let rfc = query.rfc;
+      let nacimiento = query.nacimiento;
+      let curp = query.curp;
+      let celular = query.celular;
+      let telefono = query.telefono;
+      let correo = query.correo;
+      let localidadS = localidad.idComunidad;
+
+      router.push({
+        pathname: "/solicitudes/nueva_Solicitud_Paso_3",
+        query: {
+          tipo,
+          name,
+          apellidoP,
+          apellidoM,
+          direccion,
+          rfc,
+          nacimiento,
+          curp,
+          celular,
+          telefono,
+          correo,
+          localidadS,
+        },
+      });
+    }else if(tipo=="moral"){
+      let tipo = query.tipo;
+      let nameI = query.nameI;
+      let celularI = query.celularI;
+      let telefonoI = query.telefonoI;
+      let correoI = query.correoI;
+      let name = query.name;
+      let apellidoP = query.apellidoP;
+      let apellidoM = query.apellidoM;
+      let direccion = query.direccion;
+      let rfc = query.rfc;
+      let celular = query.celular;
+      let telefono = query.telefono;
+      let correo = query.correo;
+      let localidadS = localidad.idComunidad;
+      
+      router.push({
+        pathname: "/solicitudes/nueva_Solicitud_Paso_3",
+        query: {
+          tipo,
+          nameI,
+          celularI,
+          telefonoI,
+          correoI,
+          name,
+          apellidoP,
+          apellidoM,
+          direccion,
+          rfc,
+          celular,
+          telefono,
+          correo,
+          localidadS,
+        },
+      });
+    }
   };
 
   let rutas = [

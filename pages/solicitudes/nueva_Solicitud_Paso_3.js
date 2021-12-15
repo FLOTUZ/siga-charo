@@ -57,6 +57,7 @@ function Nueva_Solicitud_Paso_3() {
   useEffect(() => {
     let usuario = sesion();
     setUsuarioLogueado(usuario);
+    let tipo = query.tipo;
   }, []);
 
   const consultarApoyos = async () => {
@@ -82,67 +83,133 @@ function Nueva_Solicitud_Paso_3() {
   };
 
   const ejecutar = async () => {
+    let tipo = query.tipo;
 
-    let beneficiario = {
-      nombre: query.name,
-      direccion: query.direccion,
-      rfc: query.rfc,
-      telefonoLocal: query.telefono,
-      telefonoCelular: query.celular,
-      correo: query.correo,
-      fechaRegistro: new Date(Date.now()).toISOString(),
-      fechaBaja: new Date(Date.now()).toISOString(),
-      usuarioCargaId: usuarioLogueado.idUsuario,
-      comunidadId: Number(query.localidadS),
-    };
+    if(tipo=="fisica"){
+      let beneficiario = {
+        nombre: query.name,
+        direccion: query.direccion,
+        rfc: query.rfc,
+        telefonoLocal: query.telefono,
+        telefonoCelular: query.celular,
+        correo: query.correo,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+        fechaBaja: new Date(Date.now()).toISOString(),
+        usuarioCargaId: usuarioLogueado.idUsuario,
+        comunidadId: Number(query.localidadS),
+      };
+  
+      let respuestaB = await Crear("/beneficiarios", beneficiario);
+  
+      let personaFisica = {
+        apellidoPaterno: query.apellidoP,
+        apellidoMaterno: query.apellidoM,
+        estadoSocioEconomico: "NA",
+        fechaNacimiento: new Date(query.nacimiento).toISOString(),
+        curp: query.curp,
+        beneficiarioId: respuestaB.data.idBeneficiario,
+      };
+  
+      let respuestaP = await Crear("/personas-fisicas", personaFisica);
 
-    let respuestaB = await Crear("/beneficiarios", beneficiario);
+      let solicitud = {
+        fechaSolicitud: new Date(fecha).toISOString(),
+        fechaAutorizacion: new Date(Date.now()).toISOString(),
+        estatus: "pendiente",
+        cantidad: Number(cantidad),
+        descuento: Number(descuento),
+        costoTotal: Number(total),
+        motivoRechazo: "NA",
+        fechaEntrega: new Date(Date.now()).toISOString(),
+        notas: "NA",
+        usuarioAutorizadorId: 1,
+        usuarioEntregaId: usuarioLogueado.idUsuario,
+        programaId: Apoyo.idPrograma,
+        beneficiarioId: respuestaB.data.idBeneficiario,
+      };
+  
+      let respuestaS = await Crear("/solicitudes", solicitud);
+  
+      if (respuestaB.status == 200 && respuestaP.status == 200 && respuestaS.status == 200) {
+        toast({
+          title: "Solicitud Creada",
+          description: "Se ha creado Solicitud",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Oops.. Algo sucedió",
+          description: respuestaS.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }else if(tipo=="moral"){
+      let beneficiario = {
+        nombre: query.nameI,
+        direccion: query.direccion,
+        rfc: query.rfc,
+        telefonoLocal: query.telefonoI,
+        telefonoCelular: query.celularI,
+        correo: query.correoI,
+        fechaRegistro: new Date(Date.now()).toISOString(),
+        fechaBaja: new Date(Date.now()).toISOString(),
+        usuarioCargaId: usuarioLogueado.idUsuario,
+        comunidadId: Number(query.localidadS),
+      };
+  
+      let respuestaB = await Crear("/beneficiarios", beneficiario);
+  
+      let personaMoral = {
+        nombreRepresentante: query.name,
+        apellidoPaternoRepresentante: query.apellidoP,
+        apellidoMaternoRepresentante: query.apellidoM,
+        telefonoLocalRep: query.telefono,
+        telefonoCelularRep: query.celular,
+        correoRep: query.correo,
+        beneficiarioId: respuestaB.data.idBeneficiario,
+      };
+  
+      let respuestaP = await Crear("/personas-morales", personaMoral);
 
-    let personaFisica = {
-      apellidoPaterno: query.apellidoP,
-      apellidoMaterno: query.apellidoM,
-      estadoSocioEconomico: "NA",
-      fechaNacimiento: new Date(query.nacimiento).toISOString(),
-      curp: query.curp,
-      beneficiarioId: respuestaB.data.idBeneficiario,
-    };
-
-    let respuestaP = await Crear("/personas-fisicas", personaFisica);
-
-    let solicitud = {
-      fechaSolicitud: new Date(fecha).toISOString(),
-      fechaAutorizacion: new Date(Date.now()).toISOString(),
-      estatus: "pendiente",
-      cantidad: Number(cantidad),
-      descuento: Number(descuento),
-      costoTotal: Number(total),
-      motivoRechazo: "NA",
-      fechaEntrega: new Date(Date.now()).toISOString(),
-      notas: "NA",
-      usuarioAutorizadorId: 1,
-      usuarioEntregaId: usuarioLogueado.idUsuario,
-      programaId: Apoyo.idPrograma,
-      beneficiarioId: respuestaB.data.idBeneficiario,
-    };
-
-    let respuestaS = await Crear("/solicitudes", solicitud);
-
-    if (respuestaB.status == 200 && respuestaP.status == 200 && respuestaS.status == 200) {
-      toast({
-        title: "Solicitud Creada",
-        description: "Se ha creado Solicitud",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: "Oops.. Algo sucedió",
-        description: respuestaS.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
+      let solicitud = {
+        fechaSolicitud: new Date(fecha).toISOString(),
+        fechaAutorizacion: new Date(Date.now()).toISOString(),
+        estatus: "pendiente",
+        cantidad: Number(cantidad),
+        descuento: Number(descuento),
+        costoTotal: Number(total),
+        motivoRechazo: "NA",
+        fechaEntrega: new Date(Date.now()).toISOString(),
+        notas: "NA",
+        usuarioAutorizadorId: 1,
+        usuarioEntregaId: usuarioLogueado.idUsuario,
+        programaId: Apoyo.idPrograma,
+        beneficiarioId: respuestaB.data.idBeneficiario,
+      };
+  
+      let respuestaS = await Crear("/solicitudes", solicitud);
+  
+      if (respuestaB.status == 200 && respuestaP.status == 200 && respuestaS.status == 200) {
+        toast({
+          title: "Solicitud Creada",
+          description: "Se ha creado Solicitud",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Oops.. Algo sucedió",
+          description: respuestaS.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
     }
   };
 
