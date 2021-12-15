@@ -145,7 +145,7 @@ function IBMDataTable({
           </TableContainer>
         )}
       </DataTable>
-      <PaginationNav totalItems={10} />
+      {/* <PaginationNav totalItems={4} /> */}
     </>
   );
 }

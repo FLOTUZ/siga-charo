@@ -1,7 +1,16 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
-import { Link, Button, Skeleton, useToast } from "@chakra-ui/react";
-import { BiAddToQueue } from "react-icons/bi";
+import {
+  Link,
+  Button,
+  Skeleton,
+  Container,
+  HStack,
+  Text,
+  useToast,
+  Flex,
+} from "@chakra-ui/react";
+import { AiFillFileAdd } from "react-icons/ai";
 import { Consultar } from "../../services/API";
 import { useEffect, useState } from "react";
 function Apoyos() {
@@ -48,22 +57,26 @@ function Apoyos() {
 
   return (
     <Scaffold titulo="Apoyos" descripcion="Catalogo de apoyos" rutas={rutas}>
-      <div style={{ margin: "2rem" }}>
+      <HStack>
         <Link href="/apoyos/agregarApoyo">
           <a>
-            <Button
-              leftIcon={<BiAddToQueue size="40px " />}
-              colorScheme="teal"
-              m={5}
+            <Container
+              color="white"
+              bgColor="core.600"
+              m={2}
+              rounded={5}
             >
-              Agregar Apoyo
-            </Button>
+              <HStack p={1}>
+                <AiFillFileAdd size="4em" />
+                <Text fontSize="md">Nuevo Apoyo</Text>
+              </HStack>
+            </Container>
           </a>
         </Link>
-        <Skeleton isLoaded={cargandoTabla}>
-          <IBMDataTable rows={apoyos} />
-        </Skeleton>
-      </div>
+      </HStack>
+      <Skeleton isLoaded={cargandoTabla}>
+        <IBMDataTable rows={apoyos} />
+      </Skeleton>
     </Scaffold>
   );
 }

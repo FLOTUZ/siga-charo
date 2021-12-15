@@ -57,7 +57,6 @@ function Nueva_Solicitud_Paso_3() {
   useEffect(() => {
     let usuario = sesion();
     setUsuarioLogueado(usuario);
-    let tipo = query.tipo;
   }, []);
 
   const consultarApoyos = async () => {
