@@ -178,7 +178,7 @@ function Nueva_Solicitud_Paso_3() {
       let solicitud = {
         fechaSolicitud: new Date(fecha).toISOString(),
         fechaAutorizacion: new Date(Date.now()).toISOString(),
-        estatus: "pendiente",
+        estatus: "PENDIENTE",
         cantidad: Number(cantidad),
         descuento: Number(descuento),
         costoTotal: Number(total),

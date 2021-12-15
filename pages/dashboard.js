@@ -41,7 +41,7 @@ function Dashboard() {
     const enEspera = async () => {
       let respuesta = await Consultar("/solicitudes", {
         where: {
-          estatus: "pendiente",
+          estatus: "PENDIENTE",
         },
       });
       respuesta.status === 200
@@ -52,7 +52,7 @@ function Dashboard() {
     const aprobados = async () => {
       let respuesta = await Consultar("/solicitudes", {
         where: {
-          estatus: "aprobado",
+          estatus: "AUTORIZADA",
         },
       });
 
