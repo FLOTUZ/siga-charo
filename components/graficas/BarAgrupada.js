@@ -53,6 +53,10 @@ function BarAgrupada() {
       lista.push(bc.nombre);
     });
     setComunidades(lista);
+
+    return () => {
+      setComunidades([])
+    };
   }, [beneficiariosPorComunidad]);
 
   let datasets = comunidades.map((c) => {
