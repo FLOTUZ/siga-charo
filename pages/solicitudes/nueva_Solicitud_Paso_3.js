@@ -233,10 +233,9 @@ function Nueva_Solicitud_Paso_3() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={65} />
-            <Flex w="170vh" alignItems="center" justifyContent="center">
+            <Flex alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
                 <Box p="4" bg="green.400" rounded={40}>
                   1
@@ -258,7 +257,7 @@ function Nueva_Solicitud_Paso_3() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex height="50vh" w="170vh" justifyContent="center">
+            <Flex height="50vh" justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -356,7 +355,7 @@ function Nueva_Solicitud_Paso_3() {
                     <Text>Total</Text>
                     <Input
                       type="number"
-                      background="gray"
+                      variant="filled"
                       id="total"
                       value={total}
                       onChange={(e) => {
@@ -370,8 +369,7 @@ function Nueva_Solicitud_Paso_3() {
             </Flex>
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Flex w="170vh" alignItems="center" justifyContent="center">
-            <Box p="2"></Box>
+          <Flex alignItems="center" justifyContent="center">
             <Spacer />
             <Box>
               <Button
