@@ -9,9 +9,12 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { Consultar } from "../../services/API";
 
 function Dona() {
+  const [programas, setProgramas] = useState([]);
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -37,11 +40,11 @@ function Dona() {
   };
 
   const data = {
-    labels: ["Red", "Blue", "Yellow", "Nueva"],
+    labels: ["Cemento", "Lavadero", "Tinaco", "Despensa"],
     datasets: [
       {
-        label: "PAPAYA",
-        data: [300, 50, 100, 10],
+        label: "Apoyos solicitados",
+        data: [318, 50, 100, 10],
         backgroundColor: [
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
