@@ -25,7 +25,7 @@ function Scaffold({ titulo = "", descripcion = "", rutas = [], children }) {
 
         {/* ---------------------------  RUTERO  --------------------------------- */}
         {rutas.length > 0 ? (
-          <GridItem rowSpan={1} colSpan={9} bg="core.900">
+          <GridItem h={50} rowSpan={1} colSpan={9} bg="core.900">
             <Rutero rutas={rutas} />
           </GridItem>
         ) : null}

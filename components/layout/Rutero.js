@@ -2,6 +2,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Container,
   Divider,
   Flex,
   HStack,
@@ -49,7 +50,6 @@ const Rutero = ({ rutas = [], dataDrawer = [] }) => {
             );
           })
         : null}
-        
     </Breadcrumb>
   );
 };
