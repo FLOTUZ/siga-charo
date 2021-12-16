@@ -47,7 +47,8 @@ function NuevoBeneficiarioMoralPaso2() {
     comunidadId: 0,
   });
   //---------------------------------guarda el id entrante------------//
-  let { beneficiarioString } = router.query;
+  let beneficiarioString = router.query.beneficiario;
+
   setBeneficiario(JSON.parse(beneficiarioString));
 
   const guardarBeneficiarioMoral = async () => {

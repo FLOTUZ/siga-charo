@@ -65,8 +65,8 @@ function IBMDataTable({
           getTableContainerProps,
         }) => (
           <TableContainer
-            title="DataTable"
-            description="With batch actions"
+            title=""
+            description=""
             {...getTableContainerProps()}
           >
             <TableToolbar {...getToolbarProps()}>
