@@ -25,7 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { AiFillDashboard } from "react-icons/ai";
 import { FiFilePlus } from "react-icons/fi";
-import { FaRegEye, FaUserAstronaut, FaRegChartBar } from "react-icons/fa";
+import { FaRegEye, FaUserAstronaut, FaRegChartBar, FaMapSigns } from "react-icons/fa";
 import { BiLogOutCircle } from "react-icons/bi";
 import { FiGrid } from "react-icons/fi";
 import { RiFolderUserFill } from "react-icons/ri";
@@ -58,13 +58,13 @@ const NavLateral = () => {
 
       icono: <RiFolderUserFill size="2rem" />,
     },
-    {
+   /* {
       id: 5,
       nombre: "Reportes",
       url: "/reportes",
 
       icono: <FaRegChartBar size="2rem" />,
-    },
+    },*/
     {
       id: 6,
       nombre: "Usuarios",
@@ -72,12 +72,21 @@ const NavLateral = () => {
 
       icono: <FaUserAstronaut size="2rem" />,
     },
+    {
+      id: 7,
+      nombre: "Comunidades",
+      url: "/comunidad",
+
+      icono: <FaMapSigns size="2rem" />,
+    },
   ];
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   return (
+    
     <Center h="100vh">
       <VStack spacing={1} w="full">
+      <Spacer paddingY="3rem" />
         <Image
           height={100}
           width={100}
@@ -96,24 +105,24 @@ const NavLateral = () => {
                   bg="transparent"
                 >
                   <Container
-                    h="4rem"
+                    h="3rem"
                     w="full"
                     color="core.800"
                     bg="#242B42"
                     _hover={{ bg: "core.800" }}
                   >
-                    <Center h="4rem">{pagina.icono}</Center>
+                    <Center h="3rem">{pagina.icono}</Center>
                   </Container>
                 </Tooltip>
               </a>
             </Link>
           );
         })}
-        <Spacer paddingY="0.8rem" />
+        <Spacer paddingY="0.4rem" />
         <Center width="90px">
           <Divider color="white" orientation="horizontal" />
         </Center>
-        <Spacer paddingY="0.8rem" />
+        <Spacer paddingY="0.4rem" />
         <a>
           <Tooltip hasArrow label="Actividad" bg="transparent">
             <Container
