@@ -248,7 +248,7 @@ function NuevoBeneficiarioMoralPaso2() {
                   </Button>
                 </a>
               </Link>
-              <Link href="/dashboard">
+              <Link href="/gestion-beneficiario">
                 <a>
                   <Button
                     colorScheme="teal"

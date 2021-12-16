@@ -34,6 +34,7 @@ import {
 import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 import { Crear, Consultar } from "../../services/API";
+import Link from "next/link";
 
 function NuevoBeneficiarioFisica() {
   //----------Estado de la interfaz--------//
@@ -264,7 +265,7 @@ function NuevoBeneficiarioFisica() {
                 <InputLeftElement pointerEvents="none">
                   <PhoneIcon color="gray.300" />
                 </InputLeftElement>
-                
+
                 <Input
                   id="telefono"
                   placeholder="Telefono"
@@ -370,17 +371,25 @@ function NuevoBeneficiarioFisica() {
 
             <Flex alignItems="center" justifyContent="center">
               <Box>
-                <Button
-                  colorScheme="teal"
-                  variant="solid"
-                  mr="4"
-                  onClick={() => guardarBeneficiario()}
-                >
-                  Guardar
-                </Button>
-                <Button colorScheme="teal" variant="outline">
-                  Descartar
-                </Button>
+                <Link href="/gestion-beneficiario">
+                  <a>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mr="4"
+                      onClick={() => guardarBeneficiario()}
+                    >
+                      Guardar
+                    </Button>
+                  </a>
+                </Link>
+                <Link href="/gestion-beneficiario">
+                  <a>
+                    <Button colorScheme="teal" variant="outline">
+                      Descartar
+                    </Button>
+                  </a>
+                </Link>
               </Box>
             </Flex>
           </Box>

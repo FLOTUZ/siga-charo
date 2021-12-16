@@ -205,7 +205,7 @@ function NuevoBeneficiarioMoralPaso1() {
                 p={2}
                 rounded={6}
               >
-                <Text m={1}>Nombre(s)</Text>
+                <Text m={1}>Nombre de la Institución</Text>
                 <Input
                   m={1}
                   id="name"
@@ -341,7 +341,7 @@ function NuevoBeneficiarioMoralPaso1() {
               >
                 Siguiente
               </Button>
-              <Link href="/dashboard">
+              <Link href="/gestion-beneficiario">
                 <a>
                   <Button colorScheme="teal" variant="outline">
                     Descartar
