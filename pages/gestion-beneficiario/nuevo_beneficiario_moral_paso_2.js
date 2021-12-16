@@ -1,10 +1,10 @@
+import Scaffold from "../../components/layout/Scaffold";
+import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { Crear } from "../../services/API";
-import Scaffold from "../../components/layout/Scaffold";
 import { useState } from "react";
-import Link from "next/link";
 import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
 import {
   Text,
@@ -19,7 +19,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
+import { sesion } from "../../utils/Utils";
+
 function NuevoBeneficiarioMoralPaso2() {
+  const [usuarioLogeado, setUsuarioLogeado] = useState({});
   //--------------------Estado de la interfaz-----------------------//
   //const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -46,67 +49,6 @@ function NuevoBeneficiarioMoralPaso2() {
     usuarioCargaId: 0,
     comunidadId: 0,
   });
-  //---------------------------------guarda el id entrante------------//
-  let beneficiarioString = router.query.beneficiario;
-
-  setBeneficiario(JSON.parse(beneficiarioString));
-
-  const guardarBeneficiarioMoral = async () => {
-    try {
-      let beneficiario = {
-        nombre: beneficiario.nombre,
-        direccion: beneficiario.direccion,
-        telefonoLocal: beneficiario.telefonoLocal,
-        telefonoCelular: beneficiario.telefonoCelular,
-        correo: beneficiario.correo,
-        fechaRegistro: new Date(Date.now()).toISOString(),
-        rfc: beneficiario.rfc,
-        usuarioCargaId: 1,
-        comunidadId: comunidad.idComunidad,
-      };
-      let respuestaBenef = await Crear("/beneficiarios", beneficiario);
-      if (respuestaBenef.status == 200) {
-        let personaMoral = {
-          nombreRepresentante: nombreRep,
-          apellidoPaternoRepresentante: apellidoPaternoRep,
-          apellidoMaternoRepresentante: apellidoMaternoRep,
-          telefonoLocalRep: telefonoLocalRep,
-          telefonoCelularRep: telefonoCelularRep,
-          correoRep: correoRep,
-          beneficiarioId: Number(beneficiario.idBeneficiario),
-        };
-
-        let respuesta = await Crear("/personas-morales", personaMoral);
-        if (respuesta.status === 200) {
-          toast({
-            title: "Nueva persona moral creada",
-            descripcion: `La Institución se ha guardado`,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-          });
-          router.push("/gestion-beneficiario");
-        } else {
-          toast({
-            title: "Oops.. Algo salio mal",
-            descripcion: respuesta.message,
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        }
-      }
-    } catch (e) {
-      toast({
-        title: "Verifica los datos",
-        description: e.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-      console.log(e.message);
-    }
-  };
 
   let rutas = [
     {
@@ -115,6 +57,71 @@ function NuevoBeneficiarioMoralPaso2() {
       isCurrentPage: true,
     },
   ];
+
+  //---------------------------------guarda el id entrante------------//
+
+  useEffect(() => {
+    //Se recupera la sesion
+    let user = sesion();
+    setUsuarioLogeado(user);
+    console.log(user);
+
+    //Se parsea el string a JSON
+    let { beneficiarioString } = router.query;
+    setBeneficiario(JSON.parse(beneficiarioString));
+  }, []);
+
+  const guardarBeneficiarioMoral = async () => {
+    //Se da de alta beneficiario
+
+    let benef = {
+      nombre: beneficiario.nombre,
+      direccion: beneficiario.direccion,
+      rfc: beneficiario.rfc,
+      telefonoLocal: beneficiario.telefonoLocal,
+      telefonoCelular: beneficiario.telefonoCelular,
+      correo: beneficiario.correo,
+      fechaRegistro: new Date(Date.now()).toISOString(),
+      usuarioCargaId: usuarioLogeado.idUsuario,
+      comunidadId: beneficiario.comunidadId,
+    };
+    let respuestaBenef = await Crear("/beneficiarios", benef);
+    //-------------------------------------------------------
+
+    if (respuestaBenef.status == 200) {
+      // Se da de alta persona moral
+      let personaMoral = {
+        nombreRepresentante: nombreRep,
+        apellidoPaternoRepresentante: apellidoPaternoRep,
+        apellidoMaternoRepresentante: apellidoMaternoRep,
+        telefonoLocalRep: telefonoLocalRep,
+        telefonoCelularRep: telefonoCelularRep,
+        correoRep: correoRep,
+        beneficiarioId: Number(beneficiario.idBeneficiario),
+      };
+
+      let respuesta = await Crear("/personas-morales", personaMoral);
+
+      if (respuesta.status === 200) {
+        toast({
+          title: "Nueva persona moral creada",
+          descripcion: `La Institución se ha guardado`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        router.push("/gestion-beneficiario");
+      } else {
+        toast({
+          title: "Oops.. Algo salio mal",
+          descripcion: respuesta.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }
+  };
 
   return (
     <Scaffold
@@ -236,18 +243,15 @@ function NuevoBeneficiarioMoralPaso2() {
             <Box p="2"></Box>
             <Spacer />
             <Box>
-              <Link href="/gestion-beneficiario">
-                <a>
-                  <Button
-                    colorScheme="teal"
-                    variant="solid"
-                    mr="4"
-                    onClick={() => guardarBeneficiarioMoral()}
-                  >
-                    Guardar
-                  </Button>
-                </a>
-              </Link>
+              <Button
+                colorScheme="teal"
+                variant="solid"
+                mr="4"
+                onClick={() => guardarBeneficiarioMoral()}
+              >
+                Guardar
+              </Button>
+
               <Link href="/dashboard">
                 <a>
                   <Button
