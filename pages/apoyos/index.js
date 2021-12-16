@@ -1,5 +1,6 @@
 import Scaffold from "../../components/layout/Scaffold";
 import IBMDataTable from "../../components/Tabla/IBMDataTable";
+import { useRouter } from "next/router";
 import {
   Link,
   Button,
@@ -18,6 +19,7 @@ function Apoyos() {
   const [cargandoTabla, setCargandoTabla] = useState(false);
 
   const toast = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     const consultarApoyos = async () => {
@@ -60,12 +62,7 @@ function Apoyos() {
       <HStack>
         <Link href="/apoyos/agregarApoyo">
           <a>
-            <Container
-              color="white"
-              bgColor="core.600"
-              m={2}
-              rounded={5}
-            >
+            <Container color="white" bgColor="core.600" m={2} rounded={5}>
               <HStack p={1}>
                 <AiFillFileAdd size="4em" />
                 <Text fontSize="md">Nuevo Apoyo</Text>
@@ -75,7 +72,13 @@ function Apoyos() {
         </Link>
       </HStack>
       <Skeleton isLoaded={cargandoTabla}>
-        <IBMDataTable rows={apoyos} />
+        <IBMDataTable
+          clickeada={(index) => {
+            let idApoyo = index.cells[0].value;
+            router.push(`/apoyos/${idApoyo}`);
+          }}
+          rows={apoyos}
+        />
       </Skeleton>
     </Scaffold>
   );

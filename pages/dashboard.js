@@ -83,7 +83,6 @@ function Dashboard() {
       >
         <HStack textAlign="center" m={5} spacing={12}>
           <Container
-            
             size="lg"
             background="core.900"
             borderRadius="10px"

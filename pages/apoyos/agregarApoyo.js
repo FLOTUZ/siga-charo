@@ -128,6 +128,7 @@ function AgregarApoyo() {
         usuarioId: usuarioLogueado.idUsuario,
         unidadId: unidad.idUnidad,
       };
+      console.log(programa);
 
       let respuesta = await Crear("/programas", programa);
 
@@ -218,7 +219,6 @@ function AgregarApoyo() {
                     <MenuButton
                       isActive={isOpen}
                       as={Button}
-                      rightIcon={<ChevronDownIcon />}
                       onClick={() => {
                         setCargandoUnidades(true);
                         consultarUnidades();
