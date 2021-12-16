@@ -153,7 +153,7 @@ function NuevoBeneficiarioMoralPaso1() {
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={50} />
-            <Flex w="170vh" alignItems="center" justifyContent="center">
+            <Flex  alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
                 <Box p="4" bg="green.500" rounded={40} color="white">
                   1
@@ -168,7 +168,7 @@ function NuevoBeneficiarioMoralPaso1() {
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
           <Box>
-            <Flex w="170vh" justifyContent="center">
+            <Flex  justifyContent="center">
               <Flex
                 direction="column"
                 w="110vh"
@@ -300,7 +300,7 @@ function NuevoBeneficiarioMoralPaso1() {
             </Flex>
           </Box>
           <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Flex w="170vh" alignItems="center" justifyContent="center">
+          <Flex  alignItems="center" justifyContent="center">
             <Box p="2"></Box>
             <Spacer />
             <Box>
