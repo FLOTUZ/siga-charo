@@ -31,6 +31,7 @@ import { Consultar, Actualizar } from "../../services/API";
 
 function Ver_solicitud() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const toast = useToast();
 
   let router = useRouter();
@@ -327,6 +328,17 @@ function Ver_solicitud() {
           borderRadius: "1rem",
         }}
       >
+        <Button
+          onClick={() => {
+            router.push({
+              pathname: "/solicitudes/imprimir",
+              query: { idSolicitud: solicitud.idSolicitud },
+            });
+          }}
+        >
+          {" "}
+          Imprimir{" "}
+        </Button>
         <Text fontSize="3xl" my="1rem">
           Detalles solicitante
         </Text>

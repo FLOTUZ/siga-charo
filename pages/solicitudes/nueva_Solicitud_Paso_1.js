@@ -112,10 +112,6 @@ function Nueva_Solicitud_Paso_1() {
                 <Box p="4" bg="gray.400" rounded={40}>
                   3
                 </Box>
-                <Spacer />
-                <Box p="4" bg="gray.400" rounded={40}>
-                  4
-                </Box>
               </Flex>
             </Flex>
           </Box>

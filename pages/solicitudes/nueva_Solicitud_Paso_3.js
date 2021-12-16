@@ -84,7 +84,7 @@ function Nueva_Solicitud_Paso_3() {
   const ejecutar = async () => {
     let tipo = query.tipo;
 
-    if(tipo=="fisica"){
+    if (tipo == "fisica") {
       let beneficiario = {
         nombre: query.name,
         direccion: query.direccion,
@@ -97,9 +97,9 @@ function Nueva_Solicitud_Paso_3() {
         usuarioCargaId: usuarioLogueado.idUsuario,
         comunidadId: Number(query.localidadS),
       };
-  
+
       let respuestaB = await Crear("/beneficiarios", beneficiario);
-  
+
       let personaFisica = {
         apellidoPaterno: query.apellidoP,
         apellidoMaterno: query.apellidoM,
@@ -108,7 +108,7 @@ function Nueva_Solicitud_Paso_3() {
         curp: query.curp,
         beneficiarioId: respuestaB.data.idBeneficiario,
       };
-  
+
       let respuestaP = await Crear("/personas-fisicas", personaFisica);
 
       let solicitud = {
@@ -126,10 +126,15 @@ function Nueva_Solicitud_Paso_3() {
         programaId: Apoyo.idPrograma,
         beneficiarioId: respuestaB.data.idBeneficiario,
       };
-  
+
       let respuestaS = await Crear("/solicitudes", solicitud);
-  
-      if (respuestaB.status == 200 && respuestaP.status == 200 && respuestaS.status == 200) {
+
+      if (
+        respuestaB.status == 200 &&
+        respuestaP.status == 200 &&
+        respuestaS.status == 200
+      ) {
+        router.push(`/solicitudes/${respuestaS.data.idSolicitud}`);
         toast({
           title: "Solicitud Creada",
           description: "Se ha creado Solicitud",
@@ -146,7 +151,7 @@ function Nueva_Solicitud_Paso_3() {
           isClosable: true,
         });
       }
-    }else if(tipo=="moral"){
+    } else if (tipo == "moral") {
       let beneficiario = {
         nombre: query.nameI,
         direccion: query.direccion,
@@ -159,9 +164,9 @@ function Nueva_Solicitud_Paso_3() {
         usuarioCargaId: usuarioLogueado.idUsuario,
         comunidadId: Number(query.localidadS),
       };
-  
+
       let respuestaB = await Crear("/beneficiarios", beneficiario);
-  
+
       let personaMoral = {
         nombreRepresentante: query.name,
         apellidoPaternoRepresentante: query.apellidoP,
@@ -171,7 +176,7 @@ function Nueva_Solicitud_Paso_3() {
         correoRep: query.correo,
         beneficiarioId: respuestaB.data.idBeneficiario,
       };
-  
+
       let respuestaP = await Crear("/personas-morales", personaMoral);
 
       let solicitud = {
@@ -189,10 +194,14 @@ function Nueva_Solicitud_Paso_3() {
         programaId: Apoyo.idPrograma,
         beneficiarioId: respuestaB.data.idBeneficiario,
       };
-  
+
       let respuestaS = await Crear("/solicitudes", solicitud);
-  
-      if (respuestaB.status == 200 && respuestaP.status == 200 && respuestaS.status == 200) {
+
+      if (
+        respuestaB.status == 200 &&
+        respuestaP.status == 200 &&
+        respuestaS.status == 200
+      ) {
         toast({
           title: "Solicitud Creada",
           description: "Se ha creado Solicitud",
@@ -247,10 +256,6 @@ function Nueva_Solicitud_Paso_3() {
                 <Box p="4" bg="green.400" rounded={40}>
                   3
                 </Box>
-                <Spacer />
-                <Box p="4" bg="gray.400" rounded={40}>
-                  4
-                </Box>
               </Flex>
             </Flex>
           </Box>
@@ -297,10 +302,7 @@ function Nueva_Solicitud_Paso_3() {
                         ) : (
                           listaDeApoyos.map((u, index) => {
                             return (
-                              <MenuItem
-                                key={index}
-                                onClick={() => setApoyo(u)}
-                              >
+                              <MenuItem key={index} onClick={() => setApoyo(u)}>
                                 {u.nombre}
                               </MenuItem>
                             );

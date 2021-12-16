@@ -1,6 +1,7 @@
 import "../styles.scss";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "../styles/globals.css";
+import "../public/solicitud.css"
 
 //Colores personalizados
 const colors = {
