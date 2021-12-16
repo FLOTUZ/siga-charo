@@ -64,7 +64,6 @@ function NuevoBeneficiarioMoralPaso2() {
     //Se recupera la sesion
     let user = sesion();
     setUsuarioLogeado(user);
-    console.log(user);
 
     //Se parsea el string a JSON
     let { beneficiarioString } = router.query;
@@ -135,10 +134,10 @@ function NuevoBeneficiarioMoralPaso2() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
+          <Box bg="white" p={5} color="white"></Box>
           <Box>
             <Progress m={5} value={100} />
-            <Flex w="170vh" alignItems="center" justifyContent="center">
+            <Flex alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
                 <Box p="4" bg="green.400" rounded={40}>
                   1
@@ -151,98 +150,98 @@ function NuevoBeneficiarioMoralPaso2() {
               </Flex>
             </Flex>
           </Box>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Box>
-            <Flex w="170vh" justifyContent="center">
-              <Flex
-                direction="column"
-                w="110vh"
-                borderStyle="solid"
-                borderColor="gray.200"
-                borderWidth="2px"
-                p={2}
-                rounded={6}
-              >
-                <Text m={1}>Nombre(s)</Text>
+          <Box mt={10}>
+            <Flex
+              direction="column"
+              borderStyle="solid"
+              borderColor="gray.200"
+              borderWidth="2px"
+              p={10}
+              rounded={6}
+            >
+              <Text m={1}>Nombre(s)</Text>
+              <Input
+                variant="filled"
+                m={1}
+                id="name"
+                placeholder="Nombre(s)"
+                required={true}
+                onChange={(e) => {
+                  setNombreRep(e.target.value);
+                }}
+              />
+              <Text m={1}>Apellido Paterno</Text>
+              <Input
+                m={1}
+                variant="filled"
+                id="apellidoP"
+                placeholder="Apellido"
+                required={true}
+                onChange={(e) => {
+                  setApellidoPaternoRep(e.target.value);
+                }}
+              />
+              <Text m={1}>Apellido Materno</Text>
+              <Input
+                m={1}
+                id="apellidoM"
+                variant="filled"
+                placeholder="Apellido Materno"
+                required={true}
+                onChange={(e) => {
+                  setApellidoMaternoRep(e.target.value);
+                }}
+              />
+              <Text m={1}>Telefono Local</Text>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <PhoneIcon color="gray.300" />
+                </InputLeftElement>
                 <Input
-                  m={1}
-                  id="name"
-                  placeholder="Nombre(s)"
+                  id="telefono"
+                  variant="filled"
+                  placeholder="Telefono Local"
                   required={true}
                   onChange={(e) => {
-                    setNombreRep(e.target.value);
+                    setTelefonoLocalRep(e.target.value);
                   }}
                 />
-                <Text m={1}>Apellido Paterno</Text>
+              </InputGroup>
+              <Text m={1}>Telefono Celular</Text>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <PhoneIcon color="gray.300" />
+                </InputLeftElement>
                 <Input
-                  m={1}
-                  id="apellidoP"
-                  placeholder="Apellido"
+                  variant="filled"
+                  id="telefono"
+                  placeholder="Telefono Celular"
                   required={true}
                   onChange={(e) => {
-                    setApellidoPaternoRep(e.target.value);
+                    setTelefonoCelularRep(e.target.value);
                   }}
                 />
-                <Text m={1}>Apellido Materno</Text>
+              </InputGroup>
+              <Text m={1}>correo</Text>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <EmailIcon color="gray.300" />
+                </InputLeftElement>
                 <Input
-                  m={1}
-                  id="apellidoM"
-                  placeholder="Apellido Materno"
+                  variant="filled"
+                  id="correo"
+                  placeholder="correo"
                   required={true}
                   onChange={(e) => {
-                    setApellidoMaternoRep(e.target.value);
+                    setCorreoRep(e.target.value);
                   }}
                 />
-                <Text m={1}>Telefono Local</Text>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <PhoneIcon color="gray.300" />
-                  </InputLeftElement>
-                  <Input
-                    id="telefono"
-                    placeholder="Telefono Local"
-                    required={true}
-                    onChange={(e) => {
-                      setTelefonoLocalRep(e.target.value);
-                    }}
-                  />
-                </InputGroup>
-                <Text m={1}>Telefono Celular</Text>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <PhoneIcon color="gray.300" />
-                  </InputLeftElement>
-                  <Input
-                    id="telefono"
-                    placeholder="Telefono Celular"
-                    required={true}
-                    onChange={(e) => {
-                      setTelefonoCelularRep(e.target.value);
-                    }}
-                  />
-                </InputGroup>
-                <Text m={1}>correo</Text>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none">
-                    <EmailIcon color="gray.300" />
-                  </InputLeftElement>
-                  <Input
-                    id="correo"
-                    placeholder="correo"
-                    required={true}
-                    onChange={(e) => {
-                      setCorreoRep(e.target.value);
-                    }}
-                  />
-                </InputGroup>
-              </Flex>
+              </InputGroup>
             </Flex>
           </Box>
-          <Box bg="white" w="100%" p={5} color="white"></Box>
-          <Flex w="170vh" alignItems="center" justifyContent="center">
-            <Box p="2"></Box>
+          <Flex alignItems="center" justifyContent="center">
             <Spacer />
-            <Box>
+            <Box mt={10}>
               <Button
                 colorScheme="teal"
                 variant="solid"
