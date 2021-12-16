@@ -25,7 +25,6 @@ function NuevoBeneficiarioMoralPaso2() {
   const [usuarioLogeado, setUsuarioLogeado] = useState({});
   //--------------------Estado de la interfaz-----------------------//
   //const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
   const router = useRouter();
   const toast = useToast();
   //-------DATOS DE Beneficiario Tabla Beneficiario-----------//
@@ -96,9 +95,8 @@ function NuevoBeneficiarioMoralPaso2() {
         telefonoLocalRep: telefonoLocalRep,
         telefonoCelularRep: telefonoCelularRep,
         correoRep: correoRep,
-        beneficiarioId: Number(beneficiario.idBeneficiario),
+        beneficiarioId: Number(respuestaBenef.data.idBeneficiario),
       };
-
       let respuesta = await Crear("/personas-morales", personaMoral);
 
       if (respuesta.status === 200) {
@@ -139,12 +137,12 @@ function NuevoBeneficiarioMoralPaso2() {
             <Progress m={5} value={100} />
             <Flex alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
-                <Box p="4" bg="green.400" rounded={40}>
+                <Box p="4" bg="green.500" rounded={40} color="white">
                   1
                 </Box>
 
                 <Spacer />
-                <Box p="4" bg="green.400" rounded={40}>
+                <Box p="4" bg="green.500" rounded={40} color="white">
                   2
                 </Box>
               </Flex>
@@ -243,7 +241,7 @@ function NuevoBeneficiarioMoralPaso2() {
             <Spacer />
             <Box mt={10}>
               <Button
-                colorScheme="teal"
+                colorScheme="green"
                 variant="solid"
                 mr="4"
                 onClick={() => guardarBeneficiarioMoral()}
@@ -251,21 +249,11 @@ function NuevoBeneficiarioMoralPaso2() {
                 Guardar
               </Button>
 
-              <Link href="/dashboard">
+              <Link href="/gestion-beneficiario">
                 <a>
                   <Button
-                    colorScheme="teal"
+                    colorScheme="green"
                     variant="outline"
-                    onClick={() => {
-                      guardarBeneficiarioMoral();
-                      toast({
-                        title: "Guardado",
-                        description: "REGISTRO iNCOMPLETO",
-                        status: "warning",
-                        duration: 9000,
-                        isClosable: true,
-                      });
-                    }}
                   >
                     Descartar
                   </Button>

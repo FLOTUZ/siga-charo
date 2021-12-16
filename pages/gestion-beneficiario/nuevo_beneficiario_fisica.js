@@ -1,6 +1,7 @@
 import Scaffold from "../../components/layout/Scaffold";
 import Head from "next/head";
 import React from "react";
+import Link from "next/link";
 import { sesion } from "../../utils/Utils";
 import {
   FormLabel,
@@ -11,7 +12,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Spacer,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -27,8 +27,6 @@ import {
   MenuItem,
   Skeleton,
   Stack,
-  InputLeftAddon,
-  ChevronDownIcon,
   MenuDivider,
 } from "@chakra-ui/react";
 import { PhoneIcon, EmailIcon } from "@chakra-ui/icons";
@@ -53,14 +51,13 @@ function NuevoBeneficiarioFisica() {
   const [estadoSocioEconomico, setEstadoSocioEconomico] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
   const [curp, setCurp] = useState("");
-  const [beneficiarioId, setBEneficiarioId] = useState("");
   //-------Comunidad-----------//
   const [cargandoComunidad, setCargandoComunidad] = useState(true);
   const [comunidad, setComunidad] = useState({ idComunidad: 0, nombre: "" });
   const [listaComunidades, setListaComunidades] = useState([]);
   const [nuevaComunidad, setNuevaComunidad] = useState("");
   //------------------ Usuario Logueado  ---------------
-  const [usuarioLogueado, setUsuarioLogueado] = useState({
+  const [usuarioLogeado, setUsuarioLogueado] = useState({
     idUsuario: 0, // completar
   });
   useEffect(() => {
@@ -118,7 +115,7 @@ function NuevoBeneficiarioFisica() {
         telefonoCelular: telefonoCelular,
         correo: correo,
         fechaRegistro: new Date(Date.now()).toISOString(),
-        usuarioCargaId: 1,
+        usuarioCargaId: usuarioLogeado.idUsuario,
         comunidadId: comunidad.idComunidad,
       };
 
@@ -309,7 +306,6 @@ function NuevoBeneficiarioFisica() {
                 }}
               />
               <FormLabel htmlFor="comunidad">Comunidad</FormLabel>{" "}
-              {/* se ocupa para menu comunidades*/}
               <Menu>
                 {({ isOpen }) => (
                   <>
@@ -355,7 +351,6 @@ function NuevoBeneficiarioFisica() {
                   </>
                 )}
               </Menu>
-              {/*  termina menu*/}
               <Text m={1}>Socio Economico</Text>
               <Input
                 m={1}
@@ -370,17 +365,25 @@ function NuevoBeneficiarioFisica() {
 
             <Flex alignItems="center" justifyContent="center">
               <Box>
+              <Link href="/gestion-beneficiario">
+                <a>
                 <Button
-                  colorScheme="teal"
+                  colorScheme="green"
                   variant="solid"
                   mr="4"
                   onClick={() => guardarBeneficiario()}
                 >
                   Guardar
                 </Button>
-                <Button colorScheme="teal" variant="outline">
+                </a>
+              </Link>
+              <Link href="/gestion-beneficiario">
+                <a>
+                <Button colorScheme="green" variant="outline">
                   Descartar
                 </Button>
+                </a>
+              </Link>
               </Box>
             </Flex>
           </Box>

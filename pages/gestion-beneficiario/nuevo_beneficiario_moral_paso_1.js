@@ -33,7 +33,6 @@ import {
   MenuItem,
   Skeleton,
   Stack,
-  ChevronDownIcon,
   MenuDivider,
 } from "@chakra-ui/react";
 
@@ -56,7 +55,7 @@ function NuevoBeneficiarioMoralPaso1() {
   const [listaComunidades, setListaComunidades] = useState([]);
   const [nuevaComunidad, setNuevaComunidad] = useState("");
   //------------------ Usuario Logueado  ---------------
-  const [usuarioLogueado, setUsuarioLogueado] = useState({
+  const [usuarioLogeado, setUsuarioLogueado] = useState({
     idUsuario: 0, // completar
   });
   useEffect(() => {
@@ -105,7 +104,7 @@ function NuevoBeneficiarioMoralPaso1() {
   };
 
   const guardarBeneficiario = async () => {
-    try {
+  //  try {
       let beneficiario = {
         nombre: nombreBeneficiario,
         direccion: direccion,
@@ -114,15 +113,13 @@ function NuevoBeneficiarioMoralPaso1() {
         correo: correo,
         fechaRegistro: new Date(Date.now()).toISOString(),
         rfc: rfc,
-        usuarioCargaId: 1,
+        usuarioCargaId: usuarioLogeado.idUsuario,
         comunidadId: comunidad.idComunidad,
       };
-      let respuesta = await Crear("/beneficiarios", beneficiario);
 
-      if (respuesta.status == 200) {
         router.push({
           pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
-          query: { beneficiarioString: JSON.stringify(respuesta.data) },
+          query: { beneficiarioString: JSON.stringify(beneficiario) },
         });
         toast({
           title: "Nueva Institucion",
@@ -131,30 +128,6 @@ function NuevoBeneficiarioMoralPaso1() {
           duration: 9000,
           isClosable: true,
         });
-      } else {
-        toast({
-          title: "Oops.. Algo salio mal",
-          descripcion: respuesta.message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-
-      /* router.push({
-        pathname: "/gestion-beneficiario/nuevo_beneficiario_moral_paso_2",
-        query: { beneficiarioString: JSON.stringify(respuesta.data) },
-      }); */
-    } catch (e) {
-      toast({
-        title: "Verifica los datos",
-        description: e.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-      console.log(e.message);
-    }
   };
 
   let rutas = [
@@ -182,12 +155,12 @@ function NuevoBeneficiarioMoralPaso1() {
             <Progress m={5} value={50} />
             <Flex w="170vh" alignItems="center" justifyContent="center">
               <Flex alignItems="center" justifyContent="center" w="100vh">
-                <Box p="4" bg="green.400" rounded={40}>
+                <Box p="4" bg="green.500" rounded={40} color="white">
                   1
                 </Box>
 
                 <Spacer />
-                <Box p="4" bg="gray.400" rounded={40}>
+                <Box p="4" bg="gray.400" rounded={40} color="white">
                   2
                 </Box>
               </Flex>
@@ -205,7 +178,7 @@ function NuevoBeneficiarioMoralPaso1() {
                 p={2}
                 rounded={6}
               >
-                <Text m={1}>Nombre(s)</Text>
+                <Text m={1}>Nombre de la Institución</Text>
                 <Input
                   m={1}
                   id="name"
@@ -226,7 +199,6 @@ function NuevoBeneficiarioMoralPaso1() {
                   }}
                 />
                 <FormLabel htmlFor="comunidad">Comunidad</FormLabel>{" "}
-                {/* se ocupa para menu comunidades*/}
                 <Menu>
                   {({ isOpen }) => (
                     <>
@@ -272,7 +244,6 @@ function NuevoBeneficiarioMoralPaso1() {
                     </>
                   )}
                 </Menu>
-                {/*  termina menu*/}
                 <Text m={1}>Telefono Celular</Text>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
@@ -334,16 +305,16 @@ function NuevoBeneficiarioMoralPaso1() {
             <Spacer />
             <Box>
               <Button
-                colorScheme="teal"
+                colorScheme="green"
                 variant="solid"
                 mr="4"
                 onClick={() => guardarBeneficiario()}
               >
                 Siguiente
               </Button>
-              <Link href="/dashboard">
+              <Link href="/gestion-beneficiario">
                 <a>
-                  <Button colorScheme="teal" variant="outline">
+                  <Button colorScheme="green" variant="outline">
                     Descartar
                   </Button>
                 </a>
